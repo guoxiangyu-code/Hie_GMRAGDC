@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generalized Moment Retrieval</title>
+    <meta
+      name="description"
+      content="Generalized Moment Retrieval (GMR): a unified benchmark and evaluation framework for retrieving no, one, or multiple relevant moments from video."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow-left"></div>
+    <div class="page-glow page-glow-right"></div>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="#home">
+          <span class="brand-mark">GMR</span>
+          <span class="brand-text">Generalized Moment Retrieval</span>
+        </a>
+        <nav class="site-nav">
+          <a href="#task">Task</a>
+          <a href="#benchmark">Benchmark</a>
+          <a href="#evaluation">Evaluation</a>
+          <a href="#methods">Methods</a>
+          <a href="#results">Results</a>
+          <a href="#demo">Demo</a>
+          <a href="#resources">Resources</a>
+        </nav>
+        <div class="header-actions">
+          <a class="ghost-button" href="#resources">Paper</a>
+          <a class="primary-button" href="../README.md">Code</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero-section" id="home">
+          <div class="hero-copy reveal-on-scroll">
+            <p class="eyebrow">Benchmark · Evaluation · Methods</p>
+            <h1>Generalized Moment Retrieval</h1>
+            <p class="hero-subtitle">
+              Benchmark and Models for Retrieving Any Relevant Moments.
+            </p>
+            <p class="hero-description">
+              A unified video-language retrieval setting in which a query may correspond to
+              <strong>no moment</strong>, <strong>one moment</strong>, or
+              <strong>multiple moments</strong> within a video.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-button" href="#benchmark">View Benchmark</a>
+              <a class="ghost-button" href="#evaluation">Explore Evaluation</a>
+              <a class="ghost-button" href="#results">See Results</a>
+            </div>
+            <div class="hero-note">
+              <span class="status-dot"></span>
+              Paper link is reserved for the post-anonymization release.
+            </div>
+          </div>
+
+          <div class="hero-visual reveal-on-scroll">
+            <div class="hero-panel-header">
+              <span>Temporal Signal</span>
+              <span>0 / 1 / Multiple</span>
+            </div>
+            <div class="timeline-board">
+              <div class="timeline-card">
+                <div class="timeline-meta">
+                  <div class="timeline-label">Null-set</div>
+                  <span>Reject</span>
+                </div>
+                <div class="timeline-bar empty"></div>
+                <p>No relevant event appears in the video.</p>
+              </div>
+              <div class="timeline-card">
+                <div class="timeline-meta">
+                  <div class="timeline-label">Single</div>
+                  <span>One hit</span>
+                </div>
+                <div class="timeline-bar">
+                  <span style="left: 36%; width: 20%"></span>
+                </div>
+                <p>Exactly one target moment should be retrieved.</p>
+              </div>
+              <div class="timeline-card">
+                <div class="timeline-meta">
+                  <div class="timeline-label">Multiple</div>
+                  <span>Set retrieval</span>
+                </div>
+                <div class="timeline-bar multiple">
+                  <span style="left: 14%; width: 14%"></span>
+                  <span style="left: 44%; width: 18%"></span>
+                  <span style="left: 74%; width: 12%"></span>
+                </div>
+                <p>All relevant temporal moments should be returned.</p>
+              </div>
+            </div>
+            <div class="hero-micro-grid">
+              <div>
+                <span class="micro-label">Setting</span>
+                <strong>Unified generalized retrieval</strong>
+              </div>
+              <div>
+                <span class="micro-label">Goal</span>
+                <strong>Retrieve the complete temporal set</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="signal-strip reveal-on-scroll">
+          <div class="signal-card">
+            <span class="signal-title">Traditional VMR</span>
+            <p>Mostly designed for exactly one matching moment.</p>
+          </div>
+          <div class="signal-divider"></div>
+          <div class="signal-card highlighted">
+            <span class="signal-title">GMR</span>
+            <p>Jointly models rejection, single-moment retrieval, and multi-moment retrieval.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="task">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Task</p>
+            <h2>Why Generalized Moment Retrieval?</h2>
+            <p>
+              Conventional video moment retrieval usually assumes that every query has exactly
+              one matching temporal segment. Real retrieval scenarios are broader: an event may
+              be absent, occur once, or repeat multiple times in the same video.
+            </p>
+          </div>
+          <div class="two-column-grid">
+            <article class="feature-card emphasis-card reveal-on-scroll">
+              <h3>Generalized Moment Retrieval</h3>
+              <p>
+                GMR unifies three retrieval regimes into one formulation and requires a model to
+                return the complete set of relevant temporal moments, or correctly predict an
+                empty set when the queried event does not exist.
+              </p>
+              <ul class="check-list">
+                <li>Supports no / one / multiple moments</li>
+                <li>Combines rejection and localization in one setting</li>
+                <li>Better reflects realistic video retrieval demands</li>
+              </ul>
+            </article>
+            <article class="comparison-card reveal-on-scroll">
+              <div>
+                <h3>Conventional VMR</h3>
+                <ul>
+                  <li>Assumes exactly one target moment</li>
+                  <li>Usually ignores null-set queries</li>
+                  <li>Under-explores repeated events</li>
+                </ul>
+              </div>
+              <div>
+                <h3>GMR</h3>
+                <ul>
+                  <li>Handles absent, single, and repeated events</li>
+                  <li>Measures rejection and localization jointly</li>
+                  <li>Expands the scope of temporal grounding research</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section scenario-section">
+          <div class="section-heading narrow reveal-on-scroll">
+            <p class="eyebrow">Three Scenarios</p>
+            <h2>Three Retrieval Scenarios in One Unified Task</h2>
+          </div>
+          <div class="scenario-grid">
+            <article class="scenario-card reveal-on-scroll">
+              <div class="scenario-index">01</div>
+              <h3>Null-set Rejection</h3>
+              <p>
+                The query is meaningful but no corresponding event occurs in the video, so the
+                correct output is an empty set.
+              </p>
+            </article>
+            <article class="scenario-card reveal-on-scroll">
+              <div class="scenario-index">02</div>
+              <h3>Single-Moment Retrieval</h3>
+              <p>
+                The query corresponds to exactly one temporal segment, aligning with the classic
+                VMR setup.
+              </p>
+            </article>
+            <article class="scenario-card reveal-on-scroll">
+              <div class="scenario-index">03</div>
+              <h3>Multi-Moment Retrieval</h3>
+              <p>
+                The same query may occur multiple times, and all relevant moments should be
+                retrieved rather than only the strongest one.
+              </p>
+            </article>
+          </div>
+          <div class="image-panel image-panel-contrast image-panel-horizontal reveal-on-scroll">
+            <img src="../assets/intro.png" alt="Three retrieval scenarios in GMR" />
+          </div>
+        </section>
+
+        <section class="content-section" id="benchmark">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Benchmark</p>
+            <h2>Soccer-GMR: A Benchmark for Realistic Generalized Retrieval</h2>
+            <p>
+              Soccer-GMR instantiates GMR on challenging soccer videos, covering null-set,
+              single-moment, and multi-moment retrieval under a unified benchmark protocol.
+            </p>
+          </div>
+          <div class="benchmark-showcase reveal-on-scroll">
+            <div class="benchmark-summary-panel">
+              <div class="stats-grid">
+                <article class="stat-card reveal-on-scroll">
+                  <span class="stat-value">139</span>
+                  <span class="stat-label">matches</span>
+                </article>
+                <article class="stat-card reveal-on-scroll">
+                  <span class="stat-value">5.5K</span>
+                  <span class="stat-label">video clips</span>
+                </article>
+                <article class="stat-card reveal-on-scroll">
+                  <span class="stat-value">22.1K</span>
+                  <span class="stat-label">query-clip pairs</span>
+                </article>
+                <article class="stat-card reveal-on-scroll">
+                  <span class="stat-value">3</span>
+                  <span class="stat-label">retrieval regimes</span>
+                </article>
+              </div>
+              <article class="feature-card reveal-on-scroll">
+                <h3>Key Properties</h3>
+                <ul class="check-list">
+                  <li>Realistic in-domain negative queries</li>
+                  <li>Unified rejection and localization setting</li>
+                  <li>Duration-flexible benchmark construction perspective</li>
+                  <li>Official labels and evaluation toolkit already released</li>
+                </ul>
+              </article>
+            </div>
+            <div class="table-card benchmark-table-card reveal-on-scroll">
+              <div class="table-card-header">
+                <div>
+                  <p class="eyebrow">Benchmark Comparison</p>
+                  <h3>How Soccer-GMR extends existing VMR benchmarks</h3>
+                </div>
+                <p>
+                  Compared with prior benchmarks, Soccer-GMR jointly supports multi-moment
+                  retrieval, null-set rejection, and duration-flexible construction.
+                </p>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Dataset</th>
+                    <th>Domain</th>
+                    <th># Queries</th>
+                    <th># Moments / # Videos</th>
+                    <th>Avg. Moment / Query</th>
+                    <th>Avg. Video Dur.</th>
+                    <th>Multi-Moment</th>
+                    <th>Null-Set</th>
+                    <th>Duration Flexible</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Charades-STA</td>
+                    <td>Activity</td>
+                    <td>27,847</td>
+                    <td>16.1K / 6.7K</td>
+                    <td>1.0</td>
+                    <td>~30s</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <td>TVR</td>
+                    <td>TV Shows</td>
+                    <td>109,480</td>
+                    <td>109K / 21.8K</td>
+                    <td>1.0</td>
+                    <td>~76s</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <td>QVHighlights</td>
+                    <td>Vlog/News</td>
+                    <td>18,367</td>
+                    <td>18.5K / 10.2K</td>
+                    <td>1.8</td>
+                    <td>~150s</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <td>QV-M²</td>
+                    <td>Vlog/News</td>
+                    <td>2,212</td>
+                    <td>6.4K / 1.3K</td>
+                    <td>2.9</td>
+                    <td>~150s</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>No</td>
+                  </tr>
+                  <tr class="benchmark-row-highlight">
+                    <td>Soccer-GMR (Ours)</td>
+                    <td>Soccer</td>
+                    <td>22,119</td>
+                    <td>16.1K / 5.5K</td>
+                    <td>1.5</td>
+                    <td>150s†</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="table-footnote">
+                † Soccer-GMR can be scaled to longer horizons by merging adjacent clips.
+              </p>
+            </div>
+          </div>
+          <div class="benchmark-visual-grid">
+            <div class="image-panel compact image-panel-contrast image-panel-horizontal reveal-on-scroll">
+              <img src="../assets/dataset.png" alt="Statistics of Soccer-GMR" />
+            </div>
+            <div class="pipeline-block reveal-on-scroll">
+              <div class="image-panel compact image-panel-contrast image-panel-horizontal image-panel-warm">
+                <img src="../assets/pipeline222.png" alt="Pipeline for Soccer-GMR construction" />
+              </div>
+              <div class="pipeline-copy">
+                <p class="eyebrow">Construction Pipeline</p>
+                <h3>Duration-Flexible Semi-Automated Data Construction</h3>
+                <p>
+                  The benchmark is built through a staged pipeline that converts timestamped sports
+                  supervision into query construction, balanced sampling, and evaluation-ready
+                  temporal annotations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" id="evaluation">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Evaluation</p>
+            <h2>A Unified Evaluation Protocol for GMR</h2>
+            <p>
+              GMR requires more than conventional localization metrics. The benchmark evaluates
+              rejection quality, temporal localization on positive queries, and end-to-end
+              generalized retrieval in one protocol.
+            </p>
+          </div>
+          <div class="metric-columns">
+            <article class="metric-card reveal-on-scroll">
+              <h3>Null-set Rejection</h3>
+              <ul>
+                <li>Rej-F1</li>
+                <li>AUROC</li>
+                <li>Threshold-aware rejection analysis</li>
+              </ul>
+            </article>
+            <article class="metric-card reveal-on-scroll">
+              <h3>Temporal Localization</h3>
+              <ul>
+                <li>mR@k</li>
+                <li>mR+@k</li>
+                <li>mAP</li>
+                <li>mIoU@k / mIoU+@k</li>
+              </ul>
+            </article>
+            <article class="metric-card reveal-on-scroll">
+              <h3>End-to-End GMR</h3>
+              <ul>
+                <li>G-mIoU@k</li>
+                <li>Joint rejection + localization assessment</li>
+                <li>Unified generalized retrieval view</li>
+              </ul>
+            </article>
+          </div>
+          <div class="evaluation-highlight reveal-on-scroll">
+            <div>
+              <span class="micro-label">Evaluation lens</span>
+              <strong>Rejection · Localization · End-to-End GMR</strong>
+            </div>
+            <div>
+              <span class="micro-label">Key novelty</span>
+              <strong>Extends VMR evaluation to generalized temporal retrieval</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" id="methods">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Methods</p>
+            <h2>Methods for Generalized Moment Retrieval</h2>
+            <p>
+              We study GMR from two complementary modeling paradigms: lightweight adaptation of
+              discriminative VMR models and reward design for generative MLLMs.
+            </p>
+          </div>
+          <div class="method-layout">
+            <div class="method-figure-shell reveal-on-scroll">
+              <div class="image-panel image-panel-contrast image-panel-horizontal image-panel-light method-figure-panel">
+                <img src="../assets/adapter10.png" alt="Architecture of the GMR Adapter" />
+              </div>
+            </div>
+            <div class="method-stack">
+              <article class="feature-card reveal-on-scroll">
+                <h3>GMR Adapter</h3>
+                <p>
+                  A lightweight plug-and-play module for discriminative VMR backbones, adding an
+                  explicit existence-estimation branch for null-set prediction without redesigning
+                  the underlying temporal grounding backbone.
+                </p>
+                <ul class="check-list">
+                  <li>Compatible with mainstream VMR architectures</li>
+                  <li>Explicit null-set awareness</li>
+                  <li>Strong end-to-end GMR gains with minimal intrusion</li>
+                </ul>
+              </article>
+              <article class="feature-card reveal-on-scroll">
+                <h3>GMR-tailored GRPO Reward</h3>
+                <p>
+                  A reward formulation for GRPO-based fine-tuning of generative MLLMs, jointly
+                  encouraging temporal localization quality and correct rejection behavior.
+                </p>
+                <ul class="check-list">
+                  <li>Targets generalized retrieval objectives</li>
+                  <li>Encourages both precision and abstention</li>
+                  <li>Extends GMR to generative video-language models</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" id="results">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Results</p>
+            <h2>Experimental Results</h2>
+            <p>
+              Results on the Soccer-GMR test set show that the GMR Adapter substantially improves
+              rejection while preserving or improving localization quality, leading to much
+              stronger end-to-end generalized retrieval performance.
+            </p>
+          </div>
+          <div class="stats-grid result-highlights">
+            <article class="stat-card accent-card reveal-on-scroll">
+              <span class="stat-value">79.11</span>
+              <span class="stat-label">Best AUROC</span>
+            </article>
+            <article class="stat-card accent-card reveal-on-scroll">
+              <span class="stat-value">64.01</span>
+              <span class="stat-label">Best Rej-F1</span>
+            </article>
+            <article class="stat-card accent-card reveal-on-scroll">
+              <span class="stat-value">39.58</span>
+              <span class="stat-label">Best G-mIoU@1</span>
+            </article>
+            <article class="stat-card accent-card reveal-on-scroll">
+              <span class="stat-value">19.10</span>
+              <span class="stat-label">Best mR+@5</span>
+            </article>
+          </div>
+          <div class="table-card reveal-on-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>AUROC</th>
+                  <th>Rej-F1</th>
+                  <th>mAP</th>
+                  <th>mR@5</th>
+                  <th>mR+@5</th>
+                  <th>G-mIoU@1</th>
+                  <th>G-mIoU@3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Moment-DETR</td>
+                  <td>69.92</td>
+                  <td>0.00</td>
+                  <td>6.98</td>
+                  <td>10.92</td>
+                  <td>0.78</td>
+                  <td>5.39</td>
+                  <td>2.47</td>
+                </tr>
+                <tr class="results-row-ours">
+                  <td>Moment-DETR-GMR (Ours)</td>
+                  <td>72.09</td>
+                  <td><strong>64.01</strong></td>
+                  <td>7.52</td>
+                  <td>12.96</td>
+                  <td>0.84</td>
+                  <td>35.84</td>
+                  <td>32.89</td>
+                </tr>
+                <tr>
+                  <td>EaTR</td>
+                  <td>70.99</td>
+                  <td>0.80</td>
+                  <td>18.48</td>
+                  <td>25.27</td>
+                  <td>11.81</td>
+                  <td>12.94</td>
+                  <td>6.67</td>
+                </tr>
+                <tr class="results-row-ours">
+                  <td>EaTR-GMR (Ours)</td>
+                  <td><strong>79.11</strong></td>
+                  <td>62.10</td>
+                  <td>18.56</td>
+                  <td>24.43</td>
+                  <td>13.97</td>
+                  <td>37.89</td>
+                  <td>31.95</td>
+                </tr>
+                <tr>
+                  <td>FlashVTG</td>
+                  <td>57.33</td>
+                  <td>7.12</td>
+                  <td>23.61</td>
+                  <td>33.06</td>
+                  <td>15.30</td>
+                  <td>15.41</td>
+                  <td>8.21</td>
+                </tr>
+                <tr class="results-row-ours">
+                  <td>FlashVTG-GMR (Ours)</td>
+                  <td>74.00</td>
+                  <td>61.72</td>
+                  <td><strong>24.62</strong></td>
+                  <td><strong>33.36</strong></td>
+                  <td><strong>19.10</strong></td>
+                  <td><strong>39.58</strong></td>
+                  <td><strong>33.53</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="results-note reveal-on-scroll">
+            <p>
+              These numbers are adapted from the main test-set results table in the paper and are
+              particularly suitable for the project page because they directly highlight GMR's
+              core claims: explicit rejection capability, preserved localization, and stronger
+              end-to-end retrieval.
+            </p>
+          </div>
+        </section>
+
+        <section class="content-section" id="demo">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Example Explorer</p>
+            <h2>Lightweight Scenario Demo</h2>
+            <p>
+              This interactive module illustrates how GMR differs from conventional single-target
+              retrieval by allowing a query to resolve to an empty set, one segment, or multiple
+              temporal segments.
+            </p>
+          </div>
+          <div class="demo-shell reveal-on-scroll">
+            <div class="demo-tabs" role="tablist" aria-label="GMR demo scenarios">
+              <button class="demo-tab is-active" data-demo="null" role="tab" aria-selected="true">
+                Null-set
+              </button>
+              <button class="demo-tab" data-demo="single" role="tab" aria-selected="false">
+                Single
+              </button>
+              <button class="demo-tab" data-demo="multi" role="tab" aria-selected="false">
+                Multiple
+              </button>
+            </div>
+            <div class="demo-panel">
+              <div class="demo-meta">
+                <p class="demo-kicker">Example Query</p>
+                <h3 id="demo-title">Locate a red-card moment in this clip.</h3>
+                <p id="demo-description">
+                  The event is semantically plausible in soccer, but the correct answer is an
+                  empty set because no red card appears in the clip.
+                </p>
+                <div class="demo-tags">
+                  <span>Query-conditioned retrieval</span>
+                  <span>Temporal set prediction</span>
+                  <span>Null-set aware</span>
+                </div>
+              </div>
+              <div class="demo-timeline-wrap">
+                <div class="demo-axis">
+                  <span>0s</span>
+                  <span>75s</span>
+                  <span>150s</span>
+                </div>
+                <div class="demo-timeline" id="demo-timeline"></div>
+                <div class="demo-legend">
+                  <span><i class="legend-chip gt"></i> Relevant moment</span>
+                  <span><i class="legend-chip predicted"></i> Retrieved moment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" id="resources">
+          <div class="section-heading reveal-on-scroll">
+            <p class="eyebrow">Resources</p>
+            <h2>Release Resources</h2>
+            <p>
+              The current release focuses on benchmark labels and the official evaluation
+              toolkit. Additional components will be released progressively.
+            </p>
+          </div>
+          <div class="resource-grid">
+            <article class="resource-card reveal-on-scroll">
+              <h3>Code Repository</h3>
+              <p>Official benchmark labels, evaluation toolkit, and reproducible example.</p>
+              <a href="../README.md">Open repository overview</a>
+            </article>
+            <article class="resource-card reveal-on-scroll">
+              <h3>Paper</h3>
+              <p>Project paper link is reserved for the post-anonymization release stage.</p>
+              <a href="#citation">See temporary citation</a>
+            </article>
+            <article class="resource-card reveal-on-scroll">
+              <h3>Evaluation Toolkit</h3>
+              <p>Official metrics for rejection, localization, and end-to-end GMR evaluation.</p>
+              <a href="../eval/README.md">Read evaluation usage</a>
+            </article>
+            <article class="resource-card reveal-on-scroll">
+              <h3>Release Note</h3>
+              <p>
+                Pipeline, baseline models, and training / inference code will be released
+                progressively.
+              </p>
+              <a href="../README.md#release-scope">See release scope</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section citation-section" id="citation">
+          <div class="section-heading narrow reveal-on-scroll">
+            <p class="eyebrow">Citation</p>
+            <h2>Temporary Citation</h2>
+            <p>
+              Citation details will be updated once anonymization constraints are lifted.
+            </p>
+          </div>
+          <div class="code-card reveal-on-scroll">
+            <pre><code>@article{retrieving_any_relevant_moments_gmr,
+  title={Retrieving Any Relevant Moments: Benchmark and Models for Generalized Moment Retrieval},
+  author={Anonymous},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2026}
+}</code></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
