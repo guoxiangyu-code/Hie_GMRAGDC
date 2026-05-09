@@ -29,13 +29,13 @@ data/
 
 ## Split Groups
 
-- `label/Standard/` is the benchmark split used for the main experiments.
+- `label/Standard/` is the benchmark split used for reported experiments.
 - `label/Full/` is the complete dataset used for scaling studies.
 
-| Split group | Train | Val | Test | Total |
-| --- | ---: | ---: | ---: | ---: |
-| `Standard` | 4,138 | 465 | 1,036 | 5,639 |
-| `Full` | 16,898 | 2,235 | 2,986 | 22,119 |
+| Split group | Train | Val | Test | Total | Videos |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `Standard` | 4,138 | 465 | 1,036 | 5,639 | 1,957 |
+| `Full` | 16,898 | 2,235 | 2,986 | 22,119 | 5,468 |
 
 ## File Format
 
