@@ -1,5 +1,5 @@
 _base_ = ['models.flash_vtg_gmr.blocks']
-# model settings
+
 model = dict(
     strides=(1, 2, 4, 8),
     buffer_size=1024,

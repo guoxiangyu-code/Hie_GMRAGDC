@@ -51,18 +51,6 @@ export RESULTS_DIR=results/flash_vtg_gmr
 bash scripts/infer_flash_vtg_gmr.sh
 ```
 
-`eval_bsz=1` is required by the released boundary decoder. The script writes
-the raw and NMS submissions and evaluates the NMS output with the GMR evaluator.
-
-The paper checkpoint uses:
-
-| Setting | Value |
-| --- | ---: |
-| Existence pooling | `mean` |
-| NMS threshold | `0.7` |
-| Rejection / G-mIoU threshold | `0.4` |
-| Maximum evaluated windows | `10` |
-
 ## Training
 
 Training uses the same feature layout:
