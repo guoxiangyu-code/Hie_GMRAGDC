@@ -348,3 +348,22 @@ Parameter Count: all 10,902,853; trainable 665,111
 Training Iteration:  12%|█▏        | 4/33 [00:17<02:11,  4.55s/it][A
 Training Iteration:  15%|█▌        | 5/33 [00:22<02:10,  4.65s/it][A
 Training Iteration:  18%|█▊        | 6/33 [00:27<02:07,  4.71s/it][A
+Training Iteration:  21%|██        | 7/33 [00:32<02:04,  4.78s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:37<01:59,  4.77s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:42<01:55,  4.81s/it][A
+Training Iteration:  30%|███       | 10/33 [00:46<01:48,  4.72s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:51<01:43,  4.70s/it][A
+Training Iteration:  36%|███▋      | 12/33 [00:56<01:39,  4.73s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:00<01:34,  4.73s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:06<01:33,  4.90s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:10<01:27,  4.84s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:16<01:24,  4.99s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:20<01:18,  4.93s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:25<01:12,  4.85s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:30<01:07,  4.83s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:34<01:00,  4.68s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:39<00:56,  4.67s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:44<00:51,  4.69s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [01:48<00:46,  4.69s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [01:53<00:42,  4.68s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [01:58<00:38,  4.77s/it][A
