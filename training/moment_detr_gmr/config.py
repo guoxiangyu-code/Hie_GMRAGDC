@@ -60,11 +60,19 @@ class BaseOptions:
         self.opt.train_log_filepath = str(results_dir / self.opt.train_log_filename)
         self.opt.eval_log_filepath = str(results_dir / self.opt.eval_log_filename)
 
+        # Prefer the released Soccer-GMR feature bundle when it is mounted in
+        # the workspace.  Fall back to the layout documented by this repo.
+        released_root = REPO_ROOT / "Soccer-GMR" / "feature" / "standard"
+        feature_root = (
+            released_root
+            if released_root.exists()
+            else REPO_ROOT / "features" / self.dataset
+        )
         self.opt.v_feat_dirs = [
-            str(REPO_ROOT / "features" / self.dataset / "clip"),
-            str(REPO_ROOT / "features" / self.dataset / "slowfast"),
+            str(feature_root / "clip"),
+            str(feature_root / "slowfast"),
         ]
-        self.opt.t_feat_dir = str(REPO_ROOT / "features" / self.dataset / "clip_text")
+        self.opt.t_feat_dir = str(feature_root / "clip_text")
         self.opt.a_feat_dirs = None
         self.opt.a_feat_types = None
         self.opt.t_feat_dir_pretrain_eval = None

@@ -1,0 +1,9 @@
+launched_at=2026-07-22T17:08:12+08:00
+repo_root=/home/guoxiangyu/generalized-moment-retrieval
+run_dir=/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict/moment_detr/seed2023/md_hiea2m
+gpu_id=1
+hostname=dell-PowerEdge-R750
+git_commit=ac78df9129a1153e74d4f75ad437a34fd770487b
+stdout_log=/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict/moment_detr/seed2023/md_hiea2m/nohup.log
+command_file=/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict/moment_detr/seed2023/md_hiea2m/launch_command.txt
+pid=1487551

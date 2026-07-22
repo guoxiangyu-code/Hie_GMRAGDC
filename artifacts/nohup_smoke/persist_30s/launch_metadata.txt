@@ -1,0 +1,9 @@
+launched_at=2026-07-22T13:50:55+08:00
+repo_root=/home/guoxiangyu/generalized-moment-retrieval
+run_dir=/home/guoxiangyu/generalized-moment-retrieval/artifacts/nohup_smoke/persist_30s
+gpu_id=1
+hostname=dell-PowerEdge-R750
+git_commit=ac78df9129a1153e74d4f75ad437a34fd770487b
+stdout_log=/home/guoxiangyu/generalized-moment-retrieval/artifacts/nohup_smoke/persist_30s/nohup.log
+command_file=/home/guoxiangyu/generalized-moment-retrieval/artifacts/nohup_smoke/persist_30s/launch_command.txt
+pid=1443473

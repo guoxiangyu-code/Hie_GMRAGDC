@@ -1,0 +1,20 @@
+{
+    "checkpoint_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    },
+    "discarded_checkpoint_keys": [],
+    "initialized_new_keys": [],
+    "protocol_match": true,
+    "resume": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/formal_strict/moment_detr/seed2023/md_hiea2m_b128_rerun_from_best/best_map.ckpt",
+    "run_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    }
+}

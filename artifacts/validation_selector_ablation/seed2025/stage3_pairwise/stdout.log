@@ -1,0 +1,831 @@
+2026-07-22 23:28:21.269:INFO:__main__ - Setup config, data and model...
+2026-07-22 23:28:21.369:INFO:__main__ - Positive count classes=[1423, 565, 117, 31] weights=[0.3112923204898834, 0.494022399187088, 1.0856201648712158, 2.109065055847168]
+2026-07-22 23:28:21.370:INFO:evaluate - setup model/optimizer/scheduler
+2026-07-22 23:28:23.334:INFO:evaluate - CUDA enabled on cuda.
+2026-07-22 23:28:24.371:INFO:__main__ - Loaded model checkpoint: artifacts/validation_selector_ablation/seed2025/stage2_zero/best.ckpt
+Parameter Count: all 10,902,853; trainable 665,111
+2026-07-22 23:28:24.373:INFO:__main__ - Start training
+Epoch:   0%|          | 0/80 [00:00<?, ?it/s]2026-07-22 23:28:24.376:INFO:__main__ - [Epoch 1]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A/home/guoxiangyu/miniconda3/lib/python3.13/site-packages/torch/nn/modules/transformer.py:531: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. We recommend specifying layout=torch.jagged when constructing a nested tensor, as this layout receives active development, has better operator coverage, and works with torch.compile. (Triggered internally at /pytorch/aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(
+
+Training Iteration:   3%|▎         | 1/33 [00:10<05:41, 10.67s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:20<05:21, 10.38s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:30<05:03, 10.10s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:39<04:40,  9.68s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:49<04:30,  9.67s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:58<04:20,  9.66s/it][A
+Training Iteration:  21%|██        | 7/33 [01:08<04:13,  9.74s/it][A
+Training Iteration:  24%|██▍       | 8/33 [01:18<04:06,  9.85s/it][A
+Training Iteration:  27%|██▋       | 9/33 [01:28<03:53,  9.73s/it][A
+Training Iteration:  30%|███       | 10/33 [01:38<03:44,  9.78s/it][A
+Training Iteration:  33%|███▎      | 11/33 [01:48<03:35,  9.82s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:57<03:23,  9.69s/it][A
+Training Iteration:  39%|███▉      | 13/33 [02:07<03:12,  9.65s/it][A
+Training Iteration:  42%|████▏     | 14/33 [02:17<03:05,  9.75s/it][A
+Training Iteration:  45%|████▌     | 15/33 [02:27<02:58,  9.94s/it][A
+Training Iteration:  48%|████▊     | 16/33 [02:37<02:49,  9.95s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [02:46<02:36,  9.77s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [02:56<02:26,  9.79s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [03:06<02:15,  9.66s/it][A
+Training Iteration:  61%|██████    | 20/33 [03:15<02:05,  9.69s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [03:25<01:56,  9.73s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [03:35<01:48,  9.82s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [03:45<01:39,  9.97s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [03:56<01:30, 10.04s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [04:06<01:20, 10.11s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [04:16<01:09,  9.98s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [04:25<00:58,  9.75s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [04:34<00:48,  9.69s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [04:44<00:38,  9.68s/it][A
+Training Iteration:  91%|█████████ | 30/33 [04:54<00:29,  9.78s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [05:04<00:19,  9.74s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [05:14<00:09,  9.88s/it][A
+Training Iteration: 100%|██████████| 33/33 [05:17<00:00,  7.93s/it][ATraining Iteration: 100%|██████████| 33/33 [05:17<00:00,  9.63s/it]
+2026-07-22 23:33:42.166:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:09<00:28,  9.49s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:19<00:20, 10.05s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:30<00:10, 10.08s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:36<00:00,  8.67s/it][Acompute moment scores: 100%|██████████| 4/4 [00:36<00:00,  9.14s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 15058.88it/s]
+2026-07-22 23:34:18.766:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:34:19.682:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.94),
+                ('G-mIoU@5', 2.94),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.43),
+                ('mR@1', 5.38),
+                ('mR@3', 10.5),
+                ('mR@5', 10.5),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.0),
+                ('mR+@5', 0.0),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.91),
+                ('mIoU@5', 11.91),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:34:19.762:INFO:__main__ - Updated best_map checkpoint: score=7.4300 mAP=7.4300 G-mIoU@3=2.9400
+2026-07-22 23:34:19.836:INFO:__main__ - Updated best_gmiou3 checkpoint: score=2.9400 mAP=7.4300 G-mIoU@3=2.9400
+2026-07-22 23:34:19.909:INFO:__main__ - Updated best_joint checkpoint: score=4.2130 mAP=7.4300 G-mIoU@3=2.9400
+2026-07-22 23:34:19.981:INFO:__main__ - Updated best checkpoint.
+Epoch:   1%|▏         | 1/80 [05:55<7:48:12, 355.61s/it]2026-07-22 23:34:19.982:INFO:__main__ - [Epoch 2]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:10<05:31, 10.37s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:20<05:18, 10.29s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:30<05:02, 10.10s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:40<04:48,  9.96s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:49<04:33,  9.75s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:59<04:21,  9.69s/it][A
+Training Iteration:  21%|██        | 7/33 [01:08<04:07,  9.51s/it][A
+Training Iteration:  24%|██▍       | 8/33 [01:17<03:57,  9.50s/it][A
+Training Iteration:  27%|██▋       | 9/33 [01:27<03:46,  9.43s/it][A
+Training Iteration:  30%|███       | 10/33 [01:36<03:34,  9.31s/it][A
+Training Iteration:  33%|███▎      | 11/33 [01:45<03:28,  9.48s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:56<03:22,  9.66s/it][A
+Training Iteration:  39%|███▉      | 13/33 [02:05<03:14,  9.71s/it][A
+Training Iteration:  42%|████▏     | 14/33 [02:15<03:03,  9.65s/it][A
+Training Iteration:  45%|████▌     | 15/33 [02:24<02:52,  9.58s/it][A
+Training Iteration:  48%|████▊     | 16/33 [02:34<02:45,  9.74s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [02:44<02:33,  9.57s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [02:53<02:23,  9.54s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [03:03<02:14,  9.61s/it][A
+Training Iteration:  61%|██████    | 20/33 [03:13<02:06,  9.71s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [03:23<01:56,  9.74s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [03:32<01:46,  9.70s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [03:42<01:36,  9.65s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [03:51<01:26,  9.58s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [04:00<01:15,  9.48s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [04:10<01:06,  9.50s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [04:19<00:56,  9.39s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [04:29<00:47,  9.51s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [04:38<00:37,  9.32s/it][A
+Training Iteration:  91%|█████████ | 30/33 [04:47<00:28,  9.34s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [04:56<00:18,  9.20s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [05:05<00:09,  9.26s/it][A
+Training Iteration: 100%|██████████| 33/33 [05:08<00:00,  7.32s/it][ATraining Iteration: 100%|██████████| 33/33 [05:08<00:00,  9.35s/it]
+2026-07-22 23:39:28.665:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:09<00:27,  9.11s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:18<00:18,  9.03s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:26<00:08,  8.88s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:32<00:00,  7.64s/it][Acompute moment scores: 100%|██████████| 4/4 [00:32<00:00,  8.13s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 17307.07it/s]
+2026-07-22 23:40:01.227:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:40:02.184:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.89),
+                ('G-mIoU@5', 2.89),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.32),
+                ('mR@1', 5.38),
+                ('mR@3', 10.07),
+                ('mR@5', 10.07),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.78),
+                ('mIoU@5', 11.78),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:40:02.184:INFO:__main__ - Early stop counter: 1/15
+Epoch:   2%|▎         | 2/80 [11:37<7:32:02, 347.72s/it]2026-07-22 23:40:02.185:INFO:__main__ - [Epoch 3]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:09<04:57,  9.31s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:18<04:48,  9.29s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:27<04:34,  9.14s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:36<04:18,  8.91s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:45<04:10,  8.94s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:53<03:58,  8.82s/it][A
+Training Iteration:  21%|██        | 7/33 [01:02<03:48,  8.81s/it][A
+Training Iteration:  24%|██▍       | 8/33 [01:10<03:35,  8.63s/it][A
+Training Iteration:  27%|██▋       | 9/33 [01:19<03:29,  8.74s/it][A
+Training Iteration:  30%|███       | 10/33 [01:28<03:20,  8.72s/it][A
+Training Iteration:  33%|███▎      | 11/33 [01:36<03:10,  8.66s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:43<02:49,  8.07s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:50<02:33,  7.66s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:57<02:20,  7.40s/it][A
+Training Iteration:  45%|████▌     | 15/33 [02:04<02:10,  7.26s/it][A
+Training Iteration:  48%|████▊     | 16/33 [02:11<02:03,  7.27s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [02:18<01:53,  7.12s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [02:24<01:41,  6.75s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [02:29<01:27,  6.26s/it][A
+Training Iteration:  61%|██████    | 20/33 [02:34<01:19,  6.08s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [02:40<01:11,  5.93s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [02:46<01:04,  5.87s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [02:51<00:57,  5.77s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:57<00:50,  5.65s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [03:02<00:45,  5.65s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [03:08<00:39,  5.64s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [03:14<00:34,  5.78s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [03:20<00:28,  5.73s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [03:25<00:22,  5.64s/it][A
+Training Iteration:  91%|█████████ | 30/33 [03:30<00:16,  5.57s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [03:36<00:11,  5.57s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [03:42<00:05,  5.65s/it][A
+Training Iteration: 100%|██████████| 33/33 [03:43<00:00,  4.47s/it][ATraining Iteration: 100%|██████████| 33/33 [03:43<00:00,  6.79s/it]
+2026-07-22 23:43:46.160:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:06<00:18,  6.32s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:11<00:11,  5.92s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:18<00:06,  6.14s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:22<00:00,  5.16s/it][Acompute moment scores: 100%|██████████| 4/4 [00:22<00:00,  5.51s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 12076.55it/s]
+2026-07-22 23:44:08.239:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:44:09.187:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.94),
+                ('G-mIoU@5', 2.94),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.27),
+                ('mR@1', 5.38),
+                ('mR@3', 9.77),
+                ('mR@5', 9.77),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.93),
+                ('mIoU@5', 11.93),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:44:09.187:INFO:__main__ - Early stop counter: 2/15
+Epoch:   4%|▍         | 3/80 [15:44<6:27:13, 301.73s/it]2026-07-22 23:44:09.188:INFO:__main__ - [Epoch 4]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:06<03:41,  6.91s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:12<03:05,  5.99s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:18<02:57,  5.93s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:23<02:45,  5.71s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:29<02:39,  5.70s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:34<02:32,  5.64s/it][A
+Training Iteration:  21%|██        | 7/33 [00:40<02:27,  5.69s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:46<02:26,  5.87s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:54<02:33,  6.41s/it][A
+Training Iteration:  30%|███       | 10/33 [00:59<02:15,  5.90s/it][A
+Training Iteration:  33%|███▎      | 11/33 [01:03<02:01,  5.52s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:07<01:47,  5.11s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:11<01:35,  4.77s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:16<01:31,  4.81s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:20<01:21,  4.53s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:24<01:15,  4.45s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:29<01:12,  4.51s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:33<01:05,  4.36s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:37<01:00,  4.33s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:42<00:57,  4.43s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:47<00:55,  4.61s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:52<00:51,  4.65s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [01:56<00:45,  4.57s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:01<00:40,  4.54s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [02:05<00:36,  4.59s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:10<00:32,  4.58s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:14<00:27,  4.52s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:19<00:22,  4.43s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:23<00:17,  4.37s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:27<00:13,  4.36s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:31<00:08,  4.24s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:36<00:04,  4.36s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:37<00:00,  3.50s/it][ATraining Iteration: 100%|██████████| 33/33 [02:37<00:00,  4.78s/it]
+2026-07-22 23:46:46.896:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:04<00:13,  4.51s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:09<00:09,  4.51s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:13<00:04,  4.51s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:16<00:00,  4.00s/it][Acompute moment scores: 100%|██████████| 4/4 [00:16<00:00,  4.19s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 16797.45it/s]
+2026-07-22 23:47:03.677:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:47:04.581:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.97),
+                ('G-mIoU@5', 2.97),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.24),
+                ('mR@1', 5.38),
+                ('mR@3', 9.83),
+                ('mR@5', 9.83),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.98),
+                ('mIoU@5', 11.98),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:47:04.686:INFO:__main__ - Updated best_gmiou3 checkpoint: score=2.9700 mAP=7.2400 G-mIoU@3=2.9700
+2026-07-22 23:47:04.687:INFO:__main__ - Early stop counter: 3/15
+Epoch:   5%|▌         | 4/80 [18:40<5:19:04, 251.90s/it]2026-07-22 23:47:04.687:INFO:__main__ - [Epoch 5]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<02:52,  5.39s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:10<02:48,  5.44s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:16<02:42,  5.42s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:21<02:37,  5.43s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:27<02:31,  5.42s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:31<02:17,  5.09s/it][A
+Training Iteration:  21%|██        | 7/33 [00:36<02:07,  4.90s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:40<01:58,  4.74s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:44<01:47,  4.50s/it][A
+Training Iteration:  30%|███       | 10/33 [00:48<01:41,  4.41s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:53<01:40,  4.56s/it][A
+Training Iteration:  36%|███▋      | 12/33 [00:57<01:34,  4.50s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:02<01:29,  4.48s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:06<01:24,  4.45s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:11<01:21,  4.50s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:15<01:16,  4.50s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:20<01:12,  4.54s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:24<01:07,  4.50s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:29<01:02,  4.47s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:34<01:00,  4.63s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:39<00:58,  4.84s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:44<00:53,  4.88s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [01:49<00:48,  4.87s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [01:54<00:45,  5.03s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [01:59<00:40,  5.04s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:05<00:36,  5.17s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:10<00:30,  5.10s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:15<00:26,  5.25s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:21<00:21,  5.35s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:26<00:16,  5.38s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:32<00:11,  5.54s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:38<00:05,  5.55s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:40<00:00,  4.39s/it][ATraining Iteration: 100%|██████████| 33/33 [02:40<00:00,  4.85s/it]
+2026-07-22 23:49:44.827:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:04<00:12,  4.32s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:08<00:08,  4.40s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:12<00:04,  4.31s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:15<00:00,  3.79s/it][Acompute moment scores: 100%|██████████| 4/4 [00:15<00:00,  3.99s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 17326.29it/s]
+2026-07-22 23:50:00.826:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:50:01.752:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.91),
+                ('G-mIoU@5', 2.91),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.22),
+                ('mR@1', 5.38),
+                ('mR@3', 9.75),
+                ('mR@5', 9.75),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.83),
+                ('mIoU@5', 11.83),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:50:01.752:INFO:__main__ - Early stop counter: 4/15
+Epoch:   6%|▋         | 5/80 [21:37<4:41:08, 224.91s/it]2026-07-22 23:50:01.753:INFO:__main__ - [Epoch 6]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:04<02:20,  4.40s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:08<02:13,  4.32s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:12<02:09,  4.30s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:17<02:04,  4.29s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:21<02:02,  4.37s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:26<02:01,  4.51s/it][A
+Training Iteration:  21%|██        | 7/33 [00:30<01:56,  4.49s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:35<01:50,  4.43s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:40<01:49,  4.56s/it][A
+Training Iteration:  30%|███       | 10/33 [00:44<01:43,  4.50s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:48<01:36,  4.40s/it][A
+Training Iteration:  36%|███▋      | 12/33 [00:53<01:33,  4.45s/it][A
+Training Iteration:  39%|███▉      | 13/33 [00:57<01:28,  4.42s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:02<01:24,  4.43s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:06<01:18,  4.36s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:10<01:14,  4.40s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:14<01:08,  4.26s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:19<01:05,  4.35s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:23<01:01,  4.39s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:27<00:56,  4.35s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:32<00:54,  4.55s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:37<00:50,  4.59s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [01:42<00:46,  4.67s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [01:46<00:41,  4.61s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [01:51<00:36,  4.55s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [01:55<00:31,  4.53s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:00<00:27,  4.59s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:05<00:23,  4.62s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:10<00:18,  4.67s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:15<00:14,  4.85s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:20<00:09,  4.97s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:25<00:05,  5.03s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:27<00:00,  4.10s/it][ATraining Iteration: 100%|██████████| 33/33 [02:27<00:00,  4.48s/it]
+2026-07-22 23:52:29.454:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:05<00:16,  5.36s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:10<00:10,  5.35s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:16<00:05,  5.43s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:19<00:00,  4.73s/it][Acompute moment scores: 100%|██████████| 4/4 [00:19<00:00,  4.97s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 16712.95it/s]
+2026-07-22 23:52:49.366:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:52:50.306:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.91),
+                ('G-mIoU@5', 2.91),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.22),
+                ('mR@1', 5.38),
+                ('mR@3', 9.75),
+                ('mR@5', 9.75),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.83),
+                ('mIoU@5', 11.83),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:52:50.307:INFO:__main__ - Early stop counter: 5/15
+Epoch:   8%|▊         | 6/80 [24:25<4:13:45, 205.75s/it]2026-07-22 23:52:50.307:INFO:__main__ - [Epoch 7]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<02:52,  5.39s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:10<02:45,  5.33s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:15<02:35,  5.19s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:20<02:29,  5.17s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:26<02:28,  5.31s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:32<02:27,  5.47s/it][A
+Training Iteration:  21%|██        | 7/33 [00:37<02:21,  5.44s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:42<02:15,  5.42s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:48<02:07,  5.33s/it][A
+Training Iteration:  30%|███       | 10/33 [00:53<02:03,  5.39s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:58<01:58,  5.39s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:04<01:55,  5.52s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:11<01:54,  5.73s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:16<01:46,  5.61s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:22<01:43,  5.73s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:27<01:35,  5.62s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:33<01:30,  5.65s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:38<01:23,  5.56s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:44<01:18,  5.58s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:49<01:11,  5.48s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:55<01:05,  5.47s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [02:00<01:00,  5.50s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [02:06<00:55,  5.50s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:11<00:48,  5.36s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [02:16<00:42,  5.26s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:21<00:37,  5.34s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:26<00:31,  5.18s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:31<00:25,  5.15s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:36<00:20,  5.04s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:41<00:15,  5.10s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:46<00:09,  4.96s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:51<00:04,  4.88s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:52<00:00,  3.92s/it][ATraining Iteration: 100%|██████████| 33/33 [02:52<00:00,  5.23s/it]
+2026-07-22 23:55:43.011:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:04<00:12,  4.30s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:09<00:09,  4.66s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:14<00:05,  5.12s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:18<00:00,  4.43s/it][Acompute moment scores: 100%|██████████| 4/4 [00:18<00:00,  4.56s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 12420.80it/s]
+2026-07-22 23:56:01.322:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:56:02.230:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.91),
+                ('G-mIoU@5', 2.91),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.18),
+                ('mR@1', 5.38),
+                ('mR@3', 9.63),
+                ('mR@5', 9.63),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.83),
+                ('mIoU@5', 11.83),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:56:02.231:INFO:__main__ - Early stop counter: 6/15
+Epoch:   9%|▉         | 7/80 [27:37<4:04:49, 201.23s/it]2026-07-22 23:56:02.231:INFO:__main__ - [Epoch 8]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<02:44,  5.14s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:10<02:46,  5.36s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:15<02:39,  5.31s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:21<02:31,  5.24s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:26<02:23,  5.14s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:31<02:18,  5.13s/it][A
+Training Iteration:  21%|██        | 7/33 [00:36<02:15,  5.21s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:41<02:09,  5.18s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:46<02:05,  5.23s/it][A
+Training Iteration:  30%|███       | 10/33 [00:52<02:00,  5.24s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:57<01:54,  5.22s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:01<01:44,  4.97s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:06<01:38,  4.95s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:11<01:31,  4.81s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:15<01:23,  4.63s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:19<01:16,  4.52s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:23<01:09,  4.34s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:28<01:08,  4.57s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:33<01:06,  4.78s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:39<01:04,  4.98s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:44<01:00,  5.05s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:49<00:56,  5.15s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [01:55<00:52,  5.25s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:00<00:47,  5.32s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [02:06<00:42,  5.29s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:11<00:37,  5.32s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:16<00:31,  5.31s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:22<00:26,  5.38s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:27<00:21,  5.34s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:33<00:16,  5.40s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:37<00:10,  5.14s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:43<00:05,  5.19s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:44<00:00,  4.08s/it][ATraining Iteration: 100%|██████████| 33/33 [02:44<00:00,  4.99s/it]
+2026-07-22 23:58:46.771:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:05<00:15,  5.30s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:10<00:10,  5.41s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:16<00:05,  5.59s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:20<00:00,  4.75s/it][Acompute moment scores: 100%|██████████| 4/4 [00:20<00:00,  5.01s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 17295.26it/s]
+2026-07-22 23:59:06.862:INFO:evaluate - Saving/evaluating predictions
+2026-07-22 23:59:07.773:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.9),
+                ('G-mIoU@5', 2.9),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.2),
+                ('mR@1', 5.38),
+                ('mR@3', 9.69),
+                ('mR@5', 9.69),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.8),
+                ('mIoU@5', 11.8),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-22 23:59:07.773:INFO:__main__ - Early stop counter: 7/15
+Epoch:  10%|█         | 8/80 [30:43<3:55:28, 196.24s/it]2026-07-22 23:59:07.773:INFO:__main__ - [Epoch 9]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<02:56,  5.51s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:10<02:38,  5.13s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:16<02:48,  5.61s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:22<02:41,  5.55s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:27<02:30,  5.39s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:32<02:26,  5.43s/it][A
+Training Iteration:  21%|██        | 7/33 [00:38<02:21,  5.46s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:43<02:14,  5.37s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:48<02:09,  5.41s/it][A
+Training Iteration:  30%|███       | 10/33 [00:53<02:02,  5.34s/it][A
+Training Iteration:  33%|███▎      | 11/33 [01:00<02:07,  5.81s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:06<02:00,  5.72s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:12<01:54,  5.70s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:16<01:43,  5.45s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:22<01:39,  5.52s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:28<01:33,  5.53s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:33<01:28,  5.55s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:38<01:21,  5.41s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:43<01:14,  5.33s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:49<01:09,  5.33s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:54<01:03,  5.32s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:59<00:58,  5.33s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [02:05<00:54,  5.44s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:11<00:48,  5.42s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [02:16<00:42,  5.37s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:21<00:38,  5.46s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:26<00:31,  5.33s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:32<00:27,  5.45s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:38<00:21,  5.49s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:43<00:16,  5.45s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:48<00:10,  5.39s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:54<00:05,  5.41s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:56<00:00,  4.37s/it][ATraining Iteration: 100%|██████████| 33/33 [02:56<00:00,  5.34s/it]
+2026-07-23 00:02:04.082:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:06<00:18,  6.28s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:11<00:11,  5.55s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:16<00:05,  5.58s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:20<00:00,  4.71s/it][Acompute moment scores: 100%|██████████| 4/4 [00:20<00:00,  5.08s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 16553.23it/s]
+2026-07-23 00:02:24.419:INFO:evaluate - Saving/evaluating predictions
+2026-07-23 00:02:25.324:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.9),
+                ('G-mIoU@5', 2.9),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.2),
+                ('mR@1', 5.38),
+                ('mR@3', 9.69),
+                ('mR@5', 9.69),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.8),
+                ('mIoU@5', 11.8),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-23 00:02:25.324:INFO:__main__ - Early stop counter: 8/15
+Epoch:  11%|█▏        | 9/80 [34:00<3:52:41, 196.65s/it]2026-07-23 00:02:25.325:INFO:__main__ - [Epoch 10]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<02:54,  5.46s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:10<02:45,  5.35s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:16<02:42,  5.41s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:21<02:38,  5.46s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:27<02:33,  5.49s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:32<02:29,  5.54s/it][A
+Training Iteration:  21%|██        | 7/33 [00:38<02:24,  5.56s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:44<02:20,  5.61s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:49<02:12,  5.53s/it][A
+Training Iteration:  30%|███       | 10/33 [00:54<02:05,  5.46s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:59<01:57,  5.33s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:05<01:51,  5.29s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:10<01:44,  5.23s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:15<01:39,  5.24s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:21<01:38,  5.47s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:27<01:33,  5.49s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:31<01:24,  5.27s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:37<01:19,  5.28s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:42<01:15,  5.40s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:47<01:08,  5.26s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:52<01:02,  5.21s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:57<00:56,  5.13s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [02:04<00:54,  5.47s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:08<00:47,  5.28s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [02:14<00:42,  5.30s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:18<00:35,  5.06s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:24<00:30,  5.16s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:28<00:25,  5.02s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:34<00:20,  5.12s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:39<00:15,  5.08s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:44<00:10,  5.20s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:49<00:05,  5.18s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:51<00:00,  4.17s/it][ATraining Iteration: 100%|██████████| 33/33 [02:51<00:00,  5.20s/it]
+2026-07-23 00:05:16.873:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:05<00:16,  5.49s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:10<00:10,  5.31s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:16<00:05,  5.36s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:19<00:00,  4.54s/it][Acompute moment scores: 100%|██████████| 4/4 [00:19<00:00,  4.84s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 17142.63it/s]
+2026-07-23 00:05:36.277:INFO:evaluate - Saving/evaluating predictions
+2026-07-23 00:05:37.329:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.9),
+                ('G-mIoU@5', 2.9),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.2),
+                ('mR@1', 5.38),
+                ('mR@3', 9.69),
+                ('mR@5', 9.69),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.8),
+                ('mIoU@5', 11.8),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-23 00:05:37.330:INFO:__main__ - Early stop counter: 9/15
+Epoch:  12%|█▎        | 10/80 [37:12<3:47:44, 195.21s/it]2026-07-23 00:05:37.330:INFO:__main__ - [Epoch 11]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<02:46,  5.20s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:10<02:39,  5.14s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:15<02:38,  5.29s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:21<02:32,  5.27s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:26<02:28,  5.29s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:32<02:27,  5.44s/it][A
+Training Iteration:  21%|██        | 7/33 [00:37<02:21,  5.44s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:42<02:15,  5.43s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:48<02:10,  5.43s/it][A
+Training Iteration:  30%|███       | 10/33 [00:53<02:05,  5.44s/it][A
+Training Iteration:  33%|███▎      | 11/33 [00:59<02:01,  5.51s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:04<01:53,  5.38s/it][A
+Training Iteration:  39%|███▉      | 13/33 [01:10<01:49,  5.49s/it][A
+Training Iteration:  42%|████▏     | 14/33 [01:15<01:43,  5.47s/it][A
+Training Iteration:  45%|████▌     | 15/33 [01:21<01:38,  5.47s/it][A
+Training Iteration:  48%|████▊     | 16/33 [01:26<01:33,  5.50s/it][A
+Training Iteration:  52%|█████▏    | 17/33 [01:32<01:31,  5.72s/it][A
+Training Iteration:  55%|█████▍    | 18/33 [01:38<01:23,  5.58s/it][A
+Training Iteration:  58%|█████▊    | 19/33 [01:43<01:18,  5.59s/it][A
+Training Iteration:  61%|██████    | 20/33 [01:49<01:11,  5.53s/it][A
+Training Iteration:  64%|██████▎   | 21/33 [01:54<01:04,  5.40s/it][A
+Training Iteration:  67%|██████▋   | 22/33 [01:59<00:59,  5.38s/it][A
+Training Iteration:  70%|██████▉   | 23/33 [02:05<00:54,  5.41s/it][A
+Training Iteration:  73%|███████▎  | 24/33 [02:11<00:50,  5.60s/it][A
+Training Iteration:  76%|███████▌  | 25/33 [02:16<00:44,  5.52s/it][A
+Training Iteration:  79%|███████▉  | 26/33 [02:22<00:38,  5.51s/it][A
+Training Iteration:  82%|████████▏ | 27/33 [02:27<00:32,  5.46s/it][A
+Training Iteration:  85%|████████▍ | 28/33 [02:32<00:27,  5.41s/it][A
+Training Iteration:  88%|████████▊ | 29/33 [02:38<00:21,  5.44s/it][A
+Training Iteration:  91%|█████████ | 30/33 [02:43<00:15,  5.33s/it][A
+Training Iteration:  94%|█████████▍| 31/33 [02:48<00:10,  5.27s/it][A
+Training Iteration:  97%|█████████▋| 32/33 [02:53<00:05,  5.28s/it][A
+Training Iteration: 100%|██████████| 33/33 [02:55<00:00,  4.33s/it][ATraining Iteration: 100%|██████████| 33/33 [02:55<00:00,  5.33s/it]
+2026-07-23 00:08:33.129:INFO:evaluate - Generate submissions
+
+compute moment scores:   0%|          | 0/4 [00:00<?, ?it/s][A
+compute moment scores:  25%|██▌       | 1/4 [00:05<00:16,  5.34s/it][A
+compute moment scores:  50%|█████     | 2/4 [00:11<00:11,  5.62s/it][A
+compute moment scores:  75%|███████▌  | 3/4 [00:16<00:05,  5.63s/it][A
+compute moment scores: 100%|██████████| 4/4 [00:20<00:00,  4.93s/it][Acompute moment scores: 100%|██████████| 4/4 [00:20<00:00,  5.16s/it]
+
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 17320.91it/s]
+2026-07-23 00:08:53.823:INFO:evaluate - Saving/evaluating predictions
+2026-07-23 00:08:54.740:INFO:__main__ - metrics OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.9),
+                ('G-mIoU@5', 2.9),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 7.2),
+                ('mR@1', 5.38),
+                ('mR@3', 9.69),
+                ('mR@5', 9.69),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 0.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.8),
+                ('mIoU@5', 11.8),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+2026-07-23 00:08:54.741:INFO:__main__ - Early stop counter: 10/15
+Epoch:  14%|█▍        | 11/80 [40:30<3:45:16, 195.89s/it]2026-07-23 00:08:54.741:INFO:__main__ - [Epoch 12]
+
+Training Iteration:   0%|          | 0/33 [00:00<?, ?it/s][A
+Training Iteration:   3%|▎         | 1/33 [00:05<03:11,  5.98s/it][A
+Training Iteration:   6%|▌         | 2/33 [00:11<02:54,  5.64s/it][A
+Training Iteration:   9%|▉         | 3/33 [00:17<02:53,  5.77s/it][A
+Training Iteration:  12%|█▏        | 4/33 [00:22<02:39,  5.51s/it][A
+Training Iteration:  15%|█▌        | 5/33 [00:28<02:35,  5.54s/it][A
+Training Iteration:  18%|█▊        | 6/33 [00:33<02:26,  5.43s/it][A
+Training Iteration:  21%|██        | 7/33 [00:38<02:21,  5.43s/it][A
+Training Iteration:  24%|██▍       | 8/33 [00:44<02:15,  5.43s/it][A
+Training Iteration:  27%|██▋       | 9/33 [00:49<02:11,  5.47s/it][A
+Training Iteration:  30%|███       | 10/33 [00:55<02:08,  5.57s/it][A
+Training Iteration:  33%|███▎      | 11/33 [01:01<02:02,  5.57s/it][A
+Training Iteration:  36%|███▋      | 12/33 [01:06<01:57,  5.58s/it][A

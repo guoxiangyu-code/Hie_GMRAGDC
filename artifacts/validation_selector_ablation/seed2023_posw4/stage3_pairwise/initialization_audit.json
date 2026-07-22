@@ -1,0 +1,33 @@
+{
+    "checkpoint_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    },
+    "discarded_checkpoint_keys": [],
+    "initialized_new_keys": [
+        "pairwise_same_event_head.query_norm.weight",
+        "pairwise_same_event_head.query_norm.bias",
+        "pairwise_same_event_head.video_norm.weight",
+        "pairwise_same_event_head.video_norm.bias",
+        "pairwise_same_event_head.net.0.weight",
+        "pairwise_same_event_head.net.0.bias",
+        "pairwise_same_event_head.net.1.weight",
+        "pairwise_same_event_head.net.1.bias",
+        "pairwise_same_event_head.net.4.weight",
+        "pairwise_same_event_head.net.4.bias",
+        "pairwise_same_event_head.net.7.weight",
+        "pairwise_same_event_head.net.7.bias"
+    ],
+    "protocol_match": true,
+    "resume": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/validation_selector_ablation/seed2023_posw4/stage2_zero/best.ckpt",
+    "run_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    }
+}

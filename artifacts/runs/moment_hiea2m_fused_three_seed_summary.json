@@ -1,0 +1,42 @@
+{
+  "seeds": [
+    {
+      "seed": 2018,
+      "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_hiea2m_release_seed2018/fused_map_joint_val_metrics.json",
+      "mAP": 9.7,
+      "G-mIoU@3": 35.31
+    },
+    {
+      "seed": 2023,
+      "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_hiea2m_release_seed2023/fused_map_joint_val_metrics.json",
+      "mAP": 10.34,
+      "G-mIoU@3": 36.9
+    },
+    {
+      "seed": 2024,
+      "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_hiea2m_release_seed2024/fused_map_joint_val_metrics.json",
+      "mAP": 9.55,
+      "G-mIoU@3": 35.01
+    }
+  ],
+  "summary": {
+    "mAP": {
+      "baseline": 8.14,
+      "mean": 9.8633,
+      "sample_std": 0.4196,
+      "min": 9.55,
+      "max": 10.34,
+      "mean_delta": 1.7233,
+      "all_seeds_improve": true
+    },
+    "G-mIoU@3": {
+      "baseline": 33.21,
+      "mean": 35.74,
+      "sample_std": 1.0157,
+      "min": 35.01,
+      "max": 36.9,
+      "mean_delta": 2.53,
+      "all_seeds_improve": true
+    }
+  }
+}

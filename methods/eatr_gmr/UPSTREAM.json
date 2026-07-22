@@ -1,0 +1,32 @@
+{
+  "name": "EaTR: Event-aware Transformer for Video Grounding",
+  "official_repository": "https://github.com/jinhyunj/EaTR",
+  "commit": "384f09396a32741a73106d2e147bde54cbcce48f",
+  "commit_date": "2023-09-07",
+  "retrieved_for_audit": "2026-07-22",
+  "license": "MIT",
+  "license_file": "LICENSE",
+  "copied_files": {
+    "misc.py": "misc.py",
+    "models/attention.py": "attention.py",
+    "models/module.py": "layers.py",
+    "models/position_encoding.py": "position_encoding.py",
+    "models/transformer.py": "transformer.py",
+    "models/model.py": "model.py",
+    "utils/span_utils.py": "spans.py"
+  },
+  "repository_local_reuse": {
+    "models/moment_detr_gmr/dual_grounding.py": "dual_grounding.py",
+    "models/moment_detr_gmr/hierarchical_counter.py": "hierarchical_counter.py",
+    "models/moment_detr_gmr/set_decoder.py": "set_decoder.py"
+  },
+  "local_changes": [
+    "Package-relative imports and isolated module layout.",
+    "Paper-style max-pool/two-layer-MLP GMR existence adapter on final moment queries.",
+    "Soccer-GMR feature dataset with video extension stripping.",
+    "MR-only, per-sample null-safe Hungarian matching and zero-safe losses.",
+    "Repository official Soccer-GMR evaluator integration and modern train/evaluate CLIs.",
+    "Unified quality, DualGround, hierarchical-counter, and HieA2M variants with step-zero parent preservation; the local DualGround masks only its residual so padded parent tokens remain bitwise unchanged.",
+    "Full primary decoding, adaptive diagnostics, Count metrics, and checkpoint structure detection."
+  ]
+}

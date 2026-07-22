@@ -21,11 +21,21 @@ Thumbs.db
 # GitHub / local env
 .env
 
-# Local outputs and temporary files
-*.log
+# Local temporary files
 *.tmp
 *.temp
 
-# Evaluation outputs
-*_result*.json
-*.out.json
+# Model weights and checkpoints (Do not track weight files)
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.engine
+
+# Local research inputs, mounted features, and datasets
+/Soccer-GMR
+/features
+/manifests
+

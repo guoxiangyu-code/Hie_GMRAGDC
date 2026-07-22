@@ -1,0 +1,35 @@
+{
+  "split": "validation",
+  "samples": 10000,
+  "seed": 20230722,
+  "gmiou_threshold": 0.4,
+  "num_positive": 255,
+  "num_all": 465,
+  "baseline": {
+    "mAP": 8.1445,
+    "G-mIoU@3": 33.2146
+  },
+  "candidate": {
+    "mAP": 10.3403,
+    "G-mIoU@3": 36.9001
+  },
+  "paired_delta": {
+    "mAP": {
+      "delta": 2.1958,
+      "ci95": [
+        0.7639,
+        3.6995
+      ],
+      "probability_delta_gt_zero": 0.9992
+    },
+    "G-mIoU@3": {
+      "delta": 3.6854,
+      "ci95": [
+        1.8748,
+        5.6401
+      ],
+      "probability_delta_gt_zero": 1.0
+    }
+  },
+  "probability_both_deltas_gt_zero": 0.9992
+}

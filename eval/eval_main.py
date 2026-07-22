@@ -16,19 +16,96 @@ from typing import Any, Dict, List, Sequence, Tuple
 
 import numpy as np
 
-from metrics import (
-    DEFAULT_IOU_THRESHOLDS,
-    compute_G_mIoU,
-    compute_gmr_cls,
-    compute_mAP,
-    compute_mIoU,
-    compute_mIoU_plus,
-    compute_mR,
-    compute_mR_plus,
-    prepare_submission_for_gmiou,
-)
-from normalization import load_ts_window_cfg, normalize_ground_truth
-from utils import load_jsonl
+try:
+    from .metrics import (
+        DEFAULT_IOU_THRESHOLDS,
+        compute_G_mIoU,
+        compute_gmr_cls,
+        compute_mAP,
+        compute_mIoU,
+        compute_mIoU_plus,
+        compute_mR,
+        compute_mR_plus,
+        prepare_submission_for_gmiou,
+    )
+    from .normalization import load_ts_window_cfg, normalize_ground_truth
+    from .utils import load_jsonl
+except ImportError:  # Preserve ``python eval/eval_main.py`` as a public entry point.
+    from metrics import (
+        DEFAULT_IOU_THRESHOLDS,
+        compute_G_mIoU,
+        compute_gmr_cls,
+        compute_mAP,
+        compute_mIoU,
+        compute_mIoU_plus,
+        compute_mR,
+        compute_mR_plus,
+        prepare_submission_for_gmiou,
+    )
+    from normalization import load_ts_window_cfg, normalize_ground_truth
+    from utils import load_jsonl
+
+
+def compute_count_diagnostics(
+    submission: List[Dict[str, Any]],
+    ground_truth: List[Dict[str, Any]],
+) -> Dict[str, Any] | None:
+    """Evaluate optional HieA2G-style ``0/1/2/3/4+`` predictions."""
+    prediction_by_qid = {
+        row.get("qid"): row for row in submission if "pred_count" in row
+    }
+    pairs = []
+    for row in ground_truth:
+        prediction = prediction_by_qid.get(row.get("qid"))
+        if prediction is None:
+            continue
+        target = min(len(row.get("relevant_windows", [])), 4)
+        predicted = int(np.clip(int(prediction["pred_count"]), 0, 4))
+        pairs.append((target, predicted, prediction.get("pred_count_probs")))
+    if not pairs:
+        return None
+
+    confusion = np.zeros((5, 5), dtype=np.int64)
+    for target, predicted, _ in pairs:
+        confusion[target, predicted] += 1
+    support = confusion.sum(axis=1)
+    correct = np.diag(confusion)
+    per_class = np.divide(
+        correct,
+        support,
+        out=np.zeros(5, dtype=np.float64),
+        where=support > 0,
+    )
+    supported = support > 0
+    positive_total = int(support[1:].sum())
+    result: Dict[str, Any] = {
+        "Count-Acc": round(float(correct.sum() / max(confusion.sum(), 1) * 100), 2),
+        "Count-MacroAcc": round(float(per_class[supported].mean() * 100), 2),
+        "Positive-Count-Acc": round(
+            float(correct[1:].sum() / max(positive_total, 1) * 100), 2
+        ),
+        "coverage": len(pairs),
+        "class_names": ["0", "1", "2", "3", "4+"],
+        "support": support.tolist(),
+        "per_class_accuracy": [round(float(value * 100), 2) for value in per_class],
+        "confusion_target_rows": confusion.tolist(),
+    }
+
+    probabilistic = []
+    for target, _, probabilities in pairs:
+        if not isinstance(probabilities, (list, tuple)) or len(probabilities) != 5:
+            continue
+        values = np.asarray(probabilities, dtype=np.float64)
+        if not np.isfinite(values).all() or values.sum() <= 0:
+            continue
+        values = np.clip(values / values.sum(), 1e-12, 1.0)
+        one_hot = np.eye(5, dtype=np.float64)[target]
+        probabilistic.append((-np.log(values[target]), np.square(values - one_hot).sum()))
+    if probabilistic:
+        result["NLL"] = round(float(np.mean([row[0] for row in probabilistic])), 6)
+        result["Brier"] = round(float(np.mean([row[1] for row in probabilistic])), 6)
+        result["probability_coverage"] = len(probabilistic)
+    return result
 
 
 def evaluate_gmr(
@@ -72,6 +149,12 @@ def evaluate_gmr(
     brief.update(gmiou_res)
     results["G-mIoU_gate"] = gmiou_gate
     results["G-mIoU_detail"] = gmiou_res
+
+    count_diagnostics = compute_count_diagnostics(submission, ground_truth)
+    if count_diagnostics is not None:
+        results["Count"] = count_diagnostics
+        for name in ("Count-Acc", "Count-MacroAcc", "Positive-Count-Acc"):
+            brief[name] = count_diagnostics[name]
 
     pos_qids = {d["qid"] for d in ground_truth if len(d.get("relevant_windows", [])) > 0}
     gt_pos = [d for d in ground_truth if d["qid"] in pos_qids]
@@ -130,8 +213,11 @@ def evaluate_gmr(
     return results
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Soccer-GMR Evaluation (full GMR metrics)")
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Soccer-GMR Evaluation (full GMR metrics)",
+        allow_abbrev=False,
+    )
     parser.add_argument("--submission_path", type=str, required=True, help="Prediction JSONL")
     parser.add_argument("--gt_path", type=str, required=True, help="GT JSONL")
     parser.add_argument("--save_path", type=str, required=True, help="Output metrics JSON")
@@ -174,7 +260,11 @@ def main() -> None:
         help="Number of mAP worker processes; <=1 or small inputs use single-thread mode",
     )
     parser.add_argument("--not_verbose", action="store_true", help="Run quietly")
-    args = parser.parse_args()
+    return parser
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = build_parser().parse_args(argv)
 
     verbose = not args.not_verbose
 

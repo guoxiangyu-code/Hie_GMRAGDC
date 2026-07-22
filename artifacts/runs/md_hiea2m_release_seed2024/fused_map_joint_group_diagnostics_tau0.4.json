@@ -1,0 +1,33 @@
+{
+  "threshold": 0.4,
+  "k": 3,
+  "num_queries": 465,
+  "groups": {
+    "null": {
+      "support": 210,
+      "G-set-IoU@k": 73.3333,
+      "raw-set-IoU@k": 0.0,
+      "acceptance_rate": 26.6667,
+      "topk_duplicate_pair_rate": 0.0
+    },
+    "single": {
+      "support": 165,
+      "G-set-IoU@k": 3.8021,
+      "raw-set-IoU@k": 4.8987,
+      "acceptance_rate": 69.697,
+      "topk_duplicate_pair_rate": 11.9192
+    },
+    "multi": {
+      "support": 90,
+      "G-set-IoU@k": 2.794,
+      "raw-set-IoU@k": 4.2095,
+      "acceptance_rate": 53.3333,
+      "topk_duplicate_pair_rate": 0.0
+    }
+  },
+  "balanced_G": 38.3898,
+  "all_empty_reference": {
+    "G-mIoU": 45.1613,
+    "balanced_G": 50.0
+  }
+}

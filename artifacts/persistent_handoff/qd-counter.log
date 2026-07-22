@@ -1,0 +1,2 @@
+2026-07-23 00:08:36 CST armed codex_pid=1490750 original_pid=1501297 command=bash scripts/start_qd_formal_variant_b128.sh qd_counter 0
+2026-07-23 00:10:26 CST original process absent; starting persistent recovery

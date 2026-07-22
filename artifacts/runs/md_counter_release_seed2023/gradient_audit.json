@@ -1,0 +1,50 @@
+{
+    "groups": {
+        "class_embed": {
+            "gradient_l2": 1.1009271481191338,
+            "parameters": 514,
+            "parameters_with_grad": 514
+        },
+        "exist_head": {
+            "gradient_l2": 0.24895519156778964,
+            "parameters": 66049,
+            "parameters_with_grad": 66049
+        },
+        "hierarchical_counter": {
+            "gradient_l2": 11.577462207530969,
+            "parameters": 792842,
+            "parameters_with_grad": 792842
+        },
+        "input_txt_proj": {
+            "gradient_l2": 0.4671989540345897,
+            "parameters": 198656,
+            "parameters_with_grad": 198656
+        },
+        "input_vid_proj": {
+            "gradient_l2": 3.754028530751603,
+            "parameters": 793604,
+            "parameters_with_grad": 793604
+        },
+        "query_embed": {
+            "gradient_l2": 0.010366619322625547,
+            "parameters": 2560,
+            "parameters_with_grad": 2560
+        },
+        "span_embed": {
+            "gradient_l2": 10.101535822760471,
+            "parameters": 132098,
+            "parameters_with_grad": 132098
+        },
+        "transformer.decoder": {
+            "gradient_l2": 1.6942509597192015,
+            "parameters": 2107392,
+            "parameters_with_grad": 2107392
+        },
+        "transformer.encoder": {
+            "gradient_l2": 1.3210536308879215,
+            "parameters": 1579520,
+            "parameters_with_grad": 1579520
+        }
+    },
+    "variant": "md_counter"
+}

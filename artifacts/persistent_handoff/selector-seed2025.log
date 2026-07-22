@@ -1,0 +1,152 @@
+2026-07-23 00:08:40 CST armed codex_pid=1490750 original_pid=1662744 command=bash scripts/recover_selector_branch.sh artifacts/validation_selector_ablation/seed2025 1 2025
+2026-07-23 00:10:25 CST original process absent; starting persistent recovery
+2026-07-23 00:10:28.447:INFO:__main__ - Setup config, data and model...
+2026-07-23 00:10:28.496:INFO:__main__ - setup model/optimizer/scheduler
+2026-07-23 00:10:29.192:INFO:__main__ - CUDA enabled on cuda.
+2026-07-23 00:10:30.261:INFO:__main__ - Model checkpoint: artifacts/validation_selector_ablation/seed2025/stage3_pairwise/best.ckpt
+2026-07-23 00:10:30.261:INFO:__main__ - Generate submissions
+compute moment scores:   0%|          | 0/117 [00:00<?, ?it/s]/home/guoxiangyu/miniconda3/lib/python3.13/site-packages/torch/nn/modules/transformer.py:531: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. We recommend specifying layout=torch.jagged when constructing a nested tensor, as this layout receives active development, has better operator coverage, and works with torch.compile. (Triggered internally at /pytorch/aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(
+compute moment scores:   1%|          | 1/117 [00:00<01:41,  1.14it/s]compute moment scores:   3%|▎         | 3/117 [00:00<00:30,  3.76it/s]compute moment scores:   5%|▌         | 6/117 [00:01<00:14,  7.71it/s]compute moment scores:   8%|▊         | 9/117 [00:01<00:09, 10.95it/s]compute moment scores:  10%|█         | 12/117 [00:01<00:07, 13.68it/s]compute moment scores:  13%|█▎        | 15/117 [00:01<00:06, 15.87it/s]compute moment scores:  15%|█▌        | 18/117 [00:01<00:05, 17.96it/s]compute moment scores:  18%|█▊        | 21/117 [00:01<00:04, 19.57it/s]compute moment scores:  21%|██        | 24/117 [00:01<00:04, 19.89it/s]compute moment scores:  23%|██▎       | 27/117 [00:02<00:04, 18.18it/s]compute moment scores:  25%|██▍       | 29/117 [00:02<00:04, 17.65it/s]compute moment scores:  26%|██▋       | 31/117 [00:02<00:04, 17.74it/s]compute moment scores:  28%|██▊       | 33/117 [00:02<00:04, 18.17it/s]compute moment scores:  31%|███       | 36/117 [00:02<00:04, 19.80it/s]compute moment scores:  33%|███▎      | 39/117 [00:02<00:03, 21.36it/s]compute moment scores:  36%|███▌      | 42/117 [00:02<00:03, 20.92it/s]compute moment scores:  38%|███▊      | 45/117 [00:03<00:03, 20.14it/s]compute moment scores:  41%|████      | 48/117 [00:03<00:03, 21.30it/s]compute moment scores:  44%|████▎     | 51/117 [00:03<00:03, 21.72it/s]compute moment scores:  46%|████▌     | 54/117 [00:03<00:02, 21.44it/s]compute moment scores:  49%|████▊     | 57/117 [00:03<00:02, 20.58it/s]compute moment scores:  51%|█████▏    | 60/117 [00:03<00:02, 20.19it/s]compute moment scores:  54%|█████▍    | 63/117 [00:03<00:02, 20.27it/s]compute moment scores:  56%|█████▋    | 66/117 [00:04<00:02, 20.14it/s]compute moment scores:  59%|█████▉    | 69/117 [00:04<00:02, 20.63it/s]compute moment scores:  62%|██████▏   | 72/117 [00:04<00:02, 19.31it/s]compute moment scores:  63%|██████▎   | 74/117 [00:04<00:02, 18.78it/s]compute moment scores:  65%|██████▍   | 76/117 [00:04<00:02, 18.90it/s]compute moment scores:  68%|██████▊   | 79/117 [00:04<00:01, 19.32it/s]compute moment scores:  69%|██████▉   | 81/117 [00:04<00:01, 18.64it/s]compute moment scores:  71%|███████   | 83/117 [00:04<00:01, 18.66it/s]compute moment scores:  73%|███████▎  | 85/117 [00:05<00:01, 18.52it/s]compute moment scores:  74%|███████▍  | 87/117 [00:05<00:01, 18.51it/s]compute moment scores:  76%|███████▌  | 89/117 [00:05<00:01, 18.35it/s]compute moment scores:  78%|███████▊  | 91/117 [00:05<00:01, 18.69it/s]compute moment scores:  80%|████████  | 94/117 [00:05<00:01, 20.23it/s]compute moment scores:  83%|████████▎ | 97/117 [00:05<00:00, 20.91it/s]compute moment scores:  85%|████████▌ | 100/117 [00:05<00:00, 20.56it/s]compute moment scores:  88%|████████▊ | 103/117 [00:05<00:00, 20.99it/s]compute moment scores:  91%|█████████ | 106/117 [00:06<00:00, 20.17it/s]compute moment scores:  93%|█████████▎| 109/117 [00:06<00:00, 19.48it/s]compute moment scores:  96%|█████████▌| 112/117 [00:06<00:00, 20.61it/s]compute moment scores:  98%|█████████▊| 115/117 [00:06<00:00, 20.83it/s]compute moment scores: 100%|██████████| 117/117 [00:06<00:00, 17.62it/s]
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s]convert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 14240.51it/s]
+2026-07-23 00:10:36.937:INFO:__main__ - Saving/evaluating predictions
+2026-07-23 00:10:37.704:INFO:__main__ - metrics_no_nms OrderedDict([   ('AUROC', 73.61),
+                ('Rej-F1@0.4', 0.94),
+                ('Acc@0.4', 54.62),
+                ('Rej-F1@0.6', 71.03),
+                ('Acc@0.6', 66.67),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 6.15),
+                ('G-mIoU@3', 2.87),
+                ('G-mIoU@5', 1.81),
+                ('Count-Acc', 35.91),
+                ('Count-MacroAcc', 28.67),
+                ('Positive-Count-Acc', 65.1),
+                ('mAP', 9.16),
+                ('mR@1', 5.38),
+                ('mR@3', 9.75),
+                ('mR@5', 15.45),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 1.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.71),
+                ('mIoU@5', 11.71),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])
+{
+  "direct_topk": {
+    "AUROC": 73.61,
+    "Rej-F1@0.4": 0.94,
+    "Acc@0.4": 54.62,
+    "Rej-F1@0.6": 71.03,
+    "Acc@0.6": 66.67,
+    "Rej-F1@0.8": 70.71,
+    "Acc@0.8": 62.58,
+    "G-mIoU@1": 6.06,
+    "G-mIoU@3": 2.86,
+    "G-mIoU@5": 2.86,
+    "Count-Acc": 35.91,
+    "Count-MacroAcc": 28.67,
+    "Positive-Count-Acc": 65.1,
+    "mAP": 6.48,
+    "mR@1": 4.65,
+    "mR@3": 8.91,
+    "mR@5": 8.91,
+    "mR+@1": 0.0,
+    "mR+@3": 0.44,
+    "mR+@5": 0.44,
+    "mIoU@1": 12.36,
+    "mIoU@3": 11.62,
+    "mIoU@5": 11.62,
+    "mIoU+@1": 0.0,
+    "mIoU+@3": 0.08,
+    "mIoU+@5": 0.08
+  },
+  "learned_topk": {
+    "AUROC": 73.61,
+    "Rej-F1@0.4": 0.94,
+    "Acc@0.4": 54.62,
+    "Rej-F1@0.6": 71.03,
+    "Acc@0.6": 66.67,
+    "Rej-F1@0.8": 70.71,
+    "Acc@0.8": 62.58,
+    "G-mIoU@1": 6.06,
+    "G-mIoU@3": 2.92,
+    "G-mIoU@5": 2.92,
+    "Count-Acc": 35.91,
+    "Count-MacroAcc": 28.67,
+    "Positive-Count-Acc": 65.1,
+    "mAP": 6.87,
+    "mR@1": 4.65,
+    "mR@3": 10.01,
+    "mR@5": 10.01,
+    "mR+@1": 0.0,
+    "mR+@3": 0.0,
+    "mR+@5": 0.0,
+    "mIoU@1": 12.36,
+    "mIoU@3": 11.81,
+    "mIoU@5": 11.81,
+    "mIoU+@1": 0.0,
+    "mIoU+@3": 0.03,
+    "mIoU+@5": 0.03
+  },
+  "learned_soft_count": {
+    "AUROC": 73.61,
+    "Rej-F1@0.4": 0.94,
+    "Acc@0.4": 54.62,
+    "Rej-F1@0.6": 71.03,
+    "Acc@0.6": 66.67,
+    "Rej-F1@0.8": 70.71,
+    "Acc@0.8": 62.58,
+    "G-mIoU@1": 6.06,
+    "G-mIoU@3": 5.15,
+    "G-mIoU@5": 4.55,
+    "Count-Acc": 35.91,
+    "Count-MacroAcc": 28.67,
+    "Positive-Count-Acc": 65.1,
+    "mAP": 6.72,
+    "mR@1": 4.65,
+    "mR@3": 7.16,
+    "mR@5": 10.69,
+    "mR+@1": 0.0,
+    "mR+@3": 0.44,
+    "mR+@5": 1.78,
+    "mIoU@1": 12.36,
+    "mIoU@3": 11.64,
+    "mIoU@5": 11.64,
+    "mIoU+@1": 0.0,
+    "mIoU+@3": 0.03,
+    "mIoU+@5": 0.03
+  },
+  "learned_soft_count_fusion": {
+    "AUROC": 73.61,
+    "Rej-F1@0.4": 0.94,
+    "Acc@0.4": 54.62,
+    "Rej-F1@0.6": 71.03,
+    "Acc@0.6": 66.67,
+    "Rej-F1@0.8": 70.71,
+    "Acc@0.8": 62.58,
+    "G-mIoU@1": 6.06,
+    "G-mIoU@3": 5.15,
+    "G-mIoU@5": 4.55,
+    "Count-Acc": 35.91,
+    "Count-MacroAcc": 28.67,
+    "Positive-Count-Acc": 65.1,
+    "mAP": 6.72,
+    "mR@1": 4.65,
+    "mR@3": 7.16,
+    "mR@5": 10.69,
+    "mR+@1": 0.0,
+    "mR+@3": 0.44,
+    "mR+@5": 1.78,
+    "mIoU@1": 12.36,
+    "mIoU@3": 11.64,
+    "mIoU@5": 11.64,
+    "mIoU+@1": 0.0,
+    "mIoU+@3": 0.03,
+    "mIoU+@5": 0.03
+  }
+}

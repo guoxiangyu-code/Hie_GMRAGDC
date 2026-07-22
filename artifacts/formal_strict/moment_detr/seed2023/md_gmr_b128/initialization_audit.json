@@ -1,0 +1,20 @@
+{
+    "checkpoint_protocol": {
+        "mask_null_vmr_loss": false,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    },
+    "discarded_checkpoint_keys": [],
+    "initialized_new_keys": [],
+    "protocol_match": false,
+    "resume": "/home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/checkpoint/moment_detr_gmr",
+    "run_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    }
+}

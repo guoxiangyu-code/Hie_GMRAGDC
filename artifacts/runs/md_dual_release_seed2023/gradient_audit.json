@@ -1,0 +1,50 @@
+{
+    "groups": {
+        "class_embed": {
+            "gradient_l2": 1.0721934375453301,
+            "parameters": 514,
+            "parameters_with_grad": 514
+        },
+        "dual_grounding": {
+            "gradient_l2": 0.9627698734189306,
+            "parameters": 4354306,
+            "parameters_with_grad": 4354306
+        },
+        "exist_head": {
+            "gradient_l2": 0.2436157815303522,
+            "parameters": 66049,
+            "parameters_with_grad": 66049
+        },
+        "input_txt_proj": {
+            "gradient_l2": 0.5404572517082038,
+            "parameters": 198656,
+            "parameters_with_grad": 198656
+        },
+        "input_vid_proj": {
+            "gradient_l2": 2.417917320851555,
+            "parameters": 793604,
+            "parameters_with_grad": 793604
+        },
+        "query_embed": {
+            "gradient_l2": 0.004930185754619419,
+            "parameters": 2560,
+            "parameters_with_grad": 2560
+        },
+        "span_embed": {
+            "gradient_l2": 8.491362532468377,
+            "parameters": 132098,
+            "parameters_with_grad": 132098
+        },
+        "transformer.decoder": {
+            "gradient_l2": 0.7873315107477903,
+            "parameters": 2107392,
+            "parameters_with_grad": 2107392
+        },
+        "transformer.encoder": {
+            "gradient_l2": 0.5458852822151948,
+            "parameters": 1579520,
+            "parameters_with_grad": 1579520
+        }
+    },
+    "variant": "md_dual"
+}

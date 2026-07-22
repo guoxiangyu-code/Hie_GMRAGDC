@@ -1,0 +1,29 @@
+{
+  "name": "CG-DETR",
+  "upstream_url": "https://github.com/wjun0830/CGDETR.git",
+  "upstream_repository": "https://github.com/wjun0830/CGDETR.git",
+  "revision": "212b2e49a0893512930d63b9294a8c066347e606",
+  "upstream_revision": "212b2e49a0893512930d63b9294a8c066347e606",
+  "revision_date": "2024-08-22T01:42:51+09:00",
+  "upstream_commit_date": "2024-08-22T01:42:51+09:00",
+  "license": "MIT",
+  "license_file": "LICENSE",
+  "original_sha256": {
+    "cg_detr/model.py": "5557fbe491b68dc06ebe0f323b89b4e65f918946db4f9985e5d45a2ea0b90994",
+    "cg_detr/transformer.py": "af381705de31bbb78fac1336fd62fb645ca1400f7ce58711a11296accd68fccf",
+    "cg_detr/matcher.py": "89a61444fca44fa4a93d8cc1f063fb87004cce5b1b6f7bfb6da7932481b344cb",
+    "cg_detr/position_encoding.py": "c189c35832fa536e757688b9469ce2bbcf6398b46c9afd6fc1f56e94ba6ca315",
+    "cg_detr/misc.py": "dcb02d459d0db988f7bec7f2ef11320274456688ef19725b6e1aab68bd2ad8eb",
+    "cg_detr/span_utils.py": "82ec89bdaca05cfb6382551597c3c60d2b79733e7e721b69eacb2cd02c6e001c",
+    "cg_detr/attention.py": "61fe42107e07f1c179238df6514f05a5ec0f8d8b347937f2fda7dc9712570378",
+    "cg_detr/crossattention.py": "f80e869d8d7ae6f15e2612f454cabbc466a15d04ad0772dee24d661a4340d107"
+  },
+  "adaptation": [
+    "Package-relative imports and device-agnostic tensor allocation.",
+    "Soccer-GMR CLIP+SlowFast and token-level CLIP feature dataset, including extension-free feature stems.",
+    "Binary relevant_clips constructed as the union of every relevant_window; null queries are all-zero.",
+    "MR-only criterion: QVHighlights saliency/ranking supervision disabled; moment-derived CG auxiliaries retained only for positive queries.",
+    "Empty-target-safe Hungarian/DETR losses and fully-null-batch-safe CG auxiliary losses.",
+    "Optional paper-style GMR existence adapter and official GMR evaluation runner."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "config": {
+    "gate_recall_thd": 0.15,
+    "zero_decision_thd": 0.5,
+    "zero_veto_thd": 0.55,
+    "zero_localization_thd": 0.1
+  },
+  "positive_pass_rate": 1.0,
+  "negative_rejection_rate": 0.0,
+  "brief": {
+    "AUROC": 50.0,
+    "Rej-F1@0.4": 0.0,
+    "Acc@0.4": 54.84,
+    "G-mIoU@1": 5.93,
+    "G-mIoU@3": 2.65,
+    "G-mIoU@5": 1.59,
+    "Count-Acc": 35.91,
+    "Count-MacroAcc": 28.67,
+    "Positive-Count-Acc": 65.1,
+    "mAP": 9.16,
+    "mR@1": 5.38,
+    "mR@3": 9.75,
+    "mR@5": 15.45,
+    "mR+@1": 0.0,
+    "mR+@3": 0.33,
+    "mR+@5": 1.33,
+    "mIoU@1": 12.59,
+    "mIoU@3": 11.71,
+    "mIoU@5": 11.71,
+    "mIoU+@1": 0.0,
+    "mIoU+@3": 0.0,
+    "mIoU+@5": 0.0
+  }
+}

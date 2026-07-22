@@ -11,13 +11,34 @@ from models.moment_detr_gmr.matcher import build_matcher
 from models.moment_detr_gmr.misc import accuracy
 from models.moment_detr_gmr.moment_transformer import build_transformer
 from models.moment_detr_gmr.gmr_adapter import GMRAdapter, compute_existence_loss
+from models.moment_detr_gmr.dual_grounding import (
+    TemporalDualGrounding,
+    dual_grounding_losses,
+)
+from models.moment_detr_gmr.hierarchical_counter import (
+    HierarchicalMomentCounter,
+    hierarchical_counter_losses,
+)
+from models.moment_detr_gmr.learned_selector import (
+    IndependentZeroVerifier,
+    PairwiseSameEventHead,
+    independent_zero_loss,
+    pairwise_same_event_loss,
+)
 
 class MomentDETR(nn.Module):
     """ This is the Moment-DETR module that performs moment localization. """
 
     def __init__(self, transformer, position_embed, txt_position_embed, txt_dim, vid_dim,
                  num_queries, input_dropout, aux_loss=False, max_v_l=75, span_loss_type="l1",
-                 use_txt_pos=False, n_input_proj=2, aud_dim=0, use_exist_head=False, exist_pool="max"):
+                 use_txt_pos=False, n_input_proj=2, aud_dim=0, use_exist_head=False, exist_pool="max",
+                 use_dual_grounding=False, dual_num_phrases=3, dual_num_dummies=3,
+                 dual_slot_iterations=1, dual_gate_init=-4.0, dual_nheads=8,
+                 dual_max_text_len=77,
+                 use_hierarchical_counter=False, counter_dropout=0.1,
+                 counter_detach_scores=True, use_quality_head=False,
+                 use_independent_zero_head=False, use_pairwise_head=False,
+                 selector_dropout=0.1, pairwise_detach_inputs=True):
         """ Initializes the model.
         Parameters:
             transformer: torch module of the transformer architecture. See transformer.py
@@ -71,6 +92,70 @@ class MomentDETR(nn.Module):
         else:
             self.exist_head = None
 
+        self.use_dual_grounding = bool(use_dual_grounding)
+        if self.use_dual_grounding:
+            self.dual_grounding = TemporalDualGrounding(
+                hidden_dim=hidden_dim,
+                nheads=int(dual_nheads),
+                dropout=transformer.encoder.layers[0].dropout.p,
+                num_phrases=int(dual_num_phrases),
+                num_dummies=int(dual_num_dummies),
+                max_text_len=int(dual_max_text_len),
+                phrase_slot_iterations=int(dual_slot_iterations),
+                gate_init=float(dual_gate_init),
+            )
+        else:
+            self.dual_grounding = None
+
+        self.use_hierarchical_counter = bool(use_hierarchical_counter)
+        if self.use_hierarchical_counter:
+            self.hierarchical_counter = HierarchicalMomentCounter(
+                hidden_dim=hidden_dim,
+                dropout=float(counter_dropout),
+                detach_query_scores=bool(counter_detach_scores),
+            )
+            # When a released GMR adapter is available, retain it as the
+            # calibrated existence prior and learn only a zero-initialized
+            # residual from the richer counter representation.  This makes a
+            # warm-start exactly reproduce the parent model at step zero.
+            self.counter_residual_exist = self.use_exist_head
+            if self.counter_residual_exist:
+                nn.init.zeros_(self.hierarchical_counter.exist_head.weight)
+                nn.init.zeros_(self.hierarchical_counter.exist_head.bias)
+        else:
+            self.hierarchical_counter = None
+            self.counter_residual_exist = False
+
+        self.use_independent_zero_head = bool(use_independent_zero_head)
+        self.use_pairwise_head = bool(use_pairwise_head)
+        if (self.use_independent_zero_head or self.use_pairwise_head) \
+                and self.hierarchical_counter is None:
+            raise ValueError(
+                "independent zero/pairwise selection heads require the hierarchical counter"
+            )
+        self.zero_verifier_head = (
+            IndependentZeroVerifier(hidden_dim, dropout=float(selector_dropout))
+            if self.use_independent_zero_head else None
+        )
+        self.pairwise_same_event_head = (
+            PairwiseSameEventHead(
+                hidden_dim,
+                dropout=float(selector_dropout),
+                detach_inputs=bool(pairwise_detach_inputs),
+            )
+            if self.use_pairwise_head else None
+        )
+
+        self.use_quality_head = bool(use_quality_head)
+        if self.use_quality_head:
+            self.quality_embed = MLP(hidden_dim, hidden_dim, 1, 3)
+            # Constant sigmoid quality preserves the parent DETR ranking until
+            # the newly introduced head has learned a localization signal.
+            nn.init.zeros_(self.quality_embed.layers[-1].weight)
+            nn.init.zeros_(self.quality_embed.layers[-1].bias)
+        else:
+            self.quality_embed = None
+
     def forward(self, src_txt, src_txt_mask, src_vid, src_vid_mask, src_aud=None, src_aud_mask=None):
         """The forward expects two tensors:
                - src_txt: [batch_size, L_txt, D_txt]
@@ -93,6 +178,15 @@ class MomentDETR(nn.Module):
 
         src_vid = self.input_vid_proj(src_vid)
         src_txt = self.input_txt_proj(src_txt)
+        dual_output = None
+        if self.dual_grounding is not None:
+            dual_output = self.dual_grounding(
+                video=src_vid,
+                video_mask=src_vid_mask,
+                text=src_txt,
+                text_mask=src_txt_mask,
+            )
+            src_vid = dual_output.video
         src = torch.cat([src_vid, src_txt], dim=1)  # (bsz, L_vid+L_txt, d)
         mask = torch.cat([src_vid_mask, src_txt_mask], dim=1).bool()  # (bsz, L_vid+L_txt)
         pos_vid = self.position_embed(src_vid, src_vid_mask)  # (bsz, L_vid, d)
@@ -105,13 +199,66 @@ class MomentDETR(nn.Module):
             outputs_coord = outputs_coord.sigmoid()
         out = {'pred_logits': outputs_class[-1], 'pred_spans': outputs_coord[-1]}
 
+        if self.quality_embed is not None:
+            out["pred_quality_logits"] = self.quality_embed(hs[-1]).squeeze(-1)
+
+        base_exist_logits = None
         if self.exist_head is not None:
-            out["pred_exist_logits"] = self.exist_head(hs[-1])
+            base_exist_logits = self.exist_head(hs[-1])
+            out["pred_exist_logits"] = base_exist_logits
+            out["pred_gate_logits"] = base_exist_logits
 
         txt_mem = memory[:, src_vid.shape[1]:]  # (bsz, L_txt, d)
         vid_mem = memory[:, :src_vid.shape[1]]  # (bsz, L_vid, d)
+        saliency_scores = self.saliency_proj(vid_mem).squeeze(-1)
 
-        out["saliency_scores"] = self.saliency_proj(vid_mem).squeeze(-1)  # (bsz, L_vid)
+        if dual_output is not None:
+            out.update({
+                "dual_phrase_attention": dual_output.phrase_attention,
+                "dual_phrase_eos": dual_output.phrase_eos,
+                "dual_text_eos": dual_output.text_eos,
+                "dual_sentence_eos_attention": dual_output.sentence_eos_attention,
+                "dual_sentence_gate": dual_output.sentence_gate,
+                "dual_phrase_gate": dual_output.phrase_gate,
+            })
+
+        if self.hierarchical_counter is not None:
+            counter_output = self.hierarchical_counter(
+                decoder_queries=hs[-1],
+                pred_logits=outputs_class[-1],
+                text_memory=txt_mem,
+                text_mask=src_txt_mask,
+                video_memory=vid_mem,
+                video_mask=src_vid_mask,
+            )
+            counter_exist_logits = counter_output.pop("pred_exist_logits")
+            counter_output["pred_counter_exist_logits"] = counter_exist_logits
+            if self.counter_residual_exist and not self.use_independent_zero_head:
+                counter_output["pred_counter_exist_delta"] = counter_exist_logits
+                counter_output["pred_exist_logits"] = base_exist_logits + counter_exist_logits
+            elif base_exist_logits is not None:
+                # The new two-stage variant keeps stage one independent.  Its
+                # second decision signal is pred_zero_logits below, not another
+                # residual added to the same existence score.
+                counter_output["pred_exist_logits"] = base_exist_logits
+            else:
+                counter_output["pred_exist_logits"] = counter_exist_logits
+            out.update(counter_output)
+
+            if self.zero_verifier_head is not None:
+                out["pred_zero_logits"] = self.zero_verifier_head(
+                    counter_output["counter_representation"],
+                    outputs_class[-1],
+                    outputs_coord[-1],
+                    out.get("pred_quality_logits"),
+                )
+            if self.pairwise_same_event_head is not None:
+                out["pred_same_event_logits"] = self.pairwise_same_event_head(
+                    hs[-1], outputs_class[-1], outputs_coord[-1], vid_mem,
+                    src_vid_mask, saliency_scores,
+                )
+
+        out["saliency_scores"] = saliency_scores  # (bsz, L_vid)
 
         if self.aux_loss:
             out['aux_outputs'] = [
@@ -127,7 +274,13 @@ class SetCriterion(nn.Module):
     """
 
     def __init__(self, matcher, weight_dict, eos_coef, losses, span_loss_type, max_v_l,
-                 saliency_margin=1):
+                 saliency_margin=1, positive_count_weights=None,
+                 dual_dqa_scale=0.3, dual_eos_temperature=0.07,
+                 counter_contrastive_temperature=0.1,
+                 zero_positive_query_weight=1.0,
+                 pair_assignment_iou=0.3, pair_ambiguity_margin=0.05,
+                 pair_positive_weight=1.0, pair_hard_negative_weight=2.0,
+                 mask_null_vmr_loss=False):
         """ Create the criterion.
         Parameters:
             matcher: module able to compute a matching between targets and proposals
@@ -152,6 +305,45 @@ class SetCriterion(nn.Module):
         empty_weight = torch.ones(2)
         empty_weight[-1] = self.eos_coef  # lower weight for background (index 1, foreground index 0)
         self.register_buffer('empty_weight', empty_weight)
+        if positive_count_weights is None:
+            positive_count_weights = torch.ones(4, dtype=torch.float32)
+        self.register_buffer(
+            "positive_count_weights",
+            torch.as_tensor(positive_count_weights, dtype=torch.float32),
+        )
+        self.dual_dqa_scale = float(dual_dqa_scale)
+        self.dual_eos_temperature = float(dual_eos_temperature)
+        self.counter_contrastive_temperature = float(counter_contrastive_temperature)
+        self.zero_positive_query_weight = float(zero_positive_query_weight)
+        self.pair_assignment_iou = float(pair_assignment_iou)
+        self.pair_ambiguity_margin = float(pair_ambiguity_margin)
+        self.pair_positive_weight = float(pair_positive_weight)
+        self.pair_hard_negative_weight = float(pair_hard_negative_weight)
+        self.mask_null_vmr_loss = bool(mask_null_vmr_loss)
+
+    def _vmr_positive_mask(self, targets, batch_size, device):
+        """Return samples allowed to contribute localization-side losses."""
+        if not self.mask_null_vmr_loss:
+            return torch.ones(batch_size, dtype=torch.bool, device=device)
+        if "exist_label" not in targets:
+            raise ValueError(
+                "mask_null_vmr_loss requires targets['exist_label']"
+            )
+        positive = targets["exist_label"].to(device=device).reshape(-1) > 0.5
+        if positive.numel() != batch_size:
+            raise ValueError(
+                "exist_label batch size does not match model output: "
+                f"{positive.numel()} != {batch_size}"
+            )
+        return positive
+
+    @staticmethod
+    def _keep_positive_indices(indices, positive):
+        return [
+            (source, target) if bool(positive[index].item())
+            else (source[:0], target[:0])
+            for index, (source, target) in enumerate(indices)
+        ]
 
     def loss_spans(self, outputs, targets, indices):
         """Compute the losses related to the bounding boxes, the L1 regression loss and the GIoU loss
@@ -193,7 +385,14 @@ class SetCriterion(nn.Module):
         target_classes[idx] = self.foreground_label
 
         loss_ce = F.cross_entropy(src_logits.transpose(1, 2), target_classes, self.empty_weight, reduction="none")
-        losses = {'loss_label': loss_ce.mean()}
+        if self.mask_null_vmr_loss:
+            positive = self._vmr_positive_mask(
+                targets, src_logits.shape[0], src_logits.device
+            )[:, None].expand_as(loss_ce)
+            loss_label = (loss_ce * positive).sum() / positive.sum().clamp_min(1)
+        else:
+            loss_label = loss_ce.mean()
+        losses = {'loss_label': loss_label}
 
         if log:
             if idx[0].numel() > 0:
@@ -223,6 +422,89 @@ class SetCriterion(nn.Module):
         """
         return {"loss_exist": compute_existence_loss(outputs, targets)}
 
+    def loss_quality(self, outputs, targets, indices, log=True):
+        """Calibrate each query score to its matched temporal IoU.
+
+        Unmatched queries receive quality zero, which also suppresses duplicate
+        predictions that lose the one-to-one Hungarian assignment.
+        """
+        del log
+        logits = outputs["pred_quality_logits"]
+        quality_targets = torch.zeros_like(logits)
+        weights = torch.full_like(logits, self.eos_coef)
+        source_index = self._get_src_permutation_idx(indices)
+        if source_index[0].numel() > 0:
+            src_spans = outputs["pred_spans"][source_index]
+            target_spans = torch.cat([
+                target["spans"][target_indices]
+                for target, (_, target_indices) in zip(targets["span_labels"], indices)
+            ], dim=0)
+            # Match inference geometry: predicted windows are clipped to the
+            # valid normalized video interval before score calibration.
+            src_xx = span_cxw_to_xx(src_spans).clamp(0, 1)
+            target_xx = span_cxw_to_xx(target_spans).clamp(0, 1)
+            intersection = (
+                torch.minimum(src_xx[:, 1], target_xx[:, 1])
+                - torch.maximum(src_xx[:, 0], target_xx[:, 0])
+            ).clamp_min(0)
+            union = (
+                (src_xx[:, 1] - src_xx[:, 0]).clamp_min(0)
+                + (target_xx[:, 1] - target_xx[:, 0]).clamp_min(0)
+                - intersection
+            ).clamp_min(1e-6)
+            matched_iou = (intersection / union).detach().clamp(0, 1)
+            quality_targets[source_index] = matched_iou
+            weights[source_index] = 1.0
+        raw = F.binary_cross_entropy_with_logits(logits, quality_targets, reduction="none")
+        if self.mask_null_vmr_loss:
+            positive = self._vmr_positive_mask(
+                targets, logits.shape[0], logits.device
+            )[:, None]
+            weights = weights * positive
+        return {"loss_quality": (raw * weights).sum() / weights.sum().clamp_min(1.0)}
+
+    def loss_dual(self, outputs, targets, indices=None, log=True):
+        del indices, log
+        sample_mask = None
+        if self.mask_null_vmr_loss:
+            attention = outputs["dual_phrase_attention"]
+            sample_mask = self._vmr_positive_mask(
+                targets, attention.shape[0], attention.device
+            )
+        return dual_grounding_losses(
+            outputs,
+            dqa_scale=self.dual_dqa_scale,
+            temperature=self.dual_eos_temperature,
+            sample_mask=sample_mask,
+        )
+
+    def loss_counter(self, outputs, targets, indices=None, log=True):
+        del indices, log
+        return hierarchical_counter_losses(
+            outputs,
+            targets,
+            positive_count_weights=self.positive_count_weights,
+            contrastive_temperature=self.counter_contrastive_temperature,
+        )
+
+    def loss_zero(self, outputs, targets, indices=None, log=True):
+        del indices, log
+        return {"loss_zero": independent_zero_loss(
+            outputs, targets,
+            positive_query_weight=self.zero_positive_query_weight,
+        )}
+
+    def loss_pairwise(self, outputs, targets, indices=None, log=True):
+        del indices, log
+        return {"loss_pairwise": pairwise_same_event_loss(
+            outputs,
+            targets,
+            assignment_iou=self.pair_assignment_iou,
+            ambiguity_margin=self.pair_ambiguity_margin,
+            positive_weight=self.pair_positive_weight,
+            hard_negative_weight=self.pair_hard_negative_weight,
+        )}
+
     def _get_src_permutation_idx(self, indices):
         batch_idx = torch.cat([torch.full_like(src, i) for i, (src, _) in enumerate(indices)])
         src_idx = torch.cat([src for (src, _) in indices])
@@ -239,6 +521,11 @@ class SetCriterion(nn.Module):
             "labels": self.loss_labels,
             "saliency": self.loss_saliency,
             "exist": self.loss_exist,
+            "quality": self.loss_quality,
+            "dual": self.loss_dual,
+            "counter": self.loss_counter,
+            "zero": self.loss_zero,
+            "pairwise": self.loss_pairwise,
         }
         assert loss in loss_map, f'do you really want to compute {loss} loss?'
         return loss_map[loss](outputs, targets, indices, **kwargs)
@@ -254,6 +541,14 @@ class SetCriterion(nn.Module):
 
         # Match predictions to ground-truth windows.
         indices = self.matcher(outputs_without_aux, targets)
+        if self.mask_null_vmr_loss:
+            indices = self._keep_positive_indices(
+                indices,
+                self._vmr_positive_mask(
+                    targets, outputs['pred_logits'].shape[0],
+                    outputs['pred_logits'].device,
+                ),
+            )
 
         losses = {}
         for loss in self.losses:
@@ -262,8 +557,16 @@ class SetCriterion(nn.Module):
         if 'aux_outputs' in outputs:
             for i, aux_outputs in enumerate(outputs['aux_outputs']):
                 indices = self.matcher(aux_outputs, targets)
+                if self.mask_null_vmr_loss:
+                    indices = self._keep_positive_indices(
+                        indices,
+                        self._vmr_positive_mask(
+                            targets, aux_outputs['pred_logits'].shape[0],
+                            aux_outputs['pred_logits'].device,
+                        ),
+                    )
                 for loss in self.losses:
-                    if "saliency" == loss:  # skip as it is only in the top layer
+                    if loss in {"saliency", "exist", "quality", "dual", "counter", "zero", "pairwise"}:
                         continue
                     kwargs = {}
                     l_dict = self.get_loss(loss, aux_outputs, targets, indices, **kwargs)
@@ -330,6 +633,21 @@ def build_model(args):
         n_input_proj=args.n_input_proj,
         use_exist_head=bool(getattr(args, "use_exist_head", False)),
         exist_pool=str(getattr(args, "exist_pool", "max")),
+        use_dual_grounding=bool(getattr(args, "use_dual_grounding", False)),
+        dual_num_phrases=int(getattr(args, "dual_num_phrases", 3)),
+        dual_num_dummies=int(getattr(args, "dual_num_dummies", 3)),
+        dual_slot_iterations=int(getattr(args, "dual_slot_iterations", 1)),
+        dual_gate_init=float(getattr(args, "dual_gate_init", -4.0)),
+        dual_nheads=int(getattr(args, "dual_nheads", args.nheads)),
+        dual_max_text_len=int(getattr(args, "max_q_l", 77)),
+        use_hierarchical_counter=bool(getattr(args, "use_hierarchical_counter", False)),
+        counter_dropout=float(getattr(args, "counter_dropout", 0.1)),
+        counter_detach_scores=bool(getattr(args, "counter_detach_scores", True)),
+        use_quality_head=bool(getattr(args, "use_quality_head", False)),
+        use_independent_zero_head=bool(getattr(args, "use_independent_zero_head", False)),
+        use_pairwise_head=bool(getattr(args, "use_pairwise_head", False)),
+        selector_dropout=float(getattr(args, "selector_dropout", 0.1)),
+        pairwise_detach_inputs=bool(getattr(args, "pairwise_detach_inputs", True)),
     )
 
     matcher = build_matcher(args)
@@ -349,12 +667,60 @@ def build_model(args):
     # Add existence supervision when the adapter is enabled.
     if bool(getattr(args, "use_exist_head", False)):
         weight_dict["loss_exist"] = float(getattr(args, "exist_loss_coef", 1.0))
-        losses.append("exist")
+        if not bool(getattr(args, "use_hierarchical_counter", False)):
+            losses.append("exist")
+
+    if bool(getattr(args, "use_quality_head", False)):
+        weight_dict["loss_quality"] = float(getattr(args, "quality_loss_coef", 1.0))
+        losses.append("quality")
+
+    if bool(getattr(args, "use_dual_grounding", False)):
+        weight_dict.update({
+            "loss_dual_dqa": float(getattr(args, "dual_dqa_loss_coef", 0.05)),
+            "loss_dual_eos": float(getattr(args, "dual_eos_loss_coef", 0.1)),
+        })
+        losses.append("dual")
+
+    if bool(getattr(args, "use_hierarchical_counter", False)):
+        weight_dict.update({
+            "loss_exist": float(getattr(args, "exist_loss_coef", 1.0)),
+            "loss_count": float(getattr(args, "count_loss_coef", 1.0)),
+            "loss_count_ordinal": float(getattr(args, "count_ordinal_loss_coef", 0.25)),
+            "loss_count_contrastive": float(getattr(args, "count_contrastive_loss_coef", 0.05)),
+            "loss_count_consistency": float(getattr(args, "count_consistency_loss_coef", 0.05)),
+        })
+        losses.append("counter")
+
+    if bool(getattr(args, "use_independent_zero_head", False)):
+        weight_dict["loss_zero"] = float(getattr(args, "zero_loss_coef", 1.0))
+        losses.append("zero")
+
+    if bool(getattr(args, "use_pairwise_head", False)):
+        weight_dict["loss_pairwise"] = float(getattr(args, "pairwise_loss_coef", 1.0))
+        losses.append("pairwise")
 
     criterion = SetCriterion(
         matcher=matcher, weight_dict=weight_dict, losses=losses,
         eos_coef=args.eos_coef, span_loss_type=args.span_loss_type,
-        max_v_l=args.max_v_l, saliency_margin=args.saliency_margin
+        max_v_l=args.max_v_l, saliency_margin=args.saliency_margin,
+        positive_count_weights=getattr(args, "positive_count_weights", None),
+        dual_dqa_scale=float(getattr(args, "dual_dqa_scale", 0.3)),
+        dual_eos_temperature=float(getattr(args, "dual_eos_temperature", 0.07)),
+        counter_contrastive_temperature=float(
+            getattr(args, "counter_contrastive_temperature", 0.1)
+        ),
+        zero_positive_query_weight=float(
+            getattr(args, "zero_positive_query_weight", 1.0)
+        ),
+        pair_assignment_iou=float(getattr(args, "pair_assignment_iou", 0.3)),
+        pair_ambiguity_margin=float(getattr(args, "pair_ambiguity_margin", 0.05)),
+        pair_positive_weight=float(getattr(args, "pair_positive_weight", 1.0)),
+        pair_hard_negative_weight=float(
+            getattr(args, "pair_hard_negative_weight", 2.0)
+        ),
+        mask_null_vmr_loss=bool(
+            getattr(args, "mask_null_vmr_loss", False)
+        ),
     )
 
     criterion.to(device)

@@ -20,6 +20,10 @@ class PostProcessorDETR:
     def __call__(self, lines):
         processed_lines = []
         for line in tqdm(lines, desc=f"convert to multiples of clip_length={self.clip_length}"):
+            if not line.get("pred_relevant_windows"):
+                line["pred_relevant_windows"] = []
+                processed_lines.append(line)
+                continue
             windows_and_scores = torch.tensor(line["pred_relevant_windows"])
             windows = windows_and_scores[:, :2]
             for func_name in self.process_func_names:

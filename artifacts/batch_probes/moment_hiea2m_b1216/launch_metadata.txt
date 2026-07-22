@@ -1,0 +1,9 @@
+launched_at=2026-07-22T14:01:26+08:00
+repo_root=/home/guoxiangyu/generalized-moment-retrieval
+run_dir=/home/guoxiangyu/generalized-moment-retrieval/artifacts/batch_probes/moment_hiea2m_b1216
+gpu_id=0
+hostname=dell-PowerEdge-R750
+git_commit=ac78df9129a1153e74d4f75ad437a34fd770487b
+stdout_log=/home/guoxiangyu/generalized-moment-retrieval/artifacts/batch_probes/moment_hiea2m_b1216/nohup.log
+command_file=/home/guoxiangyu/generalized-moment-retrieval/artifacts/batch_probes/moment_hiea2m_b1216/launch_command.txt
+pid=1464604

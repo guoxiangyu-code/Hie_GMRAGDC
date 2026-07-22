@@ -1,0 +1,45 @@
+{
+    "groups": {
+        "class_embed": {
+            "gradient_l2": 3.25914753973292,
+            "parameters": 514,
+            "parameters_with_grad": 514
+        },
+        "exist_head": {
+            "gradient_l2": 0.06619012636875683,
+            "parameters": 66049,
+            "parameters_with_grad": 66049
+        },
+        "input_txt_proj": {
+            "gradient_l2": 0.729245299229396,
+            "parameters": 198656,
+            "parameters_with_grad": 198656
+        },
+        "input_vid_proj": {
+            "gradient_l2": 4.161487723342428,
+            "parameters": 793604,
+            "parameters_with_grad": 793604
+        },
+        "query_embed": {
+            "gradient_l2": 0.006813204433559189,
+            "parameters": 2560,
+            "parameters_with_grad": 2560
+        },
+        "span_embed": {
+            "gradient_l2": 3.9190547681806556,
+            "parameters": 132098,
+            "parameters_with_grad": 132098
+        },
+        "transformer.decoder": {
+            "gradient_l2": 1.3835476717777675,
+            "parameters": 2107392,
+            "parameters_with_grad": 2107392
+        },
+        "transformer.encoder": {
+            "gradient_l2": 0.9513298334618008,
+            "parameters": 1579520,
+            "parameters_with_grad": 1579520
+        }
+    },
+    "variant": "md_gmr"
+}

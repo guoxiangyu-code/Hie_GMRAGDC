@@ -1,0 +1,32 @@
+ M .gitignore
+ M configs/moment_detr_gmr/base.yml
+ M eval/eval_main.py
+ M eval/metrics.py
+ M models/moment_detr_gmr/moment_detr.py
+ M scripts/infer_moment_detr_gmr.sh
+ M scripts/train_moment_detr_gmr.sh
+ M training/moment_detr_gmr/config.py
+ M training/moment_detr_gmr/dataset.py
+ M training/moment_detr_gmr/evaluate.py
+ M training/moment_detr_gmr/postprocessing.py
+ M training/moment_detr_gmr/train.py
+?? PROGRESS.md
+?? docs/detr_gmr_lessons_and_algorithm_notes_2026-07-22.md
+?? docs/detr_gmr_research_progress_2026-07-22.md
+?? eval/__init__.py
+?? methods/
+?? models/moment_detr_gmr/dual_grounding.py
+?? models/moment_detr_gmr/hierarchical_counter.py
+?? models/moment_detr_gmr/set_decoder.py
+?? plans/
+?? scripts/bootstrap_gmr.py
+?? scripts/calibrate_hiea2m.py
+?? scripts/diagnose_gmr_groups.py
+?? scripts/fuse_gmr_heads.py
+?? scripts/launch_nohup_job.sh
+?? scripts/preregister_detr_matrix_test.py
+?? scripts/preregister_gmr_test.py
+?? scripts/probe_moment_batch_size.py
+?? scripts/run_preregistered_detr_matrix_test.py
+?? scripts/summarize_seed_metrics.py
+?? tests/

@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=1 PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True python -u -c import\ os\,time\;\ print\(\'SMOKE_START\'\,os.getpid\(\)\,flush=True\)\;\ time.sleep\(30\)\;\ print\(\'SMOKE_DONE\'\,flush=True\) 

@@ -1,0 +1,11 @@
+{
+  "variant": "cg_detr",
+  "stage_new_prefixes": [],
+  "groups": [
+    {
+      "role": "shared",
+      "lr": 0.0001,
+      "num_parameters": 12615467
+    }
+  ]
+}

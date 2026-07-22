@@ -1,0 +1,57 @@
+{
+  "operation": "objective_specific_gmr_head_composition",
+  "num_queries": 465,
+  "localization": {
+    "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_gmr_continue_lr5e6_seed2023/best_map_soccer_gmr_val_preds.jsonl",
+    "sha256": "417b75cc304dcb703d999cca6a744003d607456afb7da2f7eb042f48574a623d",
+    "owned_fields": [
+      "pred_relevant_windows"
+    ]
+  },
+  "decision": {
+    "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_gmr_continue_lr5e6_seed2023/best_joint_soccer_gmr_val_preds.jsonl",
+    "sha256": "9ec90544f8249b05cda15329d2ea3695f88c0a36b918ef4b3f1afe1fd49feae7",
+    "owned_fields": [
+      "pred_exist_score",
+      "pred_count",
+      "pred_count_probs",
+      "pred_exist_logit"
+    ]
+  },
+  "output": {
+    "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_gmr_continue_lr5e6_seed2023/fused_map_joint_val.jsonl",
+    "sha256": "440183e394a5e324d51050010395a61041ad126209d966ac1c6a6be3b198af93"
+  },
+  "gmiou_threshold": 0.4,
+  "ground_truth": {
+    "path": "/home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/val.jsonl",
+    "sha256": "218537b2fccd604d795c3237a1b351e7288c2ff909a722f1f23b82d1082240a0"
+  },
+  "metrics": {
+    "path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_gmr_continue_lr5e6_seed2023/fused_map_joint_val_metrics.json",
+    "sha256": "c99779672c1d7224759096b3d898fa6f28c6b68a1523136c7cb3a11c4ec2e77e",
+    "brief": {
+      "AUROC": 72.55,
+      "Rej-F1@0.4": 66.52,
+      "Acc@0.4": 67.1,
+      "Rej-F1@0.6": 70.55,
+      "Acc@0.6": 63.01,
+      "G-mIoU@1": 37.06,
+      "G-mIoU@3": 34.43,
+      "G-mIoU@5": 33.74,
+      "mAP": 9.18,
+      "mR@1": 4.89,
+      "mR@3": 10.15,
+      "mR@5": 14.08,
+      "mR+@1": 0.0,
+      "mR+@3": 0.17,
+      "mR+@5": 0.83,
+      "mIoU@1": 11.62,
+      "mIoU@3": 10.93,
+      "mIoU@5": 10.91,
+      "mIoU+@1": 0.0,
+      "mIoU+@3": 0.86,
+      "mIoU+@5": 0.86
+    }
+  }
+}

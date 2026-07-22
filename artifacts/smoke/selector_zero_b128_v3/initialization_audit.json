@@ -1,0 +1,27 @@
+{
+    "checkpoint_protocol": {
+        "mask_null_vmr_loss": false,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    },
+    "discarded_checkpoint_keys": [],
+    "initialized_new_keys": [
+        "zero_verifier_head.net.0.weight",
+        "zero_verifier_head.net.0.bias",
+        "zero_verifier_head.net.1.weight",
+        "zero_verifier_head.net.1.bias",
+        "zero_verifier_head.net.4.weight",
+        "zero_verifier_head.net.4.bias"
+    ],
+    "protocol_match": false,
+    "resume": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/runs/md_hiea2m_release_seed2023/best_joint.ckpt",
+    "run_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": false,
+        "trim_text_by_attention_mask": true
+    }
+}

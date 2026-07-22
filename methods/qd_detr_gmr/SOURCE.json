@@ -1,0 +1,26 @@
+{
+  "name": "QD-DETR",
+  "upstream_url": "https://github.com/wjun0830/QD-DETR.git",
+  "revision": "f8628f79f7c651b586300b142dbe9b85e43857cc",
+  "revision_date": "2025-08-12T09:28:17+09:00",
+  "license": "MIT",
+  "license_file": "LICENSE",
+  "vendored_files": {
+    "attention.py": "61fe42107e07f1c179238df6514f05a5ec0f8d8b347937f2fda7dc9712570378",
+    "matcher.py": "0ee46a4d133965131a4bc4c9599e297c017feabf059e0457344d36bf3cce5751",
+    "misc.py": "dcb02d459d0db988f7bec7f2ef11320274456688ef19725b6e1aab68bd2ad8eb",
+    "model.py": "5c3965024f2cc038821569ba17ea82394a06b992365c1d01f2bf039be3dbb730",
+    "position_encoding.py": "73b08a01db79c44dacd6859514d504b943a76a3d3ac3067a1505ee41034ffa6d",
+    "span_utils.py": "82ec89bdaca05cfb6382551597c3c60d2b79733e7e721b69eacb2cd02c6e001c",
+    "transformer.py": "94159ea821497e0a7d2ef795c5b736538d8158ab4b85a228d004a7fba1ccfcda"
+  },
+  "adaptations": [
+    "Package imports changed from qd_detr.* to relative imports.",
+    "Transformer scratch decoder tensor follows the input device instead of hard-coded .cuda().",
+    "Hungarian matching and span losses accept batches whose ground-truth set is entirely empty.",
+    "The QD-DETR negative-pair saliency pass is optional and disabled by the Soccer-GMR MR-only runner.",
+    "A paper-style max-pooled two-layer GMR existence adapter and BCE loss were added in parallel.",
+    "Shared DualGround, matched-IoU quality, hierarchical counter, and adaptive set-decoder modules were wired as zero-residual HieA2M variants.",
+    "Soccer-GMR CLIP+SlowFast/CLIP-text data, prediction, official evaluation, and CLI runners were added."
+  ]
+}

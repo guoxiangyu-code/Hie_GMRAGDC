@@ -1,0 +1,76 @@
+{
+  "positive": {
+    "num_examples": 2,
+    "num_positive": 2,
+    "losses": {
+      "loss_span": 0.17289602756500244,
+      "loss_giou": 1.0844666957855225,
+      "loss_label": 0.17512856423854828,
+      "class_error": 66.66667175292969,
+      "loss_exist": 0.5099248886108398,
+      "loss_overall": 4.023866176605225
+    },
+    "finite": true
+  },
+  "mixed": {
+    "num_examples": 4,
+    "num_positive": 3,
+    "losses": {
+      "loss_span": 0.13473942875862122,
+      "loss_giou": 1.0352686643600464,
+      "loss_label": 0.14605796337127686,
+      "class_error": 0.0,
+      "loss_exist": 0.5981582403182983,
+      "loss_overall": 3.5650529861450195
+    },
+    "finite": true,
+    "brief": {
+      "AUROC": 66.67,
+      "Rej-F1@0.4": 0.0,
+      "Acc@0.4": 75.0,
+      "Rej-F1@0.6": 0.0,
+      "Acc@0.6": 75.0,
+      "Rej-F1@0.8": 40.0,
+      "Acc@0.8": 25.0,
+      "G-mIoU@1": 2.92,
+      "G-mIoU@3": 1.44,
+      "G-mIoU@5": 0.86,
+      "mAP": 0.0,
+      "mR@1": 0.0,
+      "mR@3": 0.0,
+      "mR@5": 0.0,
+      "mR+@1": 0.0,
+      "mR+@3": 0.0,
+      "mR+@5": 0.0,
+      "mIoU@1": 5.74,
+      "mIoU@3": 3.89,
+      "mIoU@5": 3.89,
+      "mIoU+@1": 0.0,
+      "mIoU+@3": 0.0,
+      "mIoU+@5": 0.0
+    }
+  },
+  "null": {
+    "num_examples": 2,
+    "num_positive": 0,
+    "losses": {
+      "loss_span": 0.0,
+      "loss_giou": 0.0,
+      "loss_label": 0.11779680103063583,
+      "class_error": 0.0,
+      "loss_exist": 1.2336766719818115,
+      "loss_overall": 1.7048639059066772
+    },
+    "finite": true
+  },
+  "baseline_positive": {
+    "losses": {
+      "loss_span": 0.20221585035324097,
+      "loss_giou": 0.9113268852233887,
+      "loss_label": 0.26627057790756226,
+      "class_error": 100.0,
+      "loss_overall": 3.998567819595337
+    },
+    "has_explicit_existence": false
+  }
+}

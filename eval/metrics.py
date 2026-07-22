@@ -17,10 +17,16 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
-from utils import (
-    compute_average_precision_detection,
-    compute_temporal_iou_batch_cross,
-)
+try:
+    from .utils import (
+        compute_average_precision_detection,
+        compute_temporal_iou_batch_cross,
+    )
+except ImportError:  # Direct script compatibility.
+    from utils import (
+        compute_average_precision_detection,
+        compute_temporal_iou_batch_cross,
+    )
 
 DEFAULT_IOU_THRESHOLDS = np.linspace(0.5, 0.95, 10)
 
@@ -303,7 +309,12 @@ def _compute_auroc(y_true: np.ndarray, y_score: np.ndarray) -> float:
     tpr = np.concatenate([[0], tpr[distinct]])
     fpr = np.concatenate([[0], fpr[distinct]])
 
-    return float(np.trapz(tpr, fpr))
+    # ``np.trapz`` was removed in NumPy 2.4.  ``trapezoid`` is the exact
+    # replacement and remains available in supported NumPy releases.
+    trapezoid = getattr(np, "trapezoid", None)
+    if trapezoid is None:  # NumPy < 1.20 compatibility
+        trapezoid = np.trapz
+    return float(trapezoid(tpr, fpr))
 
 
 def get_existence_score(pred: Dict[str, Any]) -> Tuple[float, str]:

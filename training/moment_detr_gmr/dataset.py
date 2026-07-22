@@ -56,6 +56,7 @@ class StartEndDataset(Dataset):
         load_labels=True,
         mr_only=True,
         keep_empty_gt=False,
+        trim_text_by_attention_mask=False,
     ):
         if dset_name != "soccer_gmr":
             raise ValueError(f"Moment-DETR-GMR release supports dataset='soccer_gmr', got {dset_name!r}")
@@ -87,6 +88,7 @@ class StartEndDataset(Dataset):
         self.load_labels = load_labels
         self.mr_only = bool(mr_only)
         self.keep_empty_gt = bool(keep_empty_gt)
+        self.trim_text_by_attention_mask = bool(trim_text_by_attention_mask)
         self.data = self.load_data()
 
     def load_data(self):
@@ -170,6 +172,14 @@ class StartEndDataset(Dataset):
             windows = meta.get("relevant_windows", [])
             has_moment = isinstance(windows, list) and len(windows) > 0
             model_inputs["exist_label"] = 1.0 if has_moment else 0.0
+            annotated_count = int(meta.get("count_label", len(windows)))
+            if annotated_count != len(windows):
+                raise ValueError(
+                    f"qid={meta.get('qid')}: count_label={annotated_count} does not "
+                    f"match {len(windows)} relevant_windows"
+                )
+            model_inputs["count_label"] = min(annotated_count, 4)
+            model_inputs["raw_count_label"] = annotated_count
             model_inputs["span_labels"] = self.get_span_labels(windows, ctx_l)
 
             if not self.mr_only and has_moment:
@@ -227,8 +237,21 @@ class StartEndDataset(Dataset):
 
     def _get_query_feat_by_qid(self, qid):
         q_feat_path = join(self.q_feat_dir, f"qid{qid}.npz")
-        q_feat = np.load(q_feat_path)[self.q_feat_type].astype(np.float32)
+        with np.load(q_feat_path) as archive:
+            q_feat = archive[self.q_feat_type].astype(np.float32)
+            attention_mask = archive.get("attention_mask")
         if self.q_feat_type == "last_hidden_state":
+            if self.trim_text_by_attention_mask and attention_mask is not None:
+                attention_mask = np.asarray(attention_mask).reshape(-1)
+                if len(attention_mask) != len(q_feat):
+                    raise ValueError(
+                        f"qid={qid}: text feature/mask length mismatch "
+                        f"{len(q_feat)} != {len(attention_mask)}"
+                    )
+                valid = np.flatnonzero(attention_mask > 0)
+                if valid.size == 0:
+                    raise ValueError(f"qid={qid}: empty CLIP attention_mask")
+                q_feat = q_feat[valid]
             q_feat = q_feat[:self.max_q_l]
         q_feat = l2_normalize_np_array(q_feat)
         return torch.from_numpy(q_feat)
@@ -259,6 +282,8 @@ def start_end_collate(batch):
             batched_data[k] = [dict(spans=e["model_inputs"]["span_labels"]) for e in batch]
         elif k == "exist_label":
             batched_data[k] = torch.tensor([e["model_inputs"][k] for e in batch], dtype=torch.float32)
+        elif k in {"count_label", "raw_count_label"}:
+            batched_data[k] = torch.tensor([e["model_inputs"][k] for e in batch], dtype=torch.long)
         elif k in ["saliency_pos_labels", "saliency_neg_labels"]:
             batched_data[k] = torch.LongTensor([e["model_inputs"][k] for e in batch])
         else:
@@ -285,6 +310,12 @@ def prepare_batch_inputs(batched_model_inputs, device, non_blocking=False):
         ]
     if "exist_label" in batched_model_inputs:
         targets["exist_label"] = batched_model_inputs["exist_label"].to(device, non_blocking=non_blocking)
+    if "count_label" in batched_model_inputs:
+        targets["count_label"] = batched_model_inputs["count_label"].to(device, non_blocking=non_blocking)
+    if "raw_count_label" in batched_model_inputs:
+        targets["raw_count_label"] = batched_model_inputs["raw_count_label"].to(
+            device, non_blocking=non_blocking
+        )
     if "saliency_pos_labels" in batched_model_inputs:
         for name in ["saliency_pos_labels", "saliency_neg_labels"]:
             targets[name] = batched_model_inputs[name].to(device, non_blocking=non_blocking)

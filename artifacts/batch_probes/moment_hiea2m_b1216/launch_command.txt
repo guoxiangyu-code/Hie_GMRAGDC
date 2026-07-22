@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True python -u scripts/probe_moment_batch_size.py --variant md_hiea2m --batch-size 1216 --steps 2 --result-json artifacts/batch_probes/moment_hiea2m_b1216/result.json 

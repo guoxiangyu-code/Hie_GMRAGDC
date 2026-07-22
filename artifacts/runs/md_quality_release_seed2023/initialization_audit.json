@@ -1,0 +1,12 @@
+{
+    "discarded_checkpoint_keys": [],
+    "initialized_new_keys": [
+        "quality_embed.layers.0.weight",
+        "quality_embed.layers.0.bias",
+        "quality_embed.layers.1.weight",
+        "quality_embed.layers.1.bias",
+        "quality_embed.layers.2.weight",
+        "quality_embed.layers.2.bias"
+    ],
+    "resume": "/home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/checkpoint/moment_detr_gmr"
+}
