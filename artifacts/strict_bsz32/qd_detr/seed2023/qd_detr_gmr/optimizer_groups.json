@@ -1,0 +1,18 @@
+{
+  "variant": "qd_detr_gmr",
+  "stage_new_prefixes": [
+    "exist_head."
+  ],
+  "groups": [
+    {
+      "role": "shared",
+      "lr": 3e-06,
+      "num_parameters": 7585573
+    },
+    {
+      "role": "new",
+      "lr": 3e-05,
+      "num_parameters": 66049
+    }
+  ]
+}

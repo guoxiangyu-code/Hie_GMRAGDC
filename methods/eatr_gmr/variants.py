@@ -12,6 +12,7 @@ VARIANT_FLAGS = {
     "eatr_gmr": (True, False, False, False),
     "eatr_quality": (True, True, False, False),
     "eatr_dual": (True, False, True, False),
+    "eatr_quality_dual": (True, True, True, False),
     "eatr_counter": (True, False, False, True),
     "eatr_hiea2m": (True, True, True, True),
 }

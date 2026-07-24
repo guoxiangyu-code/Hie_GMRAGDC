@@ -1,0 +1,3347 @@
+2026-07-23 14:22:23,004 - __main__ - INFO - Setup data and model...
+2026-07-23 14:23:29,454 - __main__ - INFO - Model FlashVTG(
+  (transformer): Transformer(
+    (t2v_encoder): TransformerCATEEncoder(
+      (layers): ModuleList(
+        (0-5): 6 x T2V_TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): Linear(in_features=256, out_features=256, bias=True)
+          )
+          (linear1): Linear(in_features=256, out_features=1024, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=1024, out_features=256, bias=True)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (dropout1): DropPath()
+          (dropout2): DropPath()
+          (activation): PReLU(num_parameters=1)
+        )
+      )
+    )
+    (encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-2): 3 x TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+          )
+          (linear1): Linear(in_features=256, out_features=1024, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=1024, out_features=256, bias=True)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (dropout1): DropPath()
+          (dropout2): DropPath()
+          (activation): PReLU(num_parameters=1)
+        )
+      )
+    )
+  )
+  (position_embed): PositionEmbeddingSine()
+  (txt_position_embed): TrainablePositionalEncoding(
+    (position_embeddings): Embedding(40, 256)
+    (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (dropout): Dropout(p=0.5, inplace=False)
+  )
+  (saliency_proj1): Linear(in_features=256, out_features=256, bias=True)
+  (saliency_proj2): Linear(in_features=256, out_features=256, bias=True)
+  (PositionEmbeddingSine): PositionEmbeddingSine()
+  (input_txt_proj): Sequential(
+    (0): LinearLayer(
+      (LayerNorm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=512, out_features=256, bias=True)
+      )
+    )
+    (1): LinearLayer(
+      (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (input_vid_proj): Sequential(
+    (0): LinearLayer(
+      (LayerNorm): LayerNorm((2818,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=2818, out_features=256, bias=True)
+      )
+    )
+    (1): LinearLayer(
+      (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (token_type_embeddings): Embedding(2, 256)
+  (txtproj_encoder): TransformerEncoder(
+    (layers): ModuleList(
+      (0-1): 2 x TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+        )
+        (linear1): Linear(in_features=256, out_features=1024, bias=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+        (linear2): Linear(in_features=1024, out_features=256, bias=True)
+        (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (dropout1): DropPath()
+        (dropout2): DropPath()
+        (activation): PReLU(num_parameters=1)
+      )
+    )
+  )
+  (pyramid): ConvPyramid(
+    (blocks): ModuleList(
+      (0): ReLU(inplace=True)
+      (1): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+      )
+      (2): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+        (5): Permute()
+        (6): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (7): Permute()
+        (8): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (9): ReLU(inplace=True)
+      )
+      (3): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+        (5): Permute()
+        (6): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (7): Permute()
+        (8): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (9): ReLU(inplace=True)
+        (10): Permute()
+        (11): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (12): Permute()
+        (13): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (14): ReLU(inplace=True)
+      )
+    )
+  )
+  (pooling): AdaPooling(
+    (att): Linear(in_features=256, out_features=1, bias=False)
+  )
+  (conf_head): ConfidenceScorer(
+    (convs): ModuleList(
+      (0): Conv2d(256, 256, kernel_size=(1, 5), stride=(1, 1), padding=(0, 2))
+    )
+    (activations): ModuleList(
+      (0): ReLU()
+    )
+    (fc): MLP(
+      (layers): ModuleList(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+  )
+  (class_head): ConfidenceScorer(
+    (convs): ModuleList(
+      (0): Conv2d(256, 256, kernel_size=(1, 5), stride=(1, 1), padding=(0, 2))
+    )
+    (activations): ModuleList(
+      (0): ReLU()
+    )
+    (fc): MLP(
+      (layers): ModuleList(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+  )
+  (coord_head): ConvHead(
+    (module): Sequential(
+      (0): Permute()
+      (1): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+      (2): ReLU(inplace=True)
+      (3): Conv1d(256, 2, kernel_size=(3,), stride=(1,), padding=(1,))
+      (4): Permute()
+    )
+  )
+  (generator): PointGenerator(
+    (buffer): BufferList()
+  )
+)
+2026-07-23 14:23:29,459 - __main__ - INFO - Learnable Parameters:
+2026-07-23 14:23:29,460 - __main__ - INFO - Learnable Parameters: 9.984M (100.0%)
+2026-07-23 14:23:29,460 - __main__ - INFO - Start Training...
+2026-07-23 14:23:29,460 - __main__ - INFO - CUDA enabled.
+2026-07-23 14:23:29,831 - __main__ - INFO - [Epoch 49]
+2026-07-23 14:23:59,189 - __main__ - INFO - 2026_07_23_14_23_59 [Epoch] 049 [Loss] loss_reg 0.3406 loss_cls 0.0280 weighted_loss_overall 0.4807
+
+2026-07-23 14:23:59,509 - __main__ - INFO - [Epoch 50]
+2026-07-23 14:24:27,376 - __main__ - INFO - 2026_07_23_14_24_27 [Epoch] 050 [Loss] loss_reg 0.3570 loss_cls 0.0285 weighted_loss_overall 0.4993
+
+2026-07-23 14:25:08,634 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 43.53),
+                ('MR-full-R1@0.5', 31.37),
+                ('MR-full-R1@0.7', 16.47),
+                ('MR-full-mAP', 21.37),
+                ('MR-full-mAP@0.5', 41.4),
+                ('MR-full-mAP@0.75', 21.66),
+                ('MR-full-mIoU', 28.5),
+                ('GMR-AUROC', 49.6),
+                ('GMR-Rej-F1@0.4', 17.58),
+                ('GMR-Acc@0.4', 51.61),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 15.8),
+                ('GMR-G-mIoU@3', 10.75),
+                ('GMR-G-mIoU@5', 8.57),
+                ('GMR-mAP', 21.37),
+                ('GMR-mR@1', 11.89),
+                ('GMR-mR@3', 22.97),
+                ('GMR-mR@5', 32.62),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 3.33),
+                ('GMR-mR+@5', 8.93),
+                ('GMR-mIoU@1', 28.5),
+                ('GMR-mIoU@3', 24.85),
+                ('GMR-mIoU@5', 24.78),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.66),
+                ('GMR-mIoU+@5', 7.48)])
+2026-07-23 14:25:08,635 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 43.14),
+                ('MR-full-R1@0.5', 31.37),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 22.08),
+                ('MR-full-mAP@0.5', 42.04),
+                ('MR-full-mAP@0.75', 22.64),
+                ('MR-full-mIoU', 28.8),
+                ('GMR-AUROC', 49.6),
+                ('GMR-Rej-F1@0.4', 16.91),
+                ('GMR-Acc@0.4', 51.4),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 15.45),
+                ('GMR-G-mIoU@3', 10.46),
+                ('GMR-G-mIoU@5', 8.29),
+                ('GMR-mAP', 22.08),
+                ('GMR-mR@1', 12.18),
+                ('GMR-mR@3', 24.38),
+                ('GMR-mR@5', 33.9),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 2.72),
+                ('GMR-mR+@5', 9.61),
+                ('GMR-mIoU@1', 28.8),
+                ('GMR-mIoU@3', 24.58),
+                ('GMR-mIoU@5', 24.46),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.13),
+                ('GMR-mIoU+@5', 5.76)])
+2026-07-23 14:25:08,968 - __main__ - INFO - [Epoch 51]
+2026-07-23 14:25:38,187 - __main__ - INFO - 2026_07_23_14_25_38 [Epoch] 051 [Loss] loss_reg 0.3547 loss_cls 0.0283 weighted_loss_overall 0.4963
+
+2026-07-23 14:25:38,472 - __main__ - INFO - [Epoch 52]
+2026-07-23 14:25:56,224 - __main__ - INFO - 2026_07_23_14_25_56 [Epoch] 052 [Loss] loss_reg 0.3551 loss_cls 0.0282 weighted_loss_overall 0.4963
+
+2026-07-23 14:25:56,586 - __main__ - INFO - [Epoch 53]
+2026-07-23 14:26:11,867 - __main__ - INFO - 2026_07_23_14_26_11 [Epoch] 053 [Loss] loss_reg 0.3552 loss_cls 0.0281 weighted_loss_overall 0.4959
+
+2026-07-23 14:26:12,125 - __main__ - INFO - [Epoch 54]
+2026-07-23 14:26:24,902 - __main__ - INFO - 2026_07_23_14_26_24 [Epoch] 054 [Loss] loss_reg 0.3517 loss_cls 0.0281 weighted_loss_overall 0.4920
+
+2026-07-23 14:26:25,201 - __main__ - INFO - [Epoch 55]
+2026-07-23 14:26:51,816 - __main__ - INFO - 2026_07_23_14_26_51 [Epoch] 055 [Loss] loss_reg 0.3492 loss_cls 0.0279 weighted_loss_overall 0.4885
+
+2026-07-23 14:27:29,220 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 44.31),
+                ('MR-full-R1@0.5', 30.98),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 21.89),
+                ('MR-full-mAP@0.5', 41.19),
+                ('MR-full-mAP@0.75', 22.89),
+                ('MR-full-mIoU', 29.07),
+                ('GMR-AUROC', 51.62),
+                ('GMR-Rej-F1@0.4', 11.07),
+                ('GMR-Acc@0.4', 51.61),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 14.54),
+                ('GMR-G-mIoU@3', 8.84),
+                ('GMR-G-mIoU@5', 6.57),
+                ('GMR-mAP', 21.89),
+                ('GMR-mR@1', 12.2),
+                ('GMR-mR@3', 24.96),
+                ('GMR-mR@5', 33.03),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.09),
+                ('GMR-mR+@5', 8.74),
+                ('GMR-mIoU@1', 29.07),
+                ('GMR-mIoU@3', 25.28),
+                ('GMR-mIoU@5', 25.21),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.36),
+                ('GMR-mIoU+@5', 7.18)])
+2026-07-23 14:27:29,220 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 44.31),
+                ('MR-full-R1@0.5', 31.76),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 22.62),
+                ('MR-full-mAP@0.5', 41.97),
+                ('MR-full-mAP@0.75', 23.73),
+                ('MR-full-mIoU', 29.33),
+                ('GMR-AUROC', 51.62),
+                ('GMR-Rej-F1@0.4', 9.6),
+                ('GMR-Acc@0.4', 51.4),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 14.25),
+                ('GMR-G-mIoU@3', 8.31),
+                ('GMR-G-mIoU@5', 6.06),
+                ('GMR-mAP', 22.62),
+                ('GMR-mR@1', 12.52),
+                ('GMR-mR@3', 25.85),
+                ('GMR-mR@5', 33.88),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 2.93),
+                ('GMR-mR+@5', 8.37),
+                ('GMR-mIoU@1', 29.33),
+                ('GMR-mIoU@3', 25.26),
+                ('GMR-mIoU@5', 25.14),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 4.51),
+                ('GMR-mIoU+@5', 4.13)])
+2026-07-23 14:27:29,740 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 14:27:29,998 - __main__ - INFO - [Epoch 56]
+2026-07-23 14:27:37,006 - __main__ - INFO - 2026_07_23_14_27_37 [Epoch] 056 [Loss] loss_reg 0.3498 loss_cls 0.0279 weighted_loss_overall 0.4892
+
+2026-07-23 14:27:37,279 - __main__ - INFO - [Epoch 57]
+2026-07-23 14:27:44,160 - __main__ - INFO - 2026_07_23_14_27_44 [Epoch] 057 [Loss] loss_reg 0.3474 loss_cls 0.0277 weighted_loss_overall 0.4861
+
+2026-07-23 14:27:44,420 - __main__ - INFO - [Epoch 58]
+2026-07-23 14:27:51,703 - __main__ - INFO - 2026_07_23_14_27_51 [Epoch] 058 [Loss] loss_reg 0.3470 loss_cls 0.0277 weighted_loss_overall 0.4855
+
+2026-07-23 14:27:51,992 - __main__ - INFO - [Epoch 59]
+2026-07-23 14:27:59,768 - __main__ - INFO - 2026_07_23_14_27_59 [Epoch] 059 [Loss] loss_reg 0.3464 loss_cls 0.0276 weighted_loss_overall 0.4845
+
+2026-07-23 14:28:00,058 - __main__ - INFO - [Epoch 60]
+2026-07-23 14:28:06,720 - __main__ - INFO - 2026_07_23_14_28_06 [Epoch] 060 [Loss] loss_reg 0.3464 loss_cls 0.0276 weighted_loss_overall 0.4846
+
+2026-07-23 14:28:27,405 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 44.31),
+                ('MR-full-R1@0.5', 32.94),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 21.52),
+                ('MR-full-mAP@0.5', 41.0),
+                ('MR-full-mAP@0.75', 22.19),
+                ('MR-full-mIoU', 29.68),
+                ('GMR-AUROC', 61.2),
+                ('GMR-Rej-F1@0.4', 31.94),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.54),
+                ('GMR-G-mIoU@3', 15.69),
+                ('GMR-G-mIoU@5', 13.42),
+                ('GMR-mAP', 21.52),
+                ('GMR-mR@1', 12.54),
+                ('GMR-mR@3', 23.44),
+                ('GMR-mR@5', 30.96),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 2.87),
+                ('GMR-mR+@5', 7.59),
+                ('GMR-mIoU@1', 29.68),
+                ('GMR-mIoU@3', 25.65),
+                ('GMR-mIoU@5', 25.52),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.54),
+                ('GMR-mIoU+@5', 7.13)])
+2026-07-23 14:28:27,405 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 44.71),
+                ('MR-full-R1@0.5', 32.16),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 22.02),
+                ('MR-full-mAP@0.5', 41.22),
+                ('MR-full-mAP@0.75', 22.86),
+                ('MR-full-mIoU', 29.65),
+                ('GMR-AUROC', 61.2),
+                ('GMR-Rej-F1@0.4', 30.39),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.94),
+                ('GMR-G-mIoU@3', 15.06),
+                ('GMR-G-mIoU@5', 12.78),
+                ('GMR-mAP', 22.02),
+                ('GMR-mR@1', 12.42),
+                ('GMR-mR@3', 24.4),
+                ('GMR-mR@5', 32.19),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 1.98),
+                ('GMR-mR+@5', 7.15),
+                ('GMR-mIoU@1', 29.65),
+                ('GMR-mIoU@3', 25.64),
+                ('GMR-mIoU@5', 25.51),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 4.95),
+                ('GMR-mIoU+@5', 4.58)])
+2026-07-23 14:28:27,682 - __main__ - INFO - [Epoch 61]
+2026-07-23 14:28:36,495 - __main__ - INFO - 2026_07_23_14_28_36 [Epoch] 061 [Loss] loss_reg 0.3420 loss_cls 0.0274 weighted_loss_overall 0.4791
+
+2026-07-23 14:28:36,771 - __main__ - INFO - [Epoch 62]
+2026-07-23 14:28:45,051 - __main__ - INFO - 2026_07_23_14_28_45 [Epoch] 062 [Loss] loss_reg 0.3414 loss_cls 0.0274 weighted_loss_overall 0.4785
+
+2026-07-23 14:28:45,372 - __main__ - INFO - [Epoch 63]
+2026-07-23 14:28:55,594 - __main__ - INFO - 2026_07_23_14_28_55 [Epoch] 063 [Loss] loss_reg 0.3392 loss_cls 0.0274 weighted_loss_overall 0.4764
+
+2026-07-23 14:28:55,899 - __main__ - INFO - [Epoch 64]
+2026-07-23 14:29:04,257 - __main__ - INFO - 2026_07_23_14_29_04 [Epoch] 064 [Loss] loss_reg 0.3395 loss_cls 0.0272 weighted_loss_overall 0.4756
+
+2026-07-23 14:29:04,544 - __main__ - INFO - [Epoch 65]
+2026-07-23 14:29:13,599 - __main__ - INFO - 2026_07_23_14_29_13 [Epoch] 065 [Loss] loss_reg 0.3404 loss_cls 0.0272 weighted_loss_overall 0.4765
+
+2026-07-23 14:29:37,289 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 45.88),
+                ('MR-full-R1@0.5', 34.9),
+                ('MR-full-R1@0.7', 18.82),
+                ('MR-full-mAP', 21.87),
+                ('MR-full-mAP@0.5', 42.57),
+                ('MR-full-mAP@0.75', 22.92),
+                ('MR-full-mIoU', 30.89),
+                ('GMR-AUROC', 53.72),
+                ('GMR-Rej-F1@0.4', 24.91),
+                ('GMR-Acc@0.4', 54.62),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.86),
+                ('GMR-G-mIoU@3', 13.43),
+                ('GMR-G-mIoU@5', 11.11),
+                ('GMR-mAP', 21.87),
+                ('GMR-mR@1', 12.59),
+                ('GMR-mR@3', 23.89),
+                ('GMR-mR@5', 32.63),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.76),
+                ('GMR-mR+@5', 10.2),
+                ('GMR-mIoU@1', 30.89),
+                ('GMR-mIoU@3', 25.96),
+                ('GMR-mIoU@5', 25.83),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.95),
+                ('GMR-mIoU+@5', 7.55)])
+2026-07-23 14:29:37,289 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 45.88),
+                ('MR-full-R1@0.5', 34.51),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 22.23),
+                ('MR-full-mAP@0.5', 43.5),
+                ('MR-full-mAP@0.75', 23.54),
+                ('MR-full-mIoU', 30.47),
+                ('GMR-AUROC', 53.72),
+                ('GMR-Rej-F1@0.4', 24.91),
+                ('GMR-Acc@0.4', 54.62),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.73),
+                ('GMR-G-mIoU@3', 13.37),
+                ('GMR-G-mIoU@5', 11.08),
+                ('GMR-mAP', 22.23),
+                ('GMR-mR@1', 12.36),
+                ('GMR-mR@3', 24.92),
+                ('GMR-mR@5', 32.46),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 3.98),
+                ('GMR-mR+@5', 9.54),
+                ('GMR-mIoU@1', 30.47),
+                ('GMR-mIoU@3', 25.87),
+                ('GMR-mIoU@5', 25.73),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 5.1),
+                ('GMR-mIoU+@5', 4.72)])
+2026-07-23 14:29:37,534 - __main__ - INFO - [Epoch 66]
+2026-07-23 14:29:43,902 - __main__ - INFO - 2026_07_23_14_29_43 [Epoch] 066 [Loss] loss_reg 0.3403 loss_cls 0.0274 weighted_loss_overall 0.4772
+
+2026-07-23 14:29:44,161 - __main__ - INFO - [Epoch 67]
+2026-07-23 14:29:49,723 - __main__ - INFO - 2026_07_23_14_29_49 [Epoch] 067 [Loss] loss_reg 0.3391 loss_cls 0.0272 weighted_loss_overall 0.4751
+
+2026-07-23 14:29:49,965 - __main__ - INFO - [Epoch 68]
+2026-07-23 14:29:57,306 - __main__ - INFO - 2026_07_23_14_29_57 [Epoch] 068 [Loss] loss_reg 0.3363 loss_cls 0.0270 weighted_loss_overall 0.4715
+
+2026-07-23 14:29:57,576 - __main__ - INFO - [Epoch 69]
+2026-07-23 14:30:05,558 - __main__ - INFO - 2026_07_23_14_30_05 [Epoch] 069 [Loss] loss_reg 0.3355 loss_cls 0.0271 weighted_loss_overall 0.4708
+
+2026-07-23 14:30:05,788 - __main__ - INFO - [Epoch 70]
+2026-07-23 14:30:14,195 - __main__ - INFO - 2026_07_23_14_30_14 [Epoch] 070 [Loss] loss_reg 0.3327 loss_cls 0.0269 weighted_loss_overall 0.4674
+
+2026-07-23 14:30:38,943 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 45.49),
+                ('MR-full-R1@0.5', 34.9),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 22.0),
+                ('MR-full-mAP@0.5', 42.61),
+                ('MR-full-mAP@0.75', 22.97),
+                ('MR-full-mIoU', 30.49),
+                ('GMR-AUROC', 59.93),
+                ('GMR-Rej-F1@0.4', 41.06),
+                ('GMR-Acc@0.4', 56.77),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 26.13),
+                ('GMR-G-mIoU@3', 20.57),
+                ('GMR-G-mIoU@5', 18.41),
+                ('GMR-mAP', 22.0),
+                ('GMR-mR@1', 12.54),
+                ('GMR-mR@3', 24.78),
+                ('GMR-mR@5', 32.41),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.09),
+                ('GMR-mR+@5', 8.37),
+                ('GMR-mIoU@1', 30.49),
+                ('GMR-mIoU@3', 25.49),
+                ('GMR-mIoU@5', 25.36),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.9),
+                ('GMR-mIoU+@5', 7.51)])
+2026-07-23 14:30:38,943 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 44.71),
+                ('MR-full-R1@0.5', 34.12),
+                ('MR-full-R1@0.7', 17.25),
+                ('MR-full-mAP', 22.64),
+                ('MR-full-mAP@0.5', 43.48),
+                ('MR-full-mAP@0.75', 24.11),
+                ('MR-full-mIoU', 30.01),
+                ('GMR-AUROC', 59.93),
+                ('GMR-Rej-F1@0.4', 40.12),
+                ('GMR-Acc@0.4', 56.99),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 25.48),
+                ('GMR-G-mIoU@3', 19.89),
+                ('GMR-G-mIoU@5', 17.74),
+                ('GMR-mAP', 22.64),
+                ('GMR-mR@1', 12.26),
+                ('GMR-mR@3', 25.29),
+                ('GMR-mR@5', 33.32),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 2.65),
+                ('GMR-mR+@5', 10.81),
+                ('GMR-mIoU@1', 30.01),
+                ('GMR-mIoU@3', 25.18),
+                ('GMR-mIoU@5', 25.05),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 5.93),
+                ('GMR-mIoU+@5', 5.56)])
+2026-07-23 14:30:39,722 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 14:30:39,972 - __main__ - INFO - [Epoch 71]
+2026-07-23 14:30:47,731 - __main__ - INFO - 2026_07_23_14_30_47 [Epoch] 071 [Loss] loss_reg 0.3332 loss_cls 0.0271 weighted_loss_overall 0.4687
+
+2026-07-23 14:30:48,010 - __main__ - INFO - [Epoch 72]
+2026-07-23 14:30:55,918 - __main__ - INFO - 2026_07_23_14_30_55 [Epoch] 072 [Loss] loss_reg 0.3306 loss_cls 0.0268 weighted_loss_overall 0.4645
+
+2026-07-23 14:30:56,199 - __main__ - INFO - [Epoch 73]
+2026-07-23 14:31:02,489 - __main__ - INFO - 2026_07_23_14_31_02 [Epoch] 073 [Loss] loss_reg 0.3323 loss_cls 0.0267 weighted_loss_overall 0.4660
+
+2026-07-23 14:31:02,714 - __main__ - INFO - [Epoch 74]
+2026-07-23 14:31:09,343 - __main__ - INFO - 2026_07_23_14_31_09 [Epoch] 074 [Loss] loss_reg 0.3302 loss_cls 0.0266 weighted_loss_overall 0.4631
+
+2026-07-23 14:31:09,598 - __main__ - INFO - [Epoch 75]
+2026-07-23 14:31:15,502 - __main__ - INFO - 2026_07_23_14_31_15 [Epoch] 075 [Loss] loss_reg 0.3283 loss_cls 0.0265 weighted_loss_overall 0.4609
+
+2026-07-23 14:31:37,705 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 48.24),
+                ('MR-full-R1@0.5', 35.69),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 22.82),
+                ('MR-full-mAP@0.5', 44.18),
+                ('MR-full-mAP@0.75', 23.92),
+                ('MR-full-mIoU', 31.86),
+                ('GMR-AUROC', 56.56),
+                ('GMR-Rej-F1@0.4', 31.61),
+                ('GMR-Acc@0.4', 54.41),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 22.64),
+                ('GMR-G-mIoU@3', 16.39),
+                ('GMR-G-mIoU@5', 14.09),
+                ('GMR-mAP', 22.82),
+                ('GMR-mR@1', 13.33),
+                ('GMR-mR@3', 26.49),
+                ('GMR-mR@5', 33.77),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.48),
+                ('GMR-mR+@5', 8.2),
+                ('GMR-mIoU@1', 31.86),
+                ('GMR-mIoU@3', 27.15),
+                ('GMR-mIoU@5', 27.03),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.41),
+                ('GMR-mIoU+@5', 7.11)])
+2026-07-23 14:31:37,705 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 48.24),
+                ('MR-full-R1@0.5', 35.69),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 23.83),
+                ('MR-full-mAP@0.5', 45.62),
+                ('MR-full-mAP@0.75', 25.27),
+                ('MR-full-mIoU', 31.86),
+                ('GMR-AUROC', 56.56),
+                ('GMR-Rej-F1@0.4', 30.72),
+                ('GMR-Acc@0.4', 54.41),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 22.21),
+                ('GMR-G-mIoU@3', 15.97),
+                ('GMR-G-mIoU@5', 13.67),
+                ('GMR-mAP', 23.83),
+                ('GMR-mR@1', 13.33),
+                ('GMR-mR@3', 27.66),
+                ('GMR-mR@5', 36.22),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.87),
+                ('GMR-mR+@5', 11.04),
+                ('GMR-mIoU@1', 31.86),
+                ('GMR-mIoU@3', 27.52),
+                ('GMR-mIoU@5', 27.39),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 5.89),
+                ('GMR-mIoU+@5', 5.47)])
+2026-07-23 14:31:38,273 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 14:31:38,564 - __main__ - INFO - [Epoch 76]
+2026-07-23 14:31:44,987 - __main__ - INFO - 2026_07_23_14_31_44 [Epoch] 076 [Loss] loss_reg 0.3296 loss_cls 0.0265 weighted_loss_overall 0.4622
+
+2026-07-23 14:31:45,252 - __main__ - INFO - [Epoch 77]
+2026-07-23 14:33:07,726 - __main__ - INFO - 2026_07_23_14_33_07 [Epoch] 077 [Loss] loss_reg 0.3284 loss_cls 0.0265 weighted_loss_overall 0.4608
+
+2026-07-23 14:33:07,949 - __main__ - INFO - [Epoch 78]
+2026-07-23 14:34:47,288 - __main__ - INFO - 2026_07_23_14_34_47 [Epoch] 078 [Loss] loss_reg 0.3254 loss_cls 0.0263 weighted_loss_overall 0.4569
+
+2026-07-23 14:34:47,511 - __main__ - INFO - [Epoch 79]
+2026-07-23 14:36:39,818 - __main__ - INFO - 2026_07_23_14_36_39 [Epoch] 079 [Loss] loss_reg 0.3255 loss_cls 0.0264 weighted_loss_overall 0.4574
+
+2026-07-23 14:36:40,122 - __main__ - INFO - [Epoch 80]
+2026-07-23 14:38:54,165 - __main__ - INFO - 2026_07_23_14_38_54 [Epoch] 080 [Loss] loss_reg 0.3222 loss_cls 0.0262 weighted_loss_overall 0.4533
+
+2026-07-23 14:40:36,644 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 18.82),
+                ('MR-full-mAP', 23.25),
+                ('MR-full-mAP@0.5', 45.85),
+                ('MR-full-mAP@0.75', 23.94),
+                ('MR-full-mIoU', 32.48),
+                ('GMR-AUROC', 60.21),
+                ('GMR-Rej-F1@0.4', 22.22),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.25),
+                ('GMR-G-mIoU@3', 12.52),
+                ('GMR-G-mIoU@5', 9.96),
+                ('GMR-mAP', 23.25),
+                ('GMR-mR@1', 13.69),
+                ('GMR-mR@3', 26.15),
+                ('GMR-mR@5', 33.55),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.04),
+                ('GMR-mR+@5', 8.74),
+                ('GMR-mIoU@1', 32.48),
+                ('GMR-mIoU@3', 27.63),
+                ('GMR-mIoU@5', 27.51),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.35),
+                ('GMR-mIoU+@5', 8.04)])
+2026-07-23 14:40:36,645 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 18.82),
+                ('MR-full-mAP', 24.23),
+                ('MR-full-mAP@0.5', 46.92),
+                ('MR-full-mAP@0.75', 25.56),
+                ('MR-full-mIoU', 32.56),
+                ('GMR-AUROC', 60.21),
+                ('GMR-Rej-F1@0.4', 22.31),
+                ('GMR-Acc@0.4', 58.06),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.27),
+                ('GMR-G-mIoU@3', 12.35),
+                ('GMR-G-mIoU@5', 9.86),
+                ('GMR-mAP', 24.23),
+                ('GMR-mR@1', 13.74),
+                ('GMR-mR@3', 27.09),
+                ('GMR-mR@5', 35.83),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.43),
+                ('GMR-mR+@5', 10.59),
+                ('GMR-mIoU@1', 32.56),
+                ('GMR-mIoU@3', 27.41),
+                ('GMR-mIoU@5', 27.3),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 5.14),
+                ('GMR-mIoU+@5', 4.87)])
+2026-07-23 14:40:37,314 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 14:40:37,542 - __main__ - INFO - [Epoch 81]
+2026-07-23 14:42:40,923 - __main__ - INFO - 2026_07_23_14_42_40 [Epoch] 081 [Loss] loss_reg 0.3264 loss_cls 0.0263 weighted_loss_overall 0.4578
+
+2026-07-23 14:42:41,191 - __main__ - INFO - [Epoch 82]
+2026-07-23 14:44:47,744 - __main__ - INFO - 2026_07_23_14_44_47 [Epoch] 082 [Loss] loss_reg 0.3236 loss_cls 0.0262 weighted_loss_overall 0.4545
+
+2026-07-23 14:44:48,019 - __main__ - INFO - [Epoch 83]
+2026-07-23 14:46:51,668 - __main__ - INFO - 2026_07_23_14_46_51 [Epoch] 083 [Loss] loss_reg 0.3199 loss_cls 0.0261 weighted_loss_overall 0.4502
+
+2026-07-23 14:46:51,924 - __main__ - INFO - [Epoch 84]
+2026-07-23 14:48:46,768 - __main__ - INFO - 2026_07_23_14_48_46 [Epoch] 084 [Loss] loss_reg 0.3197 loss_cls 0.0260 weighted_loss_overall 0.4496
+
+2026-07-23 14:48:47,024 - __main__ - INFO - [Epoch 85]
+2026-07-23 14:50:38,622 - __main__ - INFO - 2026_07_23_14_50_38 [Epoch] 085 [Loss] loss_reg 0.3200 loss_cls 0.0260 weighted_loss_overall 0.4501
+
+2026-07-23 14:52:08,370 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 18.82),
+                ('MR-full-mAP', 23.06),
+                ('MR-full-mAP@0.5', 46.62),
+                ('MR-full-mAP@0.75', 24.25),
+                ('MR-full-mIoU', 32.96),
+                ('GMR-AUROC', 56.45),
+                ('GMR-Rej-F1@0.4', 12.55),
+                ('GMR-Acc@0.4', 55.05),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 16.71),
+                ('GMR-G-mIoU@3', 9.97),
+                ('GMR-G-mIoU@5', 7.32),
+                ('GMR-mAP', 23.06),
+                ('GMR-mR@1', 13.29),
+                ('GMR-mR@3', 27.43),
+                ('GMR-mR@5', 34.27),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.56),
+                ('GMR-mR+@5', 11.11),
+                ('GMR-mIoU@1', 32.96),
+                ('GMR-mIoU@3', 28.31),
+                ('GMR-mIoU@5', 28.23),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.23),
+                ('GMR-mIoU+@5', 9.07)])
+2026-07-23 14:52:08,370 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 18.82),
+                ('MR-full-mAP', 23.9),
+                ('MR-full-mAP@0.5', 47.83),
+                ('MR-full-mAP@0.75', 25.59),
+                ('MR-full-mIoU', 33.04),
+                ('GMR-AUROC', 56.45),
+                ('GMR-Rej-F1@0.4', 11.76),
+                ('GMR-Acc@0.4', 54.84),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 16.52),
+                ('GMR-G-mIoU@3', 9.63),
+                ('GMR-G-mIoU@5', 7.01),
+                ('GMR-mAP', 23.9),
+                ('GMR-mR@1', 13.37),
+                ('GMR-mR@3', 28.05),
+                ('GMR-mR@5', 35.79),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.11),
+                ('GMR-mR+@5', 11.28),
+                ('GMR-mIoU@1', 33.04),
+                ('GMR-mIoU@3', 28.14),
+                ('GMR-mIoU@5', 28.04),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.51),
+                ('GMR-mIoU+@5', 6.32)])
+2026-07-23 14:52:08,651 - __main__ - INFO - [Epoch 86]
+2026-07-23 14:53:59,955 - __main__ - INFO - 2026_07_23_14_53_59 [Epoch] 086 [Loss] loss_reg 0.3186 loss_cls 0.0259 weighted_loss_overall 0.4479
+
+2026-07-23 14:54:00,481 - __main__ - INFO - [Epoch 87]
+2026-07-23 14:55:51,533 - __main__ - INFO - 2026_07_23_14_55_51 [Epoch] 087 [Loss] loss_reg 0.3186 loss_cls 0.0257 weighted_loss_overall 0.4473
+
+2026-07-23 14:55:51,777 - __main__ - INFO - [Epoch 88]
+2026-07-23 14:57:39,928 - __main__ - INFO - 2026_07_23_14_57_39 [Epoch] 088 [Loss] loss_reg 0.3144 loss_cls 0.0257 weighted_loss_overall 0.4428
+
+2026-07-23 14:57:40,183 - __main__ - INFO - [Epoch 89]
+2026-07-23 14:59:26,642 - __main__ - INFO - 2026_07_23_14_59_26 [Epoch] 089 [Loss] loss_reg 0.3155 loss_cls 0.0256 weighted_loss_overall 0.4436
+
+2026-07-23 14:59:26,922 - __main__ - INFO - [Epoch 90]
+2026-07-23 15:01:08,827 - __main__ - INFO - 2026_07_23_15_01_08 [Epoch] 090 [Loss] loss_reg 0.3123 loss_cls 0.0257 weighted_loss_overall 0.4409
+
+2026-07-23 15:02:28,311 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 19.61),
+                ('MR-full-mAP', 23.92),
+                ('MR-full-mAP@0.5', 46.91),
+                ('MR-full-mAP@0.75', 25.31),
+                ('MR-full-mIoU', 33.35),
+                ('GMR-AUROC', 63.12),
+                ('GMR-Rej-F1@0.4', 24.41),
+                ('GMR-Acc@0.4', 58.71),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.56),
+                ('GMR-G-mIoU@3', 13.62),
+                ('GMR-G-mIoU@5', 10.88),
+                ('GMR-mAP', 23.92),
+                ('GMR-mR@1', 13.91),
+                ('GMR-mR@3', 28.15),
+                ('GMR-mR@5', 33.28),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.15),
+                ('GMR-mR+@5', 11.15),
+                ('GMR-mIoU@1', 33.35),
+                ('GMR-mIoU@3', 29.18),
+                ('GMR-mIoU@5', 29.06),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.15),
+                ('GMR-mIoU+@5', 8.85)])
+2026-07-23 15:02:28,311 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 19.61),
+                ('MR-full-mAP', 25.09),
+                ('MR-full-mAP@0.5', 48.45),
+                ('MR-full-mAP@0.75', 26.98),
+                ('MR-full-mIoU', 33.31),
+                ('GMR-AUROC', 63.12),
+                ('GMR-Rej-F1@0.4', 23.72),
+                ('GMR-Acc@0.4', 58.49),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.26),
+                ('GMR-G-mIoU@3', 13.49),
+                ('GMR-G-mIoU@5', 10.74),
+                ('GMR-mAP', 25.09),
+                ('GMR-mR@1', 13.91),
+                ('GMR-mR@3', 28.28),
+                ('GMR-mR@5', 36.08),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.31),
+                ('GMR-mR+@5', 14.04),
+                ('GMR-mIoU@1', 33.31),
+                ('GMR-mIoU@3', 29.54),
+                ('GMR-mIoU@5', 29.51),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.55),
+                ('GMR-mIoU+@5', 8.57)])
+2026-07-23 15:02:28,768 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 15:02:28,994 - __main__ - INFO - [Epoch 91]
+2026-07-23 15:04:12,049 - __main__ - INFO - 2026_07_23_15_04_12 [Epoch] 091 [Loss] loss_reg 0.3163 loss_cls 0.0258 weighted_loss_overall 0.4453
+
+2026-07-23 15:04:12,302 - __main__ - INFO - [Epoch 92]
+2026-07-23 15:05:56,761 - __main__ - INFO - 2026_07_23_15_05_56 [Epoch] 092 [Loss] loss_reg 0.3154 loss_cls 0.0255 weighted_loss_overall 0.4430
+
+2026-07-23 15:05:56,982 - __main__ - INFO - [Epoch 93]
+2026-07-23 15:07:41,390 - __main__ - INFO - 2026_07_23_15_07_41 [Epoch] 093 [Loss] loss_reg 0.3115 loss_cls 0.0256 weighted_loss_overall 0.4394
+
+2026-07-23 15:07:41,632 - __main__ - INFO - [Epoch 94]
+2026-07-23 15:09:26,553 - __main__ - INFO - 2026_07_23_15_09_26 [Epoch] 094 [Loss] loss_reg 0.3122 loss_cls 0.0254 weighted_loss_overall 0.4391
+
+2026-07-23 15:09:26,772 - __main__ - INFO - [Epoch 95]
+2026-07-23 15:11:13,616 - __main__ - INFO - 2026_07_23_15_11_13 [Epoch] 095 [Loss] loss_reg 0.3152 loss_cls 0.0255 weighted_loss_overall 0.4425
+
+2026-07-23 15:12:33,132 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 36.86),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 23.31),
+                ('MR-full-mAP@0.5', 45.37),
+                ('MR-full-mAP@0.75', 24.76),
+                ('MR-full-mIoU', 32.72),
+                ('GMR-AUROC', 59.18),
+                ('GMR-Rej-F1@0.4', 27.97),
+                ('GMR-Acc@0.4', 55.7),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.8),
+                ('GMR-G-mIoU@3', 14.81),
+                ('GMR-G-mIoU@5', 12.36),
+                ('GMR-mAP', 23.31),
+                ('GMR-mR@1', 12.35),
+                ('GMR-mR@3', 29.08),
+                ('GMR-mR@5', 35.0),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.7),
+                ('GMR-mR+@5', 11.43),
+                ('GMR-mIoU@1', 32.72),
+                ('GMR-mIoU@3', 27.75),
+                ('GMR-mIoU@5', 27.64),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.24),
+                ('GMR-mIoU+@5', 7.96)])
+2026-07-23 15:12:33,132 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 24.77),
+                ('MR-full-mAP@0.5', 47.57),
+                ('MR-full-mAP@0.75', 26.5),
+                ('MR-full-mIoU', 33.24),
+                ('GMR-AUROC', 59.18),
+                ('GMR-Rej-F1@0.4', 28.07),
+                ('GMR-Acc@0.4', 55.91),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.96),
+                ('GMR-G-mIoU@3', 14.86),
+                ('GMR-G-mIoU@5', 12.39),
+                ('GMR-mAP', 24.77),
+                ('GMR-mR@1', 13.05),
+                ('GMR-mR@3', 30.19),
+                ('GMR-mR@5', 36.39),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.31),
+                ('GMR-mR+@5', 13.19),
+                ('GMR-mIoU@1', 33.24),
+                ('GMR-mIoU@3', 28.5),
+                ('GMR-mIoU@5', 28.41),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.43),
+                ('GMR-mIoU+@5', 7.25)])
+2026-07-23 15:12:33,377 - __main__ - INFO - [Epoch 96]
+2026-07-23 15:14:21,658 - __main__ - INFO - 2026_07_23_15_14_21 [Epoch] 096 [Loss] loss_reg 0.3103 loss_cls 0.0253 weighted_loss_overall 0.4368
+
+2026-07-23 15:14:21,895 - __main__ - INFO - [Epoch 97]
+2026-07-23 15:16:02,926 - __main__ - INFO - 2026_07_23_15_16_02 [Epoch] 097 [Loss] loss_reg 0.3120 loss_cls 0.0253 weighted_loss_overall 0.4386
+
+2026-07-23 15:16:03,175 - __main__ - INFO - [Epoch 98]
+2026-07-23 15:17:41,469 - __main__ - INFO - 2026_07_23_15_17_41 [Epoch] 098 [Loss] loss_reg 0.3096 loss_cls 0.0251 weighted_loss_overall 0.4352
+
+2026-07-23 15:17:41,736 - __main__ - INFO - [Epoch 99]
+2026-07-23 15:19:19,571 - __main__ - INFO - 2026_07_23_15_19_19 [Epoch] 099 [Loss] loss_reg 0.3077 loss_cls 0.0252 weighted_loss_overall 0.4337
+
+2026-07-23 15:19:19,791 - __main__ - INFO - [Epoch 100]
+2026-07-23 15:20:56,131 - __main__ - INFO - 2026_07_23_15_20_56 [Epoch] 100 [Loss] loss_reg 0.3039 loss_cls 0.0251 weighted_loss_overall 0.4295
+
+2026-07-23 15:22:11,010 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 23.86),
+                ('MR-full-mAP@0.5', 46.96),
+                ('MR-full-mAP@0.75', 24.87),
+                ('MR-full-mIoU', 33.4),
+                ('GMR-AUROC', 57.79),
+                ('GMR-Rej-F1@0.4', 21.26),
+                ('GMR-Acc@0.4', 56.99),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.62),
+                ('GMR-G-mIoU@3', 12.71),
+                ('GMR-G-mIoU@5', 9.99),
+                ('GMR-mAP', 23.86),
+                ('GMR-mR@1', 13.5),
+                ('GMR-mR@3', 28.83),
+                ('GMR-mR@5', 35.31),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.81),
+                ('GMR-mR+@5', 10.48),
+                ('GMR-mIoU@1', 33.4),
+                ('GMR-mIoU@3', 29.18),
+                ('GMR-mIoU@5', 29.06),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.08),
+                ('GMR-mIoU+@5', 8.78)])
+2026-07-23 15:22:11,010 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 17.65),
+                ('MR-full-mAP', 24.76),
+                ('MR-full-mAP@0.5', 48.24),
+                ('MR-full-mAP@0.75', 26.0),
+                ('MR-full-mIoU', 33.18),
+                ('GMR-AUROC', 57.79),
+                ('GMR-Rej-F1@0.4', 19.84),
+                ('GMR-Acc@0.4', 56.56),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.19),
+                ('GMR-G-mIoU@3', 12.12),
+                ('GMR-G-mIoU@5', 9.46),
+                ('GMR-mAP', 24.76),
+                ('GMR-mR@1', 13.1),
+                ('GMR-mR@3', 29.58),
+                ('GMR-mR@5', 37.12),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.87),
+                ('GMR-mR+@5', 12.94),
+                ('GMR-mIoU@1', 33.18),
+                ('GMR-mIoU@3', 28.68),
+                ('GMR-mIoU@5', 28.57),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.59),
+                ('GMR-mIoU+@5', 6.35)])
+2026-07-23 15:22:11,224 - __main__ - INFO - [Epoch 101]
+2026-07-23 15:23:42,104 - __main__ - INFO - 2026_07_23_15_23_42 [Epoch] 101 [Loss] loss_reg 0.3041 loss_cls 0.0252 weighted_loss_overall 0.4299
+
+2026-07-23 15:23:42,313 - __main__ - INFO - [Epoch 102]
+2026-07-23 15:25:22,074 - __main__ - INFO - 2026_07_23_15_25_22 [Epoch] 102 [Loss] loss_reg 0.3051 loss_cls 0.0250 weighted_loss_overall 0.4303
+
+2026-07-23 15:25:22,307 - __main__ - INFO - [Epoch 103]
+2026-07-23 15:27:22,554 - __main__ - INFO - 2026_07_23_15_27_22 [Epoch] 103 [Loss] loss_reg 0.3035 loss_cls 0.0250 weighted_loss_overall 0.4285
+
+2026-07-23 15:27:22,848 - __main__ - INFO - [Epoch 104]
+2026-07-23 15:29:14,989 - __main__ - INFO - 2026_07_23_15_29_14 [Epoch] 104 [Loss] loss_reg 0.3016 loss_cls 0.0248 weighted_loss_overall 0.4256
+
+2026-07-23 15:29:15,299 - __main__ - INFO - [Epoch 105]
+2026-07-23 15:31:04,432 - __main__ - INFO - 2026_07_23_15_31_04 [Epoch] 105 [Loss] loss_reg 0.3051 loss_cls 0.0249 weighted_loss_overall 0.4294
+
+2026-07-23 15:32:27,918 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 52.55),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 23.63),
+                ('MR-full-mAP@0.5', 45.7),
+                ('MR-full-mAP@0.75', 24.63),
+                ('MR-full-mIoU', 33.91),
+                ('GMR-AUROC', 62.92),
+                ('GMR-Rej-F1@0.4', 27.94),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.79),
+                ('GMR-G-mIoU@3', 14.91),
+                ('GMR-G-mIoU@5', 12.25),
+                ('GMR-mAP', 23.63),
+                ('GMR-mR@1', 13.5),
+                ('GMR-mR@3', 28.15),
+                ('GMR-mR@5', 34.54),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.7),
+                ('GMR-mR+@5', 11.43),
+                ('GMR-mIoU@1', 33.91),
+                ('GMR-mIoU@3', 28.96),
+                ('GMR-mIoU@5', 28.85),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.68),
+                ('GMR-mIoU+@5', 8.4)])
+2026-07-23 15:32:27,918 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 52.55),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 25.21),
+                ('MR-full-mAP@0.5', 48.24),
+                ('MR-full-mAP@0.75', 26.46),
+                ('MR-full-mIoU', 34.01),
+                ('GMR-AUROC', 62.92),
+                ('GMR-Rej-F1@0.4', 27.94),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.85),
+                ('GMR-G-mIoU@3', 14.88),
+                ('GMR-G-mIoU@5', 12.23),
+                ('GMR-mAP', 25.21),
+                ('GMR-mR@1', 13.65),
+                ('GMR-mR@3', 28.74),
+                ('GMR-mR@5', 36.86),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.98),
+                ('GMR-mR+@5', 13.72),
+                ('GMR-mIoU@1', 34.01),
+                ('GMR-mIoU@3', 29.02),
+                ('GMR-mIoU@5', 28.92),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.34),
+                ('GMR-mIoU+@5', 7.16)])
+2026-07-23 15:32:28,178 - __main__ - INFO - [Epoch 106]
+2026-07-23 15:34:14,337 - __main__ - INFO - 2026_07_23_15_34_14 [Epoch] 106 [Loss] loss_reg 0.3010 loss_cls 0.0247 weighted_loss_overall 0.4246
+
+2026-07-23 15:34:14,585 - __main__ - INFO - [Epoch 107]
+2026-07-23 15:36:04,624 - __main__ - INFO - 2026_07_23_15_36_04 [Epoch] 107 [Loss] loss_reg 0.2998 loss_cls 0.0246 weighted_loss_overall 0.4229
+
+2026-07-23 15:36:04,914 - __main__ - INFO - [Epoch 108]
+2026-07-23 15:37:54,877 - __main__ - INFO - 2026_07_23_15_37_54 [Epoch] 108 [Loss] loss_reg 0.3031 loss_cls 0.0248 weighted_loss_overall 0.4269
+
+2026-07-23 15:37:55,114 - __main__ - INFO - [Epoch 109]
+2026-07-23 15:39:44,447 - __main__ - INFO - 2026_07_23_15_39_44 [Epoch] 109 [Loss] loss_reg 0.2972 loss_cls 0.0249 weighted_loss_overall 0.4215
+
+2026-07-23 15:39:44,670 - __main__ - INFO - [Epoch 110]
+2026-07-23 15:41:37,283 - __main__ - INFO - 2026_07_23_15_41_37 [Epoch] 110 [Loss] loss_reg 0.2951 loss_cls 0.0246 weighted_loss_overall 0.4183
+
+2026-07-23 15:43:05,225 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 37.65),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 23.84),
+                ('MR-full-mAP@0.5', 46.07),
+                ('MR-full-mAP@0.75', 25.21),
+                ('MR-full-mIoU', 32.87),
+                ('GMR-AUROC', 62.45),
+                ('GMR-Rej-F1@0.4', 23.53),
+                ('GMR-Acc@0.4', 58.06),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.21),
+                ('GMR-G-mIoU@3', 13.32),
+                ('GMR-G-mIoU@5', 10.63),
+                ('GMR-mAP', 23.84),
+                ('GMR-mR@1', 13.33),
+                ('GMR-mR@3', 29.68),
+                ('GMR-mR@5', 34.43),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.67),
+                ('GMR-mR+@5', 10.54),
+                ('GMR-mIoU@1', 32.87),
+                ('GMR-mIoU@3', 28.61),
+                ('GMR-mIoU@5', 28.6),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.48),
+                ('GMR-mIoU+@5', 7.63)])
+2026-07-23 15:43:05,226 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 18.43),
+                ('MR-full-mAP', 24.97),
+                ('MR-full-mAP@0.5', 47.68),
+                ('MR-full-mAP@0.75', 26.96),
+                ('MR-full-mIoU', 32.64),
+                ('GMR-AUROC', 62.45),
+                ('GMR-Rej-F1@0.4', 22.13),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.66),
+                ('GMR-G-mIoU@3', 12.84),
+                ('GMR-G-mIoU@5', 10.15),
+                ('GMR-mAP', 24.97),
+                ('GMR-mR@1', 13.22),
+                ('GMR-mR@3', 29.48),
+                ('GMR-mR@5', 37.63),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.02),
+                ('GMR-mR+@5', 11.26),
+                ('GMR-mIoU@1', 32.64),
+                ('GMR-mIoU@3', 28.46),
+                ('GMR-mIoU@5', 28.35),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.44),
+                ('GMR-mIoU+@5', 6.21)])
+2026-07-23 15:43:05,493 - __main__ - INFO - [Epoch 111]
+2026-07-23 15:44:56,552 - __main__ - INFO - 2026_07_23_15_44_56 [Epoch] 111 [Loss] loss_reg 0.2977 loss_cls 0.0246 weighted_loss_overall 0.4205
+
+2026-07-23 15:44:56,859 - __main__ - INFO - [Epoch 112]
+2026-07-23 15:46:46,225 - __main__ - INFO - 2026_07_23_15_46_46 [Epoch] 112 [Loss] loss_reg 0.2944 loss_cls 0.0245 weighted_loss_overall 0.4170
+
+2026-07-23 15:46:46,482 - __main__ - INFO - [Epoch 113]
+2026-07-23 15:48:44,402 - __main__ - INFO - 2026_07_23_15_48_44 [Epoch] 113 [Loss] loss_reg 0.2961 loss_cls 0.0244 weighted_loss_overall 0.4182
+
+2026-07-23 15:48:44,617 - __main__ - INFO - [Epoch 114]
+2026-07-23 15:50:37,210 - __main__ - INFO - 2026_07_23_15_50_37 [Epoch] 114 [Loss] loss_reg 0.2946 loss_cls 0.0245 weighted_loss_overall 0.4170
+
+2026-07-23 15:50:37,425 - __main__ - INFO - [Epoch 115]
+2026-07-23 15:52:32,564 - __main__ - INFO - 2026_07_23_15_52_32 [Epoch] 115 [Loss] loss_reg 0.2936 loss_cls 0.0244 weighted_loss_overall 0.4156
+
+2026-07-23 15:53:57,507 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 21.57),
+                ('MR-full-mAP', 25.03),
+                ('MR-full-mAP@0.5', 46.44),
+                ('MR-full-mAP@0.75', 26.88),
+                ('MR-full-mIoU', 34.65),
+                ('GMR-AUROC', 62.12),
+                ('GMR-Rej-F1@0.4', 34.11),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 24.74),
+                ('GMR-G-mIoU@3', 17.78),
+                ('GMR-G-mIoU@5', 15.09),
+                ('GMR-mAP', 25.03),
+                ('GMR-mR@1', 15.62),
+                ('GMR-mR@3', 29.17),
+                ('GMR-mR@5', 34.69),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.59),
+                ('GMR-mR+@5', 10.93),
+                ('GMR-mIoU@1', 34.65),
+                ('GMR-mIoU@3', 30.33),
+                ('GMR-mIoU@5', 30.21),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.39),
+                ('GMR-mIoU+@5', 8.11)])
+2026-07-23 15:53:57,508 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 21.57),
+                ('MR-full-mAP', 26.83),
+                ('MR-full-mAP@0.5', 48.75),
+                ('MR-full-mAP@0.75', 29.07),
+                ('MR-full-mIoU', 34.59),
+                ('GMR-AUROC', 62.12),
+                ('GMR-Rej-F1@0.4', 33.11),
+                ('GMR-Acc@0.4', 57.42),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 24.43),
+                ('GMR-G-mIoU@3', 17.61),
+                ('GMR-G-mIoU@5', 14.82),
+                ('GMR-mAP', 26.83),
+                ('GMR-mR@1', 15.62),
+                ('GMR-mR@3', 30.41),
+                ('GMR-mR@5', 37.9),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.98),
+                ('GMR-mR+@5', 12.7),
+                ('GMR-mIoU@1', 34.59),
+                ('GMR-mIoU@3', 30.97),
+                ('GMR-mIoU@5', 30.88),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.74),
+                ('GMR-mIoU+@5', 8.56)])
+2026-07-23 15:53:57,958 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 15:53:58,195 - __main__ - INFO - [Epoch 116]
+2026-07-23 15:55:51,433 - __main__ - INFO - 2026_07_23_15_55_51 [Epoch] 116 [Loss] loss_reg 0.2931 loss_cls 0.0244 weighted_loss_overall 0.4150
+
+2026-07-23 15:55:51,649 - __main__ - INFO - [Epoch 117]
+2026-07-23 15:57:47,713 - __main__ - INFO - 2026_07_23_15_57_47 [Epoch] 117 [Loss] loss_reg 0.2900 loss_cls 0.0243 weighted_loss_overall 0.4114
+
+2026-07-23 15:57:47,921 - __main__ - INFO - [Epoch 118]
+2026-07-23 15:59:38,705 - __main__ - INFO - 2026_07_23_15_59_38 [Epoch] 118 [Loss] loss_reg 0.2906 loss_cls 0.0241 weighted_loss_overall 0.4110
+
+2026-07-23 15:59:38,915 - __main__ - INFO - [Epoch 119]
+2026-07-23 16:01:30,200 - __main__ - INFO - 2026_07_23_16_01_30 [Epoch] 119 [Loss] loss_reg 0.2901 loss_cls 0.0242 weighted_loss_overall 0.4110
+
+2026-07-23 16:01:30,405 - __main__ - INFO - [Epoch 120]
+2026-07-23 16:03:22,445 - __main__ - INFO - 2026_07_23_16_03_22 [Epoch] 120 [Loss] loss_reg 0.2875 loss_cls 0.0241 weighted_loss_overall 0.4082
+
+2026-07-23 16:04:46,945 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 22.35),
+                ('MR-full-mAP', 24.39),
+                ('MR-full-mAP@0.5', 45.58),
+                ('MR-full-mAP@0.75', 26.21),
+                ('MR-full-mIoU', 33.98),
+                ('GMR-AUROC', 62.35),
+                ('GMR-Rej-F1@0.4', 29.68),
+                ('GMR-Acc@0.4', 57.2),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 22.25),
+                ('GMR-G-mIoU@3', 15.61),
+                ('GMR-G-mIoU@5', 13.02),
+                ('GMR-mAP', 24.39),
+                ('GMR-mR@1', 14.92),
+                ('GMR-mR@3', 28.85),
+                ('GMR-mR@5', 34.09),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.87),
+                ('GMR-mR+@5', 10.48),
+                ('GMR-mIoU@1', 33.98),
+                ('GMR-mIoU@3', 29.17),
+                ('GMR-mIoU@5', 29.05),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.89),
+                ('GMR-mIoU+@5', 8.61)])
+2026-07-23 16:04:46,945 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 22.35),
+                ('MR-full-mAP', 26.12),
+                ('MR-full-mAP@0.5', 48.2),
+                ('MR-full-mAP@0.75', 28.97),
+                ('MR-full-mIoU', 33.98),
+                ('GMR-AUROC', 62.35),
+                ('GMR-Rej-F1@0.4', 29.89),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 22.51),
+                ('GMR-G-mIoU@3', 15.74),
+                ('GMR-G-mIoU@5', 13.09),
+                ('GMR-mAP', 26.12),
+                ('GMR-mR@1', 14.92),
+                ('GMR-mR@3', 29.76),
+                ('GMR-mR@5', 36.78),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.13),
+                ('GMR-mR+@5', 13.74),
+                ('GMR-mIoU@1', 33.98),
+                ('GMR-mIoU@3', 29.37),
+                ('GMR-mIoU@5', 29.26),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.38),
+                ('GMR-mIoU+@5', 7.16)])
+2026-07-23 16:04:47,159 - __main__ - INFO - [Epoch 121]
+2026-07-23 16:06:39,203 - __main__ - INFO - 2026_07_23_16_06_39 [Epoch] 121 [Loss] loss_reg 0.2883 loss_cls 0.0242 weighted_loss_overall 0.4093
+
+2026-07-23 16:06:39,415 - __main__ - INFO - [Epoch 122]
+2026-07-23 16:08:31,536 - __main__ - INFO - 2026_07_23_16_08_31 [Epoch] 122 [Loss] loss_reg 0.2853 loss_cls 0.0239 weighted_loss_overall 0.4047
+
+2026-07-23 16:08:31,745 - __main__ - INFO - [Epoch 123]
+2026-07-23 16:10:24,600 - __main__ - INFO - 2026_07_23_16_10_24 [Epoch] 123 [Loss] loss_reg 0.2831 loss_cls 0.0239 weighted_loss_overall 0.4026
+
+2026-07-23 16:10:24,807 - __main__ - INFO - [Epoch 124]
+2026-07-23 16:12:02,804 - __main__ - INFO - 2026_07_23_16_12_02 [Epoch] 124 [Loss] loss_reg 0.2862 loss_cls 0.0239 weighted_loss_overall 0.4057
+
+2026-07-23 16:12:03,011 - __main__ - INFO - [Epoch 125]
+2026-07-23 16:13:33,868 - __main__ - INFO - 2026_07_23_16_13_33 [Epoch] 125 [Loss] loss_reg 0.2851 loss_cls 0.0239 weighted_loss_overall 0.4046
+
+2026-07-23 16:14:47,472 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 51.37),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 19.22),
+                ('MR-full-mAP', 24.42),
+                ('MR-full-mAP@0.5', 45.55),
+                ('MR-full-mAP@0.75', 25.62),
+                ('MR-full-mIoU', 33.71),
+                ('GMR-AUROC', 59.86),
+                ('GMR-Rej-F1@0.4', 25.45),
+                ('GMR-Acc@0.4', 55.91),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.46),
+                ('GMR-G-mIoU@3', 14.37),
+                ('GMR-G-mIoU@5', 11.69),
+                ('GMR-mAP', 24.42),
+                ('GMR-mR@1', 14.5),
+                ('GMR-mR@3', 29.0),
+                ('GMR-mR@5', 35.19),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.72),
+                ('GMR-mR+@5', 10.15),
+                ('GMR-mIoU@1', 33.71),
+                ('GMR-mIoU@3', 29.84),
+                ('GMR-mIoU@5', 29.82),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.7),
+                ('GMR-mIoU+@5', 7.85)])
+2026-07-23 16:14:47,472 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 19.22),
+                ('MR-full-mAP', 26.65),
+                ('MR-full-mAP@0.5', 48.72),
+                ('MR-full-mAP@0.75', 28.4),
+                ('MR-full-mIoU', 33.53),
+                ('GMR-AUROC', 59.86),
+                ('GMR-Rej-F1@0.4', 23.79),
+                ('GMR-Acc@0.4', 55.91),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.93),
+                ('GMR-G-mIoU@3', 14.08),
+                ('GMR-G-mIoU@5', 11.23),
+                ('GMR-mAP', 26.65),
+                ('GMR-mR@1', 14.5),
+                ('GMR-mR@3', 30.99),
+                ('GMR-mR@5', 39.03),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.31),
+                ('GMR-mR+@5', 12.94),
+                ('GMR-mIoU@1', 33.53),
+                ('GMR-mIoU@3', 30.59),
+                ('GMR-mIoU@5', 30.49),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.42),
+                ('GMR-mIoU+@5', 9.23)])
+2026-07-23 16:14:47,703 - __main__ - INFO - [Epoch 126]
+2026-07-23 16:16:18,037 - __main__ - INFO - 2026_07_23_16_16_18 [Epoch] 126 [Loss] loss_reg 0.2853 loss_cls 0.0240 weighted_loss_overall 0.4052
+
+2026-07-23 16:16:18,241 - __main__ - INFO - [Epoch 127]
+2026-07-23 16:17:49,395 - __main__ - INFO - 2026_07_23_16_17_49 [Epoch] 127 [Loss] loss_reg 0.2836 loss_cls 0.0237 weighted_loss_overall 0.4023
+
+2026-07-23 16:17:49,631 - __main__ - INFO - [Epoch 128]
+2026-07-23 16:19:27,083 - __main__ - INFO - 2026_07_23_16_19_27 [Epoch] 128 [Loss] loss_reg 0.2833 loss_cls 0.0238 weighted_loss_overall 0.4021
+
+2026-07-23 16:19:27,296 - __main__ - INFO - [Epoch 129]
+2026-07-23 16:21:06,440 - __main__ - INFO - 2026_07_23_16_21_06 [Epoch] 129 [Loss] loss_reg 0.2798 loss_cls 0.0238 weighted_loss_overall 0.3988
+
+2026-07-23 16:21:06,649 - __main__ - INFO - [Epoch 130]
+2026-07-23 16:22:37,765 - __main__ - INFO - 2026_07_23_16_22_37 [Epoch] 130 [Loss] loss_reg 0.2819 loss_cls 0.0236 weighted_loss_overall 0.4000
+
+2026-07-23 16:23:50,826 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 52.55),
+                ('MR-full-R1@0.5', 40.78),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 25.34),
+                ('MR-full-mAP@0.5', 46.94),
+                ('MR-full-mAP@0.75', 26.94),
+                ('MR-full-mIoU', 34.99),
+                ('GMR-AUROC', 62.9),
+                ('GMR-Rej-F1@0.4', 22.48),
+                ('GMR-Acc@0.4', 56.99),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.12),
+                ('GMR-G-mIoU@3', 13.38),
+                ('GMR-G-mIoU@5', 10.56),
+                ('GMR-mAP', 25.34),
+                ('GMR-mR@1', 16.16),
+                ('GMR-mR@3', 29.96),
+                ('GMR-mR@5', 34.4),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.76),
+                ('GMR-mR+@5', 9.37),
+                ('GMR-mIoU@1', 34.99),
+                ('GMR-mIoU@3', 30.69),
+                ('GMR-mIoU@5', 30.58),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.56),
+                ('GMR-mIoU+@5', 8.28)])
+2026-07-23 16:23:50,826 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 52.16),
+                ('MR-full-R1@0.5', 40.39),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 27.37),
+                ('MR-full-mAP@0.5', 49.64),
+                ('MR-full-mAP@0.75', 29.45),
+                ('MR-full-mIoU', 34.85),
+                ('GMR-AUROC', 62.9),
+                ('GMR-Rej-F1@0.4', 21.88),
+                ('GMR-Acc@0.4', 56.99),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.83),
+                ('GMR-G-mIoU@3', 13.55),
+                ('GMR-G-mIoU@5', 10.58),
+                ('GMR-mAP', 27.37),
+                ('GMR-mR@1', 16.12),
+                ('GMR-mR@3', 30.62),
+                ('GMR-mR@5', 38.55),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.81),
+                ('GMR-mR+@5', 13.83),
+                ('GMR-mIoU@1', 34.85),
+                ('GMR-mIoU@3', 31.69),
+                ('GMR-mIoU@5', 31.59),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.81),
+                ('GMR-mIoU+@5', 9.58)])
+2026-07-23 16:23:51,250 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 16:23:51,460 - __main__ - INFO - [Epoch 131]
+2026-07-23 16:25:26,093 - __main__ - INFO - 2026_07_23_16_25_26 [Epoch] 131 [Loss] loss_reg 0.2782 loss_cls 0.0236 weighted_loss_overall 0.3959
+
+2026-07-23 16:25:26,320 - __main__ - INFO - [Epoch 132]
+2026-07-23 16:26:58,248 - __main__ - INFO - 2026_07_23_16_26_58 [Epoch] 132 [Loss] loss_reg 0.2849 loss_cls 0.0236 weighted_loss_overall 0.4029
+
+2026-07-23 16:26:58,459 - __main__ - INFO - [Epoch 133]
+2026-07-23 16:28:29,335 - __main__ - INFO - 2026_07_23_16_28_29 [Epoch] 133 [Loss] loss_reg 0.2809 loss_cls 0.0236 weighted_loss_overall 0.3990
+
+2026-07-23 16:28:29,580 - __main__ - INFO - [Epoch 134]
+2026-07-23 16:30:01,102 - __main__ - INFO - 2026_07_23_16_30_01 [Epoch] 134 [Loss] loss_reg 0.2817 loss_cls 0.0237 weighted_loss_overall 0.4001
+
+2026-07-23 16:30:01,322 - __main__ - INFO - [Epoch 135]
+2026-07-23 16:31:31,448 - __main__ - INFO - 2026_07_23_16_31_31 [Epoch] 135 [Loss] loss_reg 0.2772 loss_cls 0.0236 weighted_loss_overall 0.3953
+
+2026-07-23 16:32:44,534 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 52.55),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 20.0),
+                ('MR-full-mAP', 24.37),
+                ('MR-full-mAP@0.5', 46.39),
+                ('MR-full-mAP@0.75', 25.57),
+                ('MR-full-mIoU', 34.06),
+                ('GMR-AUROC', 62.25),
+                ('GMR-Rej-F1@0.4', 27.41),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.53),
+                ('GMR-G-mIoU@3', 14.55),
+                ('GMR-G-mIoU@5', 11.97),
+                ('GMR-mAP', 24.37),
+                ('GMR-mR@1', 14.37),
+                ('GMR-mR@3', 28.94),
+                ('GMR-mR@5', 34.79),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.17),
+                ('GMR-mR+@5', 9.35),
+                ('GMR-mIoU@1', 34.06),
+                ('GMR-mIoU@3', 29.65),
+                ('GMR-mIoU@5', 29.65),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.39),
+                ('GMR-mIoU+@5', 8.53)])
+2026-07-23 16:32:44,534 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 52.55),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 19.22),
+                ('MR-full-mAP', 25.92),
+                ('MR-full-mAP@0.5', 48.75),
+                ('MR-full-mAP@0.75', 27.87),
+                ('MR-full-mIoU', 33.74),
+                ('GMR-AUROC', 62.25),
+                ('GMR-Rej-F1@0.4', 27.41),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.49),
+                ('GMR-G-mIoU@3', 14.83),
+                ('GMR-G-mIoU@5', 12.11),
+                ('GMR-mAP', 25.92),
+                ('GMR-mR@1', 14.16),
+                ('GMR-mR@3', 30.39),
+                ('GMR-mR@5', 36.66),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.54),
+                ('GMR-mR+@5', 12.15),
+                ('GMR-mIoU@1', 33.74),
+                ('GMR-mIoU@3', 30.41),
+                ('GMR-mIoU@5', 30.32),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.39),
+                ('GMR-mIoU+@5', 7.2)])
+2026-07-23 16:32:44,761 - __main__ - INFO - [Epoch 136]
+2026-07-23 16:34:16,874 - __main__ - INFO - 2026_07_23_16_34_16 [Epoch] 136 [Loss] loss_reg 0.2776 loss_cls 0.0235 weighted_loss_overall 0.3949
+
+2026-07-23 16:34:17,104 - __main__ - INFO - [Epoch 137]
+2026-07-23 16:35:53,275 - __main__ - INFO - 2026_07_23_16_35_53 [Epoch] 137 [Loss] loss_reg 0.2750 loss_cls 0.0234 weighted_loss_overall 0.3919
+
+2026-07-23 16:35:53,567 - __main__ - INFO - [Epoch 138]
+2026-07-23 16:37:32,338 - __main__ - INFO - 2026_07_23_16_37_32 [Epoch] 138 [Loss] loss_reg 0.2787 loss_cls 0.0235 weighted_loss_overall 0.3962
+
+2026-07-23 16:37:32,551 - __main__ - INFO - [Epoch 139]
+2026-07-23 16:39:14,225 - __main__ - INFO - 2026_07_23_16_39_14 [Epoch] 139 [Loss] loss_reg 0.2757 loss_cls 0.0236 weighted_loss_overall 0.3936
+
+2026-07-23 16:39:14,456 - __main__ - INFO - [Epoch 140]
+2026-07-23 16:40:46,229 - __main__ - INFO - 2026_07_23_16_40_46 [Epoch] 140 [Loss] loss_reg 0.2765 loss_cls 0.0233 weighted_loss_overall 0.3931
+
+2026-07-23 16:41:59,772 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 21.57),
+                ('MR-full-mAP', 24.6),
+                ('MR-full-mAP@0.5', 46.29),
+                ('MR-full-mAP@0.75', 26.51),
+                ('MR-full-mIoU', 34.41),
+                ('GMR-AUROC', 58.21),
+                ('GMR-Rej-F1@0.4', 22.81),
+                ('GMR-Acc@0.4', 56.34),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.81),
+                ('GMR-G-mIoU@3', 13.47),
+                ('GMR-G-mIoU@5', 10.72),
+                ('GMR-mAP', 24.6),
+                ('GMR-mR@1', 15.41),
+                ('GMR-mR@3', 28.69),
+                ('GMR-mR@5', 33.87),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.33),
+                ('GMR-mR+@5', 8.7),
+                ('GMR-mIoU@1', 34.41),
+                ('GMR-mIoU@3', 30.45),
+                ('GMR-mIoU@5', 30.43),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.23),
+                ('GMR-mIoU+@5', 8.38)])
+2026-07-23 16:41:59,772 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 21.57),
+                ('MR-full-mAP', 26.15),
+                ('MR-full-mAP@0.5', 48.46),
+                ('MR-full-mAP@0.75', 28.93),
+                ('MR-full-mIoU', 34.41),
+                ('GMR-AUROC', 58.21),
+                ('GMR-Rej-F1@0.4', 20.77),
+                ('GMR-Acc@0.4', 55.7),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.16),
+                ('GMR-G-mIoU@3', 12.98),
+                ('GMR-G-mIoU@5', 10.14),
+                ('GMR-mAP', 26.15),
+                ('GMR-mR@1', 15.41),
+                ('GMR-mR@3', 29.08),
+                ('GMR-mR@5', 36.75),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 3.76),
+                ('GMR-mR+@5', 9.85),
+                ('GMR-mIoU@1', 34.41),
+                ('GMR-mIoU@3', 30.9),
+                ('GMR-mIoU@5', 30.8),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.97),
+                ('GMR-mIoU+@5', 6.78)])
+2026-07-23 16:41:59,983 - __main__ - INFO - [Epoch 141]
+2026-07-23 16:43:32,577 - __main__ - INFO - 2026_07_23_16_43_32 [Epoch] 141 [Loss] loss_reg 0.2744 loss_cls 0.0232 weighted_loss_overall 0.3906
+
+2026-07-23 16:43:32,799 - __main__ - INFO - [Epoch 142]
+2026-07-23 16:45:12,019 - __main__ - INFO - 2026_07_23_16_45_12 [Epoch] 142 [Loss] loss_reg 0.2728 loss_cls 0.0231 weighted_loss_overall 0.3883
+
+2026-07-23 16:45:12,244 - __main__ - INFO - [Epoch 143]
+2026-07-23 16:46:49,952 - __main__ - INFO - 2026_07_23_16_46_49 [Epoch] 143 [Loss] loss_reg 0.2730 loss_cls 0.0232 weighted_loss_overall 0.3888
+
+2026-07-23 16:46:50,177 - __main__ - INFO - [Epoch 144]
+2026-07-23 16:48:29,714 - __main__ - INFO - 2026_07_23_16_48_29 [Epoch] 144 [Loss] loss_reg 0.2726 loss_cls 0.0231 weighted_loss_overall 0.3882
+
+2026-07-23 16:48:29,970 - __main__ - INFO - [Epoch 145]
+2026-07-23 16:50:02,024 - __main__ - INFO - 2026_07_23_16_50_02 [Epoch] 145 [Loss] loss_reg 0.2701 loss_cls 0.0229 weighted_loss_overall 0.3848
+
+2026-07-23 16:51:16,030 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 20.0),
+                ('MR-full-mAP', 24.27),
+                ('MR-full-mAP@0.5', 46.05),
+                ('MR-full-mAP@0.75', 26.63),
+                ('MR-full-mIoU', 33.33),
+                ('GMR-AUROC', 60.21),
+                ('GMR-Rej-F1@0.4', 13.1),
+                ('GMR-Acc@0.4', 57.2),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 17.9),
+                ('GMR-G-mIoU@3', 10.33),
+                ('GMR-G-mIoU@5', 7.55),
+                ('GMR-mAP', 24.27),
+                ('GMR-mR@1', 14.38),
+                ('GMR-mR@3', 28.6),
+                ('GMR-mR@5', 33.39),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.28),
+                ('GMR-mR+@5', 10.31),
+                ('GMR-mIoU@1', 33.33),
+                ('GMR-mIoU@3', 29.29),
+                ('GMR-mIoU@5', 29.28),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.41),
+                ('GMR-mIoU+@5', 8.56)])
+2026-07-23 16:51:16,031 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 20.39),
+                ('MR-full-mAP', 26.15),
+                ('MR-full-mAP@0.5', 48.33),
+                ('MR-full-mAP@0.75', 29.69),
+                ('MR-full-mIoU', 33.56),
+                ('GMR-AUROC', 60.21),
+                ('GMR-Rej-F1@0.4', 13.1),
+                ('GMR-Acc@0.4', 57.2),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 17.96),
+                ('GMR-G-mIoU@3', 10.67),
+                ('GMR-G-mIoU@5', 7.72),
+                ('GMR-mAP', 26.15),
+                ('GMR-mR@1', 14.5),
+                ('GMR-mR@3', 29.86),
+                ('GMR-mR@5', 37.5),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.91),
+                ('GMR-mR+@5', 13.69),
+                ('GMR-mIoU@1', 33.56),
+                ('GMR-mIoU@3', 30.21),
+                ('GMR-mIoU@5', 30.11),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.29),
+                ('GMR-mIoU+@5', 9.06)])
+2026-07-23 16:51:16,255 - __main__ - INFO - [Epoch 146]
+2026-07-23 16:52:48,594 - __main__ - INFO - 2026_07_23_16_52_48 [Epoch] 146 [Loss] loss_reg 0.2723 loss_cls 0.0230 weighted_loss_overall 0.3873
+
+2026-07-23 16:52:48,826 - __main__ - INFO - [Epoch 147]
+2026-07-23 16:54:26,458 - __main__ - INFO - 2026_07_23_16_54_26 [Epoch] 147 [Loss] loss_reg 0.2711 loss_cls 0.0230 weighted_loss_overall 0.3863
+
+2026-07-23 16:54:26,680 - __main__ - INFO - [Epoch 148]
+2026-07-23 16:56:03,418 - __main__ - INFO - 2026_07_23_16_56_03 [Epoch] 148 [Loss] loss_reg 0.2683 loss_cls 0.0230 weighted_loss_overall 0.3834
+
+2026-07-23 16:56:03,641 - __main__ - INFO - [Epoch 149]
+2026-07-23 16:57:38,450 - __main__ - INFO - 2026_07_23_16_57_38 [Epoch] 149 [Loss] loss_reg 0.2689 loss_cls 0.0230 weighted_loss_overall 0.3838
+
+2026-07-23 16:57:38,672 - __main__ - INFO - [Epoch 150]
+2026-07-23 16:59:13,255 - __main__ - INFO - 2026_07_23_16_59_13 [Epoch] 150 [Loss] loss_reg 0.2680 loss_cls 0.0230 weighted_loss_overall 0.3831
+
+2026-07-23 17:00:27,354 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 40.78),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 25.41),
+                ('MR-full-mAP@0.5', 46.77),
+                ('MR-full-mAP@0.75', 27.44),
+                ('MR-full-mIoU', 35.16),
+                ('GMR-AUROC', 58.99),
+                ('GMR-Rej-F1@0.4', 23.62),
+                ('GMR-Acc@0.4', 55.48),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.27),
+                ('GMR-G-mIoU@3', 13.9),
+                ('GMR-G-mIoU@5', 11.13),
+                ('GMR-mAP', 25.41),
+                ('GMR-mR@1', 16.63),
+                ('GMR-mR@3', 28.9),
+                ('GMR-mR@5', 33.72),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.65),
+                ('GMR-mR+@5', 9.59),
+                ('GMR-mIoU@1', 35.16),
+                ('GMR-mIoU@3', 30.87),
+                ('GMR-mIoU@5', 30.76),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.89),
+                ('GMR-mIoU+@5', 7.61)])
+2026-07-23 17:00:27,354 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 40.78),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 27.51),
+                ('MR-full-mAP@0.5', 49.72),
+                ('MR-full-mAP@0.75', 29.93),
+                ('MR-full-mIoU', 35.16),
+                ('GMR-AUROC', 58.99),
+                ('GMR-Rej-F1@0.4', 22.96),
+                ('GMR-Acc@0.4', 55.27),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.06),
+                ('GMR-G-mIoU@3', 13.95),
+                ('GMR-G-mIoU@5', 11.07),
+                ('GMR-mAP', 27.51),
+                ('GMR-mR@1', 16.63),
+                ('GMR-mR@3', 30.61),
+                ('GMR-mR@5', 36.94),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.2),
+                ('GMR-mR+@5', 12.02),
+                ('GMR-mIoU@1', 35.16),
+                ('GMR-mIoU@3', 31.6),
+                ('GMR-mIoU@5', 31.5),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.02),
+                ('GMR-mIoU+@5', 7.84)])
+2026-07-23 17:00:27,813 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 17:00:28,060 - __main__ - INFO - [Epoch 151]
+2026-07-23 17:02:02,690 - __main__ - INFO - 2026_07_23_17_02_02 [Epoch] 151 [Loss] loss_reg 0.2663 loss_cls 0.0228 weighted_loss_overall 0.3804
+
+2026-07-23 17:02:02,916 - __main__ - INFO - [Epoch 152]
+2026-07-23 17:03:37,764 - __main__ - INFO - 2026_07_23_17_03_37 [Epoch] 152 [Loss] loss_reg 0.2659 loss_cls 0.0228 weighted_loss_overall 0.3799
+
+2026-07-23 17:03:38,004 - __main__ - INFO - [Epoch 153]
+2026-07-23 17:05:12,488 - __main__ - INFO - 2026_07_23_17_05_12 [Epoch] 153 [Loss] loss_reg 0.2656 loss_cls 0.0226 weighted_loss_overall 0.3784
+
+2026-07-23 17:05:12,695 - __main__ - INFO - [Epoch 154]
+2026-07-23 17:06:43,394 - __main__ - INFO - 2026_07_23_17_06_43 [Epoch] 154 [Loss] loss_reg 0.2660 loss_cls 0.0228 weighted_loss_overall 0.3799
+
+2026-07-23 17:06:43,622 - __main__ - INFO - [Epoch 155]
+2026-07-23 17:08:15,737 - __main__ - INFO - 2026_07_23_17_08_15 [Epoch] 155 [Loss] loss_reg 0.2633 loss_cls 0.0228 weighted_loss_overall 0.3775
+
+2026-07-23 17:09:28,709 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 25.01),
+                ('MR-full-mAP@0.5', 46.82),
+                ('MR-full-mAP@0.75', 26.47),
+                ('MR-full-mIoU', 33.89),
+                ('GMR-AUROC', 59.18),
+                ('GMR-Rej-F1@0.4', 18.4),
+                ('GMR-Acc@0.4', 56.13),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.61),
+                ('GMR-G-mIoU@3', 11.89),
+                ('GMR-G-mIoU@5', 9.15),
+                ('GMR-mAP', 25.01),
+                ('GMR-mR@1', 15.67),
+                ('GMR-mR@3', 29.44),
+                ('GMR-mR@5', 33.64),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.54),
+                ('GMR-mR+@5', 10.2),
+                ('GMR-mIoU@1', 33.89),
+                ('GMR-mIoU@3', 29.79),
+                ('GMR-mIoU@5', 29.68),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.21),
+                ('GMR-mIoU+@5', 6.93)])
+2026-07-23 17:09:28,710 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 26.64),
+                ('MR-full-mAP@0.5', 49.0),
+                ('MR-full-mAP@0.75', 28.58),
+                ('MR-full-mIoU', 33.89),
+                ('GMR-AUROC', 59.18),
+                ('GMR-Rej-F1@0.4', 17.67),
+                ('GMR-Acc@0.4', 55.91),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.4),
+                ('GMR-G-mIoU@3', 11.99),
+                ('GMR-G-mIoU@5', 9.12),
+                ('GMR-mAP', 26.64),
+                ('GMR-mR@1', 15.67),
+                ('GMR-mR@3', 29.78),
+                ('GMR-mR@5', 37.07),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.87),
+                ('GMR-mR+@5', 12.13),
+                ('GMR-mIoU@1', 33.89),
+                ('GMR-mIoU@3', 30.68),
+                ('GMR-mIoU@5', 30.58),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.72),
+                ('GMR-mIoU+@5', 8.54)])
+2026-07-23 17:09:28,937 - __main__ - INFO - [Epoch 156]
+2026-07-23 17:11:01,995 - __main__ - INFO - 2026_07_23_17_11_01 [Epoch] 156 [Loss] loss_reg 0.2643 loss_cls 0.0226 weighted_loss_overall 0.3774
+
+2026-07-23 17:11:02,210 - __main__ - INFO - [Epoch 157]
+2026-07-23 17:12:34,903 - __main__ - INFO - 2026_07_23_17_12_34 [Epoch] 157 [Loss] loss_reg 0.2598 loss_cls 0.0227 weighted_loss_overall 0.3731
+
+2026-07-23 17:12:35,110 - __main__ - INFO - [Epoch 158]
+2026-07-23 17:14:10,317 - __main__ - INFO - 2026_07_23_17_14_10 [Epoch] 158 [Loss] loss_reg 0.2608 loss_cls 0.0226 weighted_loss_overall 0.3736
+
+2026-07-23 17:14:10,534 - __main__ - INFO - [Epoch 159]
+2026-07-23 17:15:44,927 - __main__ - INFO - 2026_07_23_17_15_44 [Epoch] 159 [Loss] loss_reg 0.2637 loss_cls 0.0226 weighted_loss_overall 0.3766
+
+2026-07-23 17:15:45,143 - __main__ - INFO - [Epoch 160]
+2026-07-23 17:17:16,231 - __main__ - INFO - 2026_07_23_17_17_16 [Epoch] 160 [Loss] loss_reg 0.2622 loss_cls 0.0224 weighted_loss_overall 0.3744
+
+2026-07-23 17:18:29,939 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 52.16),
+                ('MR-full-R1@0.5', 40.0),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 25.29),
+                ('MR-full-mAP@0.5', 47.08),
+                ('MR-full-mAP@0.75', 27.14),
+                ('MR-full-mIoU', 35.32),
+                ('GMR-AUROC', 60.92),
+                ('GMR-Rej-F1@0.4', 21.79),
+                ('GMR-Acc@0.4', 56.77),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.01),
+                ('GMR-G-mIoU@3', 13.21),
+                ('GMR-G-mIoU@5', 10.37),
+                ('GMR-mAP', 25.29),
+                ('GMR-mR@1', 16.22),
+                ('GMR-mR@3', 28.87),
+                ('GMR-mR@5', 33.85),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.31),
+                ('GMR-mR+@5', 10.76),
+                ('GMR-mIoU@1', 35.32),
+                ('GMR-mIoU@3', 31.14),
+                ('GMR-mIoU@5', 31.02),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.24),
+                ('GMR-mIoU+@5', 6.96)])
+2026-07-23 17:18:29,939 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 51.76),
+                ('MR-full-R1@0.5', 39.61),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 26.71),
+                ('MR-full-mAP@0.5', 48.78),
+                ('MR-full-mAP@0.75', 29.11),
+                ('MR-full-mIoU', 35.2),
+                ('GMR-AUROC', 60.92),
+                ('GMR-Rej-F1@0.4', 21.96),
+                ('GMR-Acc@0.4', 57.2),
+                ('GMR-Rej-F1@0.6', 62.22),
+                ('GMR-Acc@0.6', 45.16),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.01),
+                ('GMR-G-mIoU@3', 13.45),
+                ('GMR-G-mIoU@5', 10.51),
+                ('GMR-mAP', 26.71),
+                ('GMR-mR@1', 16.18),
+                ('GMR-mR@3', 29.16),
+                ('GMR-mR@5', 37.31),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 4.76),
+                ('GMR-mR+@5', 10.96),
+                ('GMR-mIoU@1', 35.2),
+                ('GMR-mIoU@3', 31.72),
+                ('GMR-mIoU@5', 31.62),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.64),
+                ('GMR-mIoU+@5', 6.46)])
+2026-07-23 17:18:30,179 - __main__ - INFO - [Epoch 161]
+2026-07-23 17:20:02,926 - __main__ - INFO - 2026_07_23_17_20_02 [Epoch] 161 [Loss] loss_reg 0.2601 loss_cls 0.0223 weighted_loss_overall 0.3718
+
+2026-07-23 17:20:03,137 - __main__ - INFO - [Epoch 162]
+2026-07-23 17:21:32,769 - __main__ - INFO - 2026_07_23_17_21_32 [Epoch] 162 [Loss] loss_reg 0.2591 loss_cls 0.0224 weighted_loss_overall 0.3711
+
+2026-07-23 17:21:32,991 - __main__ - INFO - [Epoch 163]
+2026-07-23 17:23:06,122 - __main__ - INFO - 2026_07_23_17_23_06 [Epoch] 163 [Loss] loss_reg 0.2602 loss_cls 0.0226 weighted_loss_overall 0.3734
+
+2026-07-23 17:23:06,332 - __main__ - INFO - [Epoch 164]
+2026-07-23 17:24:40,729 - __main__ - INFO - 2026_07_23_17_24_40 [Epoch] 164 [Loss] loss_reg 0.2590 loss_cls 0.0224 weighted_loss_overall 0.3711
+
+2026-07-23 17:24:40,951 - __main__ - INFO - [Epoch 165]
+2026-07-23 17:26:15,596 - __main__ - INFO - 2026_07_23_17_26_15 [Epoch] 165 [Loss] loss_reg 0.2591 loss_cls 0.0224 weighted_loss_overall 0.3709
+
+2026-07-23 17:27:28,952 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 52.16),
+                ('MR-full-R1@0.5', 40.0),
+                ('MR-full-R1@0.7', 21.18),
+                ('MR-full-mAP', 24.55),
+                ('MR-full-mAP@0.5', 46.79),
+                ('MR-full-mAP@0.75', 25.71),
+                ('MR-full-mIoU', 34.74),
+                ('GMR-AUROC', 59.37),
+                ('GMR-Rej-F1@0.4', 12.88),
+                ('GMR-Acc@0.4', 56.34),
+                ('GMR-Rej-F1@0.6', 63.35),
+                ('GMR-Acc@0.6', 47.74),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.49),
+                ('GMR-G-mIoU@3', 10.61),
+                ('GMR-G-mIoU@5', 7.72),
+                ('GMR-mAP', 24.55),
+                ('GMR-mR@1', 15.57),
+                ('GMR-mR@3', 27.9),
+                ('GMR-mR@5', 34.53),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.28),
+                ('GMR-mR+@5', 9.98),
+                ('GMR-mIoU@1', 34.74),
+                ('GMR-mIoU@3', 30.87),
+                ('GMR-mIoU@5', 30.86),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.14),
+                ('GMR-mIoU+@5', 8.29)])
+2026-07-23 17:27:28,952 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 52.16),
+                ('MR-full-R1@0.5', 40.39),
+                ('MR-full-R1@0.7', 22.35),
+                ('MR-full-mAP', 26.6),
+                ('MR-full-mAP@0.5', 49.52),
+                ('MR-full-mAP@0.75', 28.82),
+                ('MR-full-mIoU', 34.98),
+                ('GMR-AUROC', 59.37),
+                ('GMR-Rej-F1@0.4', 12.07),
+                ('GMR-Acc@0.4', 56.13),
+                ('GMR-Rej-F1@0.6', 63.24),
+                ('GMR-Acc@0.6', 47.74),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.31),
+                ('GMR-G-mIoU@3', 10.67),
+                ('GMR-G-mIoU@5', 7.64),
+                ('GMR-mAP', 26.6),
+                ('GMR-mR@1', 15.92),
+                ('GMR-mR@3', 30.35),
+                ('GMR-mR@5', 36.78),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.96),
+                ('GMR-mR+@5', 14.57),
+                ('GMR-mIoU@1', 34.98),
+                ('GMR-mIoU@3', 31.58),
+                ('GMR-mIoU@5', 31.47),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.15),
+                ('GMR-mIoU+@5', 7.92)])
+2026-07-23 17:27:29,189 - __main__ - INFO - [Epoch 166]
+2026-07-23 17:29:04,466 - __main__ - INFO - 2026_07_23_17_29_04 [Epoch] 166 [Loss] loss_reg 0.2591 loss_cls 0.0221 weighted_loss_overall 0.3697
+
+2026-07-23 17:29:04,699 - __main__ - INFO - [Epoch 167]
+2026-07-23 17:30:42,237 - __main__ - INFO - 2026_07_23_17_30_42 [Epoch] 167 [Loss] loss_reg 0.2535 loss_cls 0.0220 weighted_loss_overall 0.3635
+
+2026-07-23 17:30:42,456 - __main__ - INFO - [Epoch 168]
+2026-07-23 17:32:18,837 - __main__ - INFO - 2026_07_23_17_32_18 [Epoch] 168 [Loss] loss_reg 0.2564 loss_cls 0.0223 weighted_loss_overall 0.3677
+
+2026-07-23 17:32:19,059 - __main__ - INFO - [Epoch 169]
+2026-07-23 17:33:52,344 - __main__ - INFO - 2026_07_23_17_33_52 [Epoch] 169 [Loss] loss_reg 0.2579 loss_cls 0.0221 weighted_loss_overall 0.3685
+
+2026-07-23 17:33:52,571 - __main__ - INFO - [Epoch 170]
+2026-07-23 17:35:26,874 - __main__ - INFO - 2026_07_23_17_35_26 [Epoch] 170 [Loss] loss_reg 0.2533 loss_cls 0.0220 weighted_loss_overall 0.3634
+
+2026-07-23 17:36:39,930 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 41.18),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 25.8),
+                ('MR-full-mAP@0.5', 47.58),
+                ('MR-full-mAP@0.75', 27.86),
+                ('MR-full-mIoU', 35.4),
+                ('GMR-AUROC', 57.08),
+                ('GMR-Rej-F1@0.4', 18.97),
+                ('GMR-Acc@0.4', 55.91),
+                ('GMR-Rej-F1@0.6', 61.9),
+                ('GMR-Acc@0.6', 44.95),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.13),
+                ('GMR-G-mIoU@3', 12.46),
+                ('GMR-G-mIoU@5', 9.58),
+                ('GMR-mAP', 25.8),
+                ('GMR-mR@1', 16.93),
+                ('GMR-mR@3', 28.89),
+                ('GMR-mR@5', 35.46),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.15),
+                ('GMR-mR+@5', 12.43),
+                ('GMR-mIoU@1', 35.4),
+                ('GMR-mIoU@3', 31.05),
+                ('GMR-mIoU@5', 30.94),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.09),
+                ('GMR-mIoU+@5', 7.81)])
+2026-07-23 17:36:39,930 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.98),
+                ('MR-full-R1@0.5', 41.18),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 28.08),
+                ('MR-full-mAP@0.5', 50.44),
+                ('MR-full-mAP@0.75', 31.24),
+                ('MR-full-mIoU', 35.45),
+                ('GMR-AUROC', 57.08),
+                ('GMR-Rej-F1@0.4', 18.25),
+                ('GMR-Acc@0.4', 55.7),
+                ('GMR-Rej-F1@0.6', 61.56),
+                ('GMR-Acc@0.6', 44.95),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.93),
+                ('GMR-G-mIoU@3', 12.47),
+                ('GMR-G-mIoU@5', 9.49),
+                ('GMR-mAP', 28.08),
+                ('GMR-mR@1', 16.93),
+                ('GMR-mR@3', 32.77),
+                ('GMR-mR@5', 38.99),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.43),
+                ('GMR-mR+@5', 15.46),
+                ('GMR-mIoU@1', 35.45),
+                ('GMR-mIoU@3', 31.69),
+                ('GMR-mIoU@5', 31.59),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.25),
+                ('GMR-mIoU+@5', 8.06)])
+2026-07-23 17:36:40,348 - __main__ - INFO - The checkpoint file has been updated.
+2026-07-23 17:36:40,537 - __main__ - INFO - [Epoch 171]
+2026-07-23 17:38:13,873 - __main__ - INFO - 2026_07_23_17_38_13 [Epoch] 171 [Loss] loss_reg 0.2525 loss_cls 0.0220 weighted_loss_overall 0.3626
+
+2026-07-23 17:38:14,087 - __main__ - INFO - [Epoch 172]
+2026-07-23 17:39:48,213 - __main__ - INFO - 2026_07_23_17_39_48 [Epoch] 172 [Loss] loss_reg 0.2499 loss_cls 0.0220 weighted_loss_overall 0.3597
+
+2026-07-23 17:39:48,421 - __main__ - INFO - [Epoch 173]
+2026-07-23 17:41:18,037 - __main__ - INFO - 2026_07_23_17_41_18 [Epoch] 173 [Loss] loss_reg 0.2530 loss_cls 0.0219 weighted_loss_overall 0.3627
+
+2026-07-23 17:41:18,264 - __main__ - INFO - [Epoch 174]
+2026-07-23 17:42:50,707 - __main__ - INFO - 2026_07_23_17_42_50 [Epoch] 174 [Loss] loss_reg 0.2503 loss_cls 0.0219 weighted_loss_overall 0.3596
+
+2026-07-23 17:42:50,945 - __main__ - INFO - [Epoch 175]
+2026-07-23 17:44:22,758 - __main__ - INFO - 2026_07_23_17_44_22 [Epoch] 175 [Loss] loss_reg 0.2492 loss_cls 0.0220 weighted_loss_overall 0.3591
+
+2026-07-23 17:45:36,905 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 25.23),
+                ('MR-full-mAP@0.5', 46.05),
+                ('MR-full-mAP@0.75', 26.3),
+                ('MR-full-mIoU', 34.48),
+                ('GMR-AUROC', 58.87),
+                ('GMR-Rej-F1@0.4', 12.17),
+                ('GMR-Acc@0.4', 56.56),
+                ('GMR-Rej-F1@0.6', 62.73),
+                ('GMR-Acc@0.6', 47.1),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.25),
+                ('GMR-G-mIoU@3', 10.24),
+                ('GMR-G-mIoU@5', 7.41),
+                ('GMR-mAP', 25.23),
+                ('GMR-mR@1', 16.79),
+                ('GMR-mR@3', 27.64),
+                ('GMR-mR@5', 33.47),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.61),
+                ('GMR-mR+@5', 11.15),
+                ('GMR-mIoU@1', 34.48),
+                ('GMR-mIoU@3', 30.33),
+                ('GMR-mIoU@5', 30.31),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.41),
+                ('GMR-mIoU+@5', 7.56)])
+2026-07-23 17:45:36,905 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 27.03),
+                ('MR-full-mAP@0.5', 48.26),
+                ('MR-full-mAP@0.75', 28.47),
+                ('MR-full-mIoU', 34.37),
+                ('GMR-AUROC', 58.87),
+                ('GMR-Rej-F1@0.4', 12.17),
+                ('GMR-Acc@0.4', 56.56),
+                ('GMR-Rej-F1@0.6', 62.73),
+                ('GMR-Acc@0.6', 47.1),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.19),
+                ('GMR-G-mIoU@3', 10.66),
+                ('GMR-G-mIoU@5', 7.64),
+                ('GMR-mAP', 27.03),
+                ('GMR-mR@1', 16.71),
+                ('GMR-mR@3', 30.23),
+                ('GMR-mR@5', 37.53),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.74),
+                ('GMR-mR+@5', 14.17),
+                ('GMR-mIoU@1', 34.37),
+                ('GMR-mIoU@3', 31.49),
+                ('GMR-mIoU@5', 31.38),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.56),
+                ('GMR-mIoU+@5', 9.33)])
+2026-07-23 17:45:37,131 - __main__ - INFO - [Epoch 176]
+2026-07-23 17:47:07,041 - __main__ - INFO - 2026_07_23_17_47_07 [Epoch] 176 [Loss] loss_reg 0.2488 loss_cls 0.0219 weighted_loss_overall 0.3583
+
+2026-07-23 17:47:07,295 - __main__ - INFO - [Epoch 177]
+2026-07-23 17:48:39,135 - __main__ - INFO - 2026_07_23_17_48_39 [Epoch] 177 [Loss] loss_reg 0.2525 loss_cls 0.0220 weighted_loss_overall 0.3626
+
+2026-07-23 17:48:39,343 - __main__ - INFO - [Epoch 178]
+2026-07-23 17:50:10,630 - __main__ - INFO - 2026_07_23_17_50_10 [Epoch] 178 [Loss] loss_reg 0.2510 loss_cls 0.0218 weighted_loss_overall 0.3601
+
+2026-07-23 17:50:10,842 - __main__ - INFO - [Epoch 179]
+2026-07-23 17:51:47,303 - __main__ - INFO - 2026_07_23_17_51_47 [Epoch] 179 [Loss] loss_reg 0.2486 loss_cls 0.0217 weighted_loss_overall 0.3573
+
+2026-07-23 17:51:47,561 - __main__ - INFO - [Epoch 180]
+2026-07-23 17:53:21,614 - __main__ - INFO - 2026_07_23_17_53_21 [Epoch] 180 [Loss] loss_reg 0.2493 loss_cls 0.0218 weighted_loss_overall 0.3583
+
+2026-07-23 17:54:35,052 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 37.65),
+                ('MR-full-R1@0.7', 21.18),
+                ('MR-full-mAP', 25.02),
+                ('MR-full-mAP@0.5', 46.71),
+                ('MR-full-mAP@0.75', 26.66),
+                ('MR-full-mIoU', 33.42),
+                ('GMR-AUROC', 59.71),
+                ('GMR-Rej-F1@0.4', 15.52),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.54),
+                ('GMR-Acc@0.6', 49.25),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.82),
+                ('GMR-G-mIoU@3', 11.01),
+                ('GMR-G-mIoU@5', 8.19),
+                ('GMR-mAP', 25.02),
+                ('GMR-mR@1', 15.86),
+                ('GMR-mR@3', 27.96),
+                ('GMR-mR@5', 33.5),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.43),
+                ('GMR-mR+@5', 11.98),
+                ('GMR-mIoU@1', 33.42),
+                ('GMR-mIoU@3', 30.15),
+                ('GMR-mIoU@5', 30.03),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.62),
+                ('GMR-mIoU+@5', 7.34)])
+2026-07-23 17:54:35,053 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 37.65),
+                ('MR-full-R1@0.7', 21.57),
+                ('MR-full-mAP', 27.23),
+                ('MR-full-mAP@0.5', 49.23),
+                ('MR-full-mAP@0.75', 29.98),
+                ('MR-full-mIoU', 33.41),
+                ('GMR-AUROC', 59.71),
+                ('GMR-Rej-F1@0.4', 15.52),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.74),
+                ('GMR-Acc@0.6', 49.68),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.86),
+                ('GMR-G-mIoU@3', 11.27),
+                ('GMR-G-mIoU@5', 8.35),
+                ('GMR-mAP', 27.23),
+                ('GMR-mR@1', 15.99),
+                ('GMR-mR@3', 30.95),
+                ('GMR-mR@5', 37.33),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 10.85),
+                ('GMR-mR+@5', 14.46),
+                ('GMR-mIoU@1', 33.41),
+                ('GMR-mIoU@3', 30.68),
+                ('GMR-mIoU@5', 30.58),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.19),
+                ('GMR-mIoU+@5', 7.96)])
+2026-07-23 17:54:35,277 - __main__ - INFO - [Epoch 181]
+2026-07-23 17:56:09,058 - __main__ - INFO - 2026_07_23_17_56_09 [Epoch] 181 [Loss] loss_reg 0.2438 loss_cls 0.0217 weighted_loss_overall 0.3521
+
+2026-07-23 17:56:09,276 - __main__ - INFO - [Epoch 182]
+2026-07-23 17:57:40,796 - __main__ - INFO - 2026_07_23_17_57_40 [Epoch] 182 [Loss] loss_reg 0.2472 loss_cls 0.0215 weighted_loss_overall 0.3548
+
+2026-07-23 17:57:41,020 - __main__ - INFO - [Epoch 183]
+2026-07-23 17:59:18,707 - __main__ - INFO - 2026_07_23_17_59_18 [Epoch] 183 [Loss] loss_reg 0.2456 loss_cls 0.0216 weighted_loss_overall 0.3536
+
+2026-07-23 17:59:18,926 - __main__ - INFO - [Epoch 184]
+2026-07-23 18:00:54,085 - __main__ - INFO - 2026_07_23_18_00_54 [Epoch] 184 [Loss] loss_reg 0.2451 loss_cls 0.0215 weighted_loss_overall 0.3524
+
+2026-07-23 18:00:54,352 - __main__ - INFO - [Epoch 185]
+2026-07-23 18:02:27,593 - __main__ - INFO - 2026_07_23_18_02_27 [Epoch] 185 [Loss] loss_reg 0.2441 loss_cls 0.0216 weighted_loss_overall 0.3519
+
+2026-07-23 18:03:41,207 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 40.0),
+                ('MR-full-R1@0.7', 23.92),
+                ('MR-full-mAP', 25.77),
+                ('MR-full-mAP@0.5', 47.59),
+                ('MR-full-mAP@0.75', 27.99),
+                ('MR-full-mIoU', 34.68),
+                ('GMR-AUROC', 57.11),
+                ('GMR-Rej-F1@0.4', 10.53),
+                ('GMR-Acc@0.4', 56.13),
+                ('GMR-Rej-F1@0.6', 62.4),
+                ('GMR-Acc@0.6', 49.46),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 17.89),
+                ('GMR-G-mIoU@3', 9.73),
+                ('GMR-G-mIoU@5', 6.91),
+                ('GMR-mAP', 25.77),
+                ('GMR-mR@1', 16.9),
+                ('GMR-mR@3', 28.51),
+                ('GMR-mR@5', 34.06),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.15),
+                ('GMR-mR+@5', 11.96),
+                ('GMR-mIoU@1', 34.68),
+                ('GMR-mIoU@3', 30.19),
+                ('GMR-mIoU@5', 30.07),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.85),
+                ('GMR-mIoU+@5', 7.57)])
+2026-07-23 18:03:41,207 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 40.0),
+                ('MR-full-R1@0.7', 23.53),
+                ('MR-full-mAP', 27.58),
+                ('MR-full-mAP@0.5', 50.35),
+                ('MR-full-mAP@0.75', 30.17),
+                ('MR-full-mIoU', 34.52),
+                ('GMR-AUROC', 57.11),
+                ('GMR-Rej-F1@0.4', 10.57),
+                ('GMR-Acc@0.4', 56.34),
+                ('GMR-Rej-F1@0.6', 62.28),
+                ('GMR-Acc@0.6', 49.46),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 17.86),
+                ('GMR-G-mIoU@3', 10.06),
+                ('GMR-G-mIoU@5', 7.1),
+                ('GMR-mAP', 27.58),
+                ('GMR-mR@1', 16.63),
+                ('GMR-mR@3', 31.14),
+                ('GMR-mR@5', 37.52),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.46),
+                ('GMR-mR+@5', 14.96),
+                ('GMR-mIoU@1', 34.52),
+                ('GMR-mIoU@3', 30.93),
+                ('GMR-mIoU@5', 30.83),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.59),
+                ('GMR-mIoU+@5', 8.36)])
+2026-07-23 18:03:41,437 - __main__ - INFO - [Epoch 186]
+2026-07-23 18:05:12,566 - __main__ - INFO - 2026_07_23_18_05_12 [Epoch] 186 [Loss] loss_reg 0.2440 loss_cls 0.0214 weighted_loss_overall 0.3512
+
+2026-07-23 18:05:12,787 - __main__ - INFO - [Epoch 187]
+2026-07-23 18:06:44,507 - __main__ - INFO - 2026_07_23_18_06_44 [Epoch] 187 [Loss] loss_reg 0.2421 loss_cls 0.0215 weighted_loss_overall 0.3495
+
+2026-07-23 18:06:44,712 - __main__ - INFO - [Epoch 188]
+2026-07-23 18:08:16,061 - __main__ - INFO - 2026_07_23_18_08_16 [Epoch] 188 [Loss] loss_reg 0.2449 loss_cls 0.0215 weighted_loss_overall 0.3523
+
+2026-07-23 18:08:16,293 - __main__ - INFO - [Epoch 189]
+2026-07-23 18:09:51,495 - __main__ - INFO - 2026_07_23_18_09_51 [Epoch] 189 [Loss] loss_reg 0.2439 loss_cls 0.0213 weighted_loss_overall 0.3507
+
+2026-07-23 18:09:51,715 - __main__ - INFO - [Epoch 190]
+2026-07-23 18:11:24,023 - __main__ - INFO - 2026_07_23_18_11_24 [Epoch] 190 [Loss] loss_reg 0.2404 loss_cls 0.0213 weighted_loss_overall 0.3468
+
+2026-07-23 18:12:38,930 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 24.7),
+                ('MR-full-mAP@0.5', 46.18),
+                ('MR-full-mAP@0.75', 26.2),
+                ('MR-full-mIoU', 33.93),
+                ('GMR-AUROC', 59.27),
+                ('GMR-Rej-F1@0.4', 19.83),
+                ('GMR-Acc@0.4', 58.28),
+                ('GMR-Rej-F1@0.6', 62.38),
+                ('GMR-Acc@0.6', 49.68),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.95),
+                ('GMR-G-mIoU@3', 12.34),
+                ('GMR-G-mIoU@5', 9.51),
+                ('GMR-mAP', 24.7),
+                ('GMR-mR@1', 15.72),
+                ('GMR-mR@3', 27.78),
+                ('GMR-mR@5', 34.83),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.87),
+                ('GMR-mR+@5', 11.26),
+                ('GMR-mIoU@1', 33.93),
+                ('GMR-mIoU@3', 30.03),
+                ('GMR-mIoU@5', 29.92),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.98),
+                ('GMR-mIoU+@5', 8.7)])
+2026-07-23 18:12:38,930 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 26.39),
+                ('MR-full-mAP@0.5', 48.96),
+                ('MR-full-mAP@0.75', 28.45),
+                ('MR-full-mIoU', 33.93),
+                ('GMR-AUROC', 59.27),
+                ('GMR-Rej-F1@0.4', 19.09),
+                ('GMR-Acc@0.4', 58.06),
+                ('GMR-Rej-F1@0.6', 62.16),
+                ('GMR-Acc@0.6', 49.46),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.74),
+                ('GMR-G-mIoU@3', 12.44),
+                ('GMR-G-mIoU@5', 9.47),
+                ('GMR-mAP', 26.39),
+                ('GMR-mR@1', 15.72),
+                ('GMR-mR@3', 30.65),
+                ('GMR-mR@5', 37.23),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.52),
+                ('GMR-mR+@5', 14.07),
+                ('GMR-mIoU@1', 33.93),
+                ('GMR-mIoU@3', 30.88),
+                ('GMR-mIoU@5', 30.77),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.3),
+                ('GMR-mIoU+@5', 8.07)])
+2026-07-23 18:12:39,149 - __main__ - INFO - [Epoch 191]
+2026-07-23 18:14:13,456 - __main__ - INFO - 2026_07_23_18_14_13 [Epoch] 191 [Loss] loss_reg 0.2409 loss_cls 0.0212 weighted_loss_overall 0.3470
+
+2026-07-23 18:14:13,677 - __main__ - INFO - [Epoch 192]
+2026-07-23 18:15:53,645 - __main__ - INFO - 2026_07_23_18_15_53 [Epoch] 192 [Loss] loss_reg 0.2418 loss_cls 0.0212 weighted_loss_overall 0.3480
+
+2026-07-23 18:15:53,854 - __main__ - INFO - [Epoch 193]
+2026-07-23 18:17:31,193 - __main__ - INFO - 2026_07_23_18_17_31 [Epoch] 193 [Loss] loss_reg 0.2386 loss_cls 0.0212 weighted_loss_overall 0.3446
+
+2026-07-23 18:17:31,423 - __main__ - INFO - [Epoch 194]
+2026-07-23 18:19:10,599 - __main__ - INFO - 2026_07_23_18_19_10 [Epoch] 194 [Loss] loss_reg 0.2378 loss_cls 0.0211 weighted_loss_overall 0.3430
+
+2026-07-23 18:19:10,826 - __main__ - INFO - [Epoch 195]
+2026-07-23 18:20:48,065 - __main__ - INFO - 2026_07_23_18_20_48 [Epoch] 195 [Loss] loss_reg 0.2385 loss_cls 0.0210 weighted_loss_overall 0.3432
+
+2026-07-23 18:22:02,172 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 39.61),
+                ('MR-full-R1@0.7', 24.31),
+                ('MR-full-mAP', 25.34),
+                ('MR-full-mAP@0.5', 46.02),
+                ('MR-full-mAP@0.75', 27.14),
+                ('MR-full-mIoU', 34.78),
+                ('GMR-AUROC', 62.82),
+                ('GMR-Rej-F1@0.4', 20.58),
+                ('GMR-Acc@0.4', 58.49),
+                ('GMR-Rej-F1@0.6', 63.88),
+                ('GMR-Acc@0.6', 51.61),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.83),
+                ('GMR-G-mIoU@3', 12.65),
+                ('GMR-G-mIoU@5', 9.8),
+                ('GMR-mAP', 25.34),
+                ('GMR-mR@1', 17.43),
+                ('GMR-mR@3', 27.84),
+                ('GMR-mR@5', 32.37),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.83),
+                ('GMR-mR+@5', 11.04),
+                ('GMR-mIoU@1', 34.78),
+                ('GMR-mIoU@3', 30.94),
+                ('GMR-mIoU@5', 30.94),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.39),
+                ('GMR-mIoU+@5', 6.57)])
+2026-07-23 18:22:02,172 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 39.61),
+                ('MR-full-R1@0.7', 24.31),
+                ('MR-full-mAP', 27.68),
+                ('MR-full-mAP@0.5', 48.9),
+                ('MR-full-mAP@0.75', 30.21),
+                ('MR-full-mIoU', 34.78),
+                ('GMR-AUROC', 62.82),
+                ('GMR-Rej-F1@0.4', 20.66),
+                ('GMR-Acc@0.4', 58.71),
+                ('GMR-Rej-F1@0.6', 63.33),
+                ('GMR-Acc@0.6', 51.18),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.83),
+                ('GMR-G-mIoU@3', 13.16),
+                ('GMR-G-mIoU@5', 10.07),
+                ('GMR-mAP', 27.68),
+                ('GMR-mR@1', 17.43),
+                ('GMR-mR@3', 30.58),
+                ('GMR-mR@5', 37.08),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.44),
+                ('GMR-mR+@5', 14.37),
+                ('GMR-mIoU@1', 34.78),
+                ('GMR-mIoU@3', 32.26),
+                ('GMR-mIoU@5', 32.17),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.35),
+                ('GMR-mIoU+@5', 7.21)])
+2026-07-23 18:22:02,377 - __main__ - INFO - [Epoch 196]
+2026-07-23 18:23:32,912 - __main__ - INFO - 2026_07_23_18_23_32 [Epoch] 196 [Loss] loss_reg 0.2370 loss_cls 0.0209 weighted_loss_overall 0.3412
+
+2026-07-23 18:23:33,139 - __main__ - INFO - [Epoch 197]
+2026-07-23 18:25:06,457 - __main__ - INFO - 2026_07_23_18_25_06 [Epoch] 197 [Loss] loss_reg 0.2359 loss_cls 0.0209 weighted_loss_overall 0.3403
+
+2026-07-23 18:25:06,686 - __main__ - INFO - [Epoch 198]
+2026-07-23 18:26:39,484 - __main__ - INFO - 2026_07_23_18_26_39 [Epoch] 198 [Loss] loss_reg 0.2360 loss_cls 0.0211 weighted_loss_overall 0.3415
+
+2026-07-23 18:26:39,710 - __main__ - INFO - [Epoch 199]
+2026-07-23 18:28:10,776 - __main__ - INFO - 2026_07_23_18_28_10 [Epoch] 199 [Loss] loss_reg 0.2362 loss_cls 0.0210 weighted_loss_overall 0.3414
+
+2026-07-23 18:28:10,987 - __main__ - INFO - [Epoch 200]
+2026-07-23 18:29:42,266 - __main__ - INFO - 2026_07_23_18_29_42 [Epoch] 200 [Loss] loss_reg 0.2366 loss_cls 0.0208 weighted_loss_overall 0.3407
+
+2026-07-23 18:30:55,932 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 36.47),
+                ('MR-full-R1@0.7', 19.61),
+                ('MR-full-mAP', 23.7),
+                ('MR-full-mAP@0.5', 45.48),
+                ('MR-full-mAP@0.75', 24.61),
+                ('MR-full-mIoU', 33.35),
+                ('GMR-AUROC', 57.28),
+                ('GMR-Rej-F1@0.4', 14.66),
+                ('GMR-Acc@0.4', 57.42),
+                ('GMR-Rej-F1@0.6', 61.2),
+                ('GMR-Acc@0.6', 50.11),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.45),
+                ('GMR-G-mIoU@3', 10.81),
+                ('GMR-G-mIoU@5', 7.98),
+                ('GMR-mAP', 23.7),
+                ('GMR-mR@1', 14.44),
+                ('GMR-mR@3', 27.27),
+                ('GMR-mR@5', 31.79),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.43),
+                ('GMR-mR+@5', 11.26),
+                ('GMR-mIoU@1', 33.35),
+                ('GMR-mIoU@3', 29.66),
+                ('GMR-mIoU@5', 29.55),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.79),
+                ('GMR-mIoU+@5', 7.55)])
+2026-07-23 18:30:55,932 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 36.47),
+                ('MR-full-R1@0.7', 19.61),
+                ('MR-full-mAP', 25.52),
+                ('MR-full-mAP@0.5', 48.02),
+                ('MR-full-mAP@0.75', 27.37),
+                ('MR-full-mIoU', 33.35),
+                ('GMR-AUROC', 57.28),
+                ('GMR-Rej-F1@0.4', 14.66),
+                ('GMR-Acc@0.4', 57.42),
+                ('GMR-Rej-F1@0.6', 61.2),
+                ('GMR-Acc@0.6', 50.11),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.45),
+                ('GMR-G-mIoU@3', 11.31),
+                ('GMR-G-mIoU@5', 8.28),
+                ('GMR-mAP', 25.52),
+                ('GMR-mR@1', 14.44),
+                ('GMR-mR@3', 27.93),
+                ('GMR-mR@5', 34.65),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 9.46),
+                ('GMR-mR+@5', 13.96),
+                ('GMR-mIoU@1', 33.35),
+                ('GMR-mIoU@3', 31.0),
+                ('GMR-mIoU@5', 30.9),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.89),
+                ('GMR-mIoU+@5', 9.67)])
+2026-07-23 18:30:56,161 - __main__ - INFO - [Epoch 201]
+2026-07-23 18:32:32,430 - __main__ - INFO - 2026_07_23_18_32_32 [Epoch] 201 [Loss] loss_reg 0.2358 loss_cls 0.0208 weighted_loss_overall 0.3400
+
+2026-07-23 18:32:32,648 - __main__ - INFO - [Epoch 202]
+2026-07-23 18:34:04,937 - __main__ - INFO - 2026_07_23_18_34_04 [Epoch] 202 [Loss] loss_reg 0.2343 loss_cls 0.0209 weighted_loss_overall 0.3389
+
+2026-07-23 18:34:05,145 - __main__ - INFO - [Epoch 203]
+2026-07-23 18:35:37,081 - __main__ - INFO - 2026_07_23_18_35_37 [Epoch] 203 [Loss] loss_reg 0.2345 loss_cls 0.0209 weighted_loss_overall 0.3388
+
+2026-07-23 18:35:37,305 - __main__ - INFO - [Epoch 204]
+2026-07-23 18:37:08,290 - __main__ - INFO - 2026_07_23_18_37_08 [Epoch] 204 [Loss] loss_reg 0.2314 loss_cls 0.0207 weighted_loss_overall 0.3351
+
+2026-07-23 18:37:08,527 - __main__ - INFO - [Epoch 205]
+2026-07-23 18:38:40,523 - __main__ - INFO - 2026_07_23_18_38_40 [Epoch] 205 [Loss] loss_reg 0.2343 loss_cls 0.0207 weighted_loss_overall 0.3380
+
+2026-07-23 18:39:54,381 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 21.57),
+                ('MR-full-mAP', 23.95),
+                ('MR-full-mAP@0.5', 45.74),
+                ('MR-full-mAP@0.75', 24.88),
+                ('MR-full-mIoU', 33.42),
+                ('GMR-AUROC', 57.91),
+                ('GMR-Rej-F1@0.4', 12.99),
+                ('GMR-Acc@0.4', 56.77),
+                ('GMR-Rej-F1@0.6', 62.08),
+                ('GMR-Acc@0.6', 51.4),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 17.82),
+                ('GMR-G-mIoU@3', 10.24),
+                ('GMR-G-mIoU@5', 7.49),
+                ('GMR-mAP', 23.95),
+                ('GMR-mR@1', 15.23),
+                ('GMR-mR@3', 26.89),
+                ('GMR-mR@5', 33.16),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.94),
+                ('GMR-mR+@5', 10.15),
+                ('GMR-mIoU@1', 33.42),
+                ('GMR-mIoU@3', 29.65),
+                ('GMR-mIoU@5', 29.64),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.56),
+                ('GMR-mIoU+@5', 6.75)])
+2026-07-23 18:39:54,382 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 26.77),
+                ('MR-full-mAP@0.5', 49.22),
+                ('MR-full-mAP@0.75', 28.41),
+                ('MR-full-mIoU', 33.57),
+                ('GMR-AUROC', 57.91),
+                ('GMR-Rej-F1@0.4', 12.99),
+                ('GMR-Acc@0.4', 56.77),
+                ('GMR-Rej-F1@0.6', 62.08),
+                ('GMR-Acc@0.6', 51.4),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 17.9),
+                ('GMR-G-mIoU@3', 10.64),
+                ('GMR-G-mIoU@5', 7.7),
+                ('GMR-mAP', 26.77),
+                ('GMR-mR@1', 15.5),
+                ('GMR-mR@3', 29.74),
+                ('GMR-mR@5', 36.95),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.48),
+                ('GMR-mR+@5', 15.19),
+                ('GMR-mIoU@1', 33.57),
+                ('GMR-mIoU@3', 30.83),
+                ('GMR-mIoU@5', 30.73),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.49),
+                ('GMR-mIoU+@5', 8.29)])
+2026-07-23 18:39:54,601 - __main__ - INFO - [Epoch 206]
+2026-07-23 18:41:29,928 - __main__ - INFO - 2026_07_23_18_41_29 [Epoch] 206 [Loss] loss_reg 0.2289 loss_cls 0.0207 weighted_loss_overall 0.3322
+
+2026-07-23 18:41:30,139 - __main__ - INFO - [Epoch 207]
+2026-07-23 18:43:05,637 - __main__ - INFO - 2026_07_23_18_43_05 [Epoch] 207 [Loss] loss_reg 0.2317 loss_cls 0.0205 weighted_loss_overall 0.3342
+
+2026-07-23 18:43:05,854 - __main__ - INFO - [Epoch 208]
+2026-07-23 18:44:41,988 - __main__ - INFO - 2026_07_23_18_44_41 [Epoch] 208 [Loss] loss_reg 0.2312 loss_cls 0.0205 weighted_loss_overall 0.3338
+
+2026-07-23 18:44:42,200 - __main__ - INFO - [Epoch 209]
+2026-07-23 18:46:19,653 - __main__ - INFO - 2026_07_23_18_46_19 [Epoch] 209 [Loss] loss_reg 0.2315 loss_cls 0.0207 weighted_loss_overall 0.3348
+
+2026-07-23 18:46:19,872 - __main__ - INFO - [Epoch 210]
+2026-07-23 18:47:57,691 - __main__ - INFO - 2026_07_23_18_47_57 [Epoch] 210 [Loss] loss_reg 0.2299 loss_cls 0.0207 weighted_loss_overall 0.3332
+
+2026-07-23 18:49:12,364 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 23.92),
+                ('MR-full-mAP', 25.07),
+                ('MR-full-mAP@0.5', 45.99),
+                ('MR-full-mAP@0.75', 26.49),
+                ('MR-full-mIoU', 34.26),
+                ('GMR-AUROC', 58.75),
+                ('GMR-Rej-F1@0.4', 17.72),
+                ('GMR-Acc@0.4', 58.06),
+                ('GMR-Rej-F1@0.6', 61.98),
+                ('GMR-Acc@0.6', 51.18),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.66),
+                ('GMR-G-mIoU@3', 11.7),
+                ('GMR-G-mIoU@5', 8.86),
+                ('GMR-mAP', 25.07),
+                ('GMR-mR@1', 16.79),
+                ('GMR-mR@3', 27.64),
+                ('GMR-mR@5', 33.23),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.93),
+                ('GMR-mR+@5', 11.81),
+                ('GMR-mIoU@1', 34.26),
+                ('GMR-mIoU@3', 30.72),
+                ('GMR-mIoU@5', 30.61),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.83),
+                ('GMR-mIoU+@5', 7.58)])
+2026-07-23 18:49:12,364 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 24.31),
+                ('MR-full-mAP', 27.7),
+                ('MR-full-mAP@0.5', 49.09),
+                ('MR-full-mAP@0.75', 29.95),
+                ('MR-full-mIoU', 34.86),
+                ('GMR-AUROC', 58.75),
+                ('GMR-Rej-F1@0.4', 16.95),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 61.51),
+                ('GMR-Acc@0.6', 50.75),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.75),
+                ('GMR-G-mIoU@3', 11.92),
+                ('GMR-G-mIoU@5', 8.9),
+                ('GMR-mAP', 27.7),
+                ('GMR-mR@1', 17.14),
+                ('GMR-mR@3', 30.82),
+                ('GMR-mR@5', 36.76),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 10.26),
+                ('GMR-mR+@5', 15.35),
+                ('GMR-mIoU@1', 34.86),
+                ('GMR-mIoU@3', 32.18),
+                ('GMR-mIoU@5', 32.08),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.88),
+                ('GMR-mIoU+@5', 7.7)])
+2026-07-23 18:49:12,585 - __main__ - INFO - [Epoch 211]
+2026-07-23 18:50:46,347 - __main__ - INFO - 2026_07_23_18_50_46 [Epoch] 211 [Loss] loss_reg 0.2268 loss_cls 0.0205 weighted_loss_overall 0.3293
+
+2026-07-23 18:50:46,571 - __main__ - INFO - [Epoch 212]
+2026-07-23 18:52:24,699 - __main__ - INFO - 2026_07_23_18_52_24 [Epoch] 212 [Loss] loss_reg 0.2285 loss_cls 0.0207 weighted_loss_overall 0.3322
+
+2026-07-23 18:52:24,921 - __main__ - INFO - [Epoch 213]
+2026-07-23 18:53:59,871 - __main__ - INFO - 2026_07_23_18_53_59 [Epoch] 213 [Loss] loss_reg 0.2273 loss_cls 0.0206 weighted_loss_overall 0.3303
+
+2026-07-23 18:54:00,082 - __main__ - INFO - [Epoch 214]
+2026-07-23 18:55:37,456 - __main__ - INFO - 2026_07_23_18_55_37 [Epoch] 214 [Loss] loss_reg 0.2275 loss_cls 0.0205 weighted_loss_overall 0.3299
+
+2026-07-23 18:55:37,687 - __main__ - INFO - [Epoch 215]
+2026-07-23 18:57:15,337 - __main__ - INFO - 2026_07_23_18_57_15 [Epoch] 215 [Loss] loss_reg 0.2279 loss_cls 0.0207 weighted_loss_overall 0.3311
+
+2026-07-23 18:58:29,025 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 22.35),
+                ('MR-full-mAP', 24.35),
+                ('MR-full-mAP@0.5', 45.34),
+                ('MR-full-mAP@0.75', 25.7),
+                ('MR-full-mIoU', 33.72),
+                ('GMR-AUROC', 58.82),
+                ('GMR-Rej-F1@0.4', 13.16),
+                ('GMR-Acc@0.4', 57.42),
+                ('GMR-Rej-F1@0.6', 61.85),
+                ('GMR-Acc@0.6', 51.18),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.29),
+                ('GMR-G-mIoU@3', 10.57),
+                ('GMR-G-mIoU@5', 7.67),
+                ('GMR-mAP', 24.35),
+                ('GMR-mR@1', 16.17),
+                ('GMR-mR@3', 26.19),
+                ('GMR-mR@5', 32.39),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.04),
+                ('GMR-mR+@5', 11.2),
+                ('GMR-mIoU@1', 33.72),
+                ('GMR-mIoU@3', 30.71),
+                ('GMR-mIoU@5', 30.6),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.2),
+                ('GMR-mIoU+@5', 7.95)])
+2026-07-23 18:58:29,025 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 37.65),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 26.99),
+                ('MR-full-mAP@0.5', 48.52),
+                ('MR-full-mAP@0.75', 29.17),
+                ('MR-full-mIoU', 34.04),
+                ('GMR-AUROC', 58.82),
+                ('GMR-Rej-F1@0.4', 13.16),
+                ('GMR-Acc@0.4', 57.42),
+                ('GMR-Rej-F1@0.6', 62.06),
+                ('GMR-Acc@0.6', 51.61),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.35),
+                ('GMR-G-mIoU@3', 10.82),
+                ('GMR-G-mIoU@5', 7.81),
+                ('GMR-mAP', 26.99),
+                ('GMR-mR@1', 16.26),
+                ('GMR-mR@3', 29.91),
+                ('GMR-mR@5', 37.04),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.7),
+                ('GMR-mR+@5', 14.26),
+                ('GMR-mIoU@1', 34.04),
+                ('GMR-mIoU@3', 31.4),
+                ('GMR-mIoU@5', 31.3),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.44),
+                ('GMR-mIoU+@5', 8.25)])
+2026-07-23 18:58:29,241 - __main__ - INFO - [Epoch 216]
+2026-07-23 19:00:02,414 - __main__ - INFO - 2026_07_23_19_00_02 [Epoch] 216 [Loss] loss_reg 0.2272 loss_cls 0.0204 weighted_loss_overall 0.3292
+
+2026-07-23 19:00:02,630 - __main__ - INFO - [Epoch 217]
+2026-07-23 19:01:35,350 - __main__ - INFO - 2026_07_23_19_01_35 [Epoch] 217 [Loss] loss_reg 0.2288 loss_cls 0.0203 weighted_loss_overall 0.3303
+
+2026-07-23 19:01:35,559 - __main__ - INFO - [Epoch 218]
+2026-07-23 19:03:08,075 - __main__ - INFO - 2026_07_23_19_03_08 [Epoch] 218 [Loss] loss_reg 0.2258 loss_cls 0.0202 weighted_loss_overall 0.3268
+
+2026-07-23 19:03:08,297 - __main__ - INFO - [Epoch 219]
+2026-07-23 19:04:41,625 - __main__ - INFO - 2026_07_23_19_04_41 [Epoch] 219 [Loss] loss_reg 0.2268 loss_cls 0.0202 weighted_loss_overall 0.3280
+
+2026-07-23 19:04:41,833 - __main__ - INFO - [Epoch 220]
+2026-07-23 19:06:18,202 - __main__ - INFO - 2026_07_23_19_06_18 [Epoch] 220 [Loss] loss_reg 0.2245 loss_cls 0.0201 weighted_loss_overall 0.3249
+
+2026-07-23 19:07:31,434 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 24.58),
+                ('MR-full-mAP@0.5', 45.56),
+                ('MR-full-mAP@0.75', 26.17),
+                ('MR-full-mIoU', 33.59),
+                ('GMR-AUROC', 58.6),
+                ('GMR-Rej-F1@0.4', 18.26),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 61.41),
+                ('GMR-Acc@0.6', 51.61),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.6),
+                ('GMR-G-mIoU@3', 12.03),
+                ('GMR-G-mIoU@5', 9.15),
+                ('GMR-mAP', 24.58),
+                ('GMR-mR@1', 16.23),
+                ('GMR-mR@3', 26.68),
+                ('GMR-mR@5', 33.05),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.93),
+                ('GMR-mR+@5', 11.48),
+                ('GMR-mIoU@1', 33.59),
+                ('GMR-mIoU@3', 30.97),
+                ('GMR-mIoU@5', 30.86),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.02),
+                ('GMR-mIoU+@5', 8.74)])
+2026-07-23 19:07:31,435 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 27.1),
+                ('MR-full-mAP@0.5', 48.56),
+                ('MR-full-mAP@0.75', 29.74),
+                ('MR-full-mIoU', 33.59),
+                ('GMR-AUROC', 58.6),
+                ('GMR-Rej-F1@0.4', 18.26),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 61.62),
+                ('GMR-Acc@0.6', 52.04),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.6),
+                ('GMR-G-mIoU@3', 12.39),
+                ('GMR-G-mIoU@5', 9.36),
+                ('GMR-mAP', 27.1),
+                ('GMR-mR@1', 16.23),
+                ('GMR-mR@3', 29.88),
+                ('GMR-mR@5', 36.48),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 9.35),
+                ('GMR-mR+@5', 14.91),
+                ('GMR-mIoU@1', 33.59),
+                ('GMR-mIoU@3', 31.91),
+                ('GMR-mIoU@5', 31.8),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 10.14),
+                ('GMR-mIoU+@5', 9.91)])
+2026-07-23 19:07:31,670 - __main__ - INFO - [Epoch 221]
+2026-07-23 19:09:06,411 - __main__ - INFO - 2026_07_23_19_09_06 [Epoch] 221 [Loss] loss_reg 0.2213 loss_cls 0.0201 weighted_loss_overall 0.3220
+
+2026-07-23 19:09:06,623 - __main__ - INFO - [Epoch 222]
+2026-07-23 19:10:41,301 - __main__ - INFO - 2026_07_23_19_10_41 [Epoch] 222 [Loss] loss_reg 0.2249 loss_cls 0.0202 weighted_loss_overall 0.3258
+
+2026-07-23 19:10:41,514 - __main__ - INFO - [Epoch 223]
+2026-07-23 19:12:18,927 - __main__ - INFO - 2026_07_23_19_12_18 [Epoch] 223 [Loss] loss_reg 0.2215 loss_cls 0.0198 weighted_loss_overall 0.3206
+
+2026-07-23 19:12:19,148 - __main__ - INFO - [Epoch 224]
+2026-07-23 19:13:55,878 - __main__ - INFO - 2026_07_23_19_13_55 [Epoch] 224 [Loss] loss_reg 0.2254 loss_cls 0.0201 weighted_loss_overall 0.3260
+
+2026-07-23 19:13:56,100 - __main__ - INFO - [Epoch 225]
+2026-07-23 19:15:29,200 - __main__ - INFO - 2026_07_23_19_15_29 [Epoch] 225 [Loss] loss_reg 0.2216 loss_cls 0.0198 weighted_loss_overall 0.3207
+
+2026-07-23 19:16:42,620 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 25.88),
+                ('MR-full-mAP', 24.95),
+                ('MR-full-mAP@0.5', 45.65),
+                ('MR-full-mAP@0.75', 27.04),
+                ('MR-full-mIoU', 34.79),
+                ('GMR-AUROC', 58.69),
+                ('GMR-Rej-F1@0.4', 17.72),
+                ('GMR-Acc@0.4', 58.06),
+                ('GMR-Rej-F1@0.6', 60.0),
+                ('GMR-Acc@0.6', 52.69),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.83),
+                ('GMR-G-mIoU@3', 11.77),
+                ('GMR-G-mIoU@5', 8.9),
+                ('GMR-mAP', 24.95),
+                ('GMR-mR@1', 17.43),
+                ('GMR-mR@3', 26.49),
+                ('GMR-mR@5', 31.34),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.04),
+                ('GMR-mR+@5', 9.93),
+                ('GMR-mIoU@1', 34.79),
+                ('GMR-mIoU@3', 30.87),
+                ('GMR-mIoU@5', 30.77),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.02),
+                ('GMR-mIoU+@5', 7.78)])
+2026-07-23 19:16:42,620 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 38.43),
+                ('MR-full-R1@0.7', 26.27),
+                ('MR-full-mAP', 27.19),
+                ('MR-full-mAP@0.5', 49.05),
+                ('MR-full-mAP@0.75', 30.36),
+                ('MR-full-mIoU', 34.7),
+                ('GMR-AUROC', 58.69),
+                ('GMR-Rej-F1@0.4', 17.8),
+                ('GMR-Acc@0.4', 58.28),
+                ('GMR-Rej-F1@0.6', 60.11),
+                ('GMR-Acc@0.6', 52.9),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.76),
+                ('GMR-G-mIoU@3', 12.0),
+                ('GMR-G-mIoU@5', 9.04),
+                ('GMR-mAP', 27.19),
+                ('GMR-mR@1', 17.45),
+                ('GMR-mR@3', 28.84),
+                ('GMR-mR@5', 36.16),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.61),
+                ('GMR-mR+@5', 14.44),
+                ('GMR-mIoU@1', 34.7),
+                ('GMR-mIoU@3', 31.46),
+                ('GMR-mIoU@5', 31.36),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.5),
+                ('GMR-mIoU+@5', 7.35)])
+2026-07-23 19:16:42,863 - __main__ - INFO - [Epoch 226]
+2026-07-23 19:18:18,977 - __main__ - INFO - 2026_07_23_19_18_18 [Epoch] 226 [Loss] loss_reg 0.2195 loss_cls 0.0201 weighted_loss_overall 0.3198
+
+2026-07-23 19:18:19,240 - __main__ - INFO - [Epoch 227]
+2026-07-23 19:19:51,453 - __main__ - INFO - 2026_07_23_19_19_51 [Epoch] 227 [Loss] loss_reg 0.2171 loss_cls 0.0197 weighted_loss_overall 0.3157
+
+2026-07-23 19:19:51,671 - __main__ - INFO - [Epoch 228]
+2026-07-23 19:21:22,389 - __main__ - INFO - 2026_07_23_19_21_22 [Epoch] 228 [Loss] loss_reg 0.2185 loss_cls 0.0199 weighted_loss_overall 0.3182
+
+2026-07-23 19:21:22,620 - __main__ - INFO - [Epoch 229]
+2026-07-23 19:22:52,792 - __main__ - INFO - 2026_07_23_19_22_52 [Epoch] 229 [Loss] loss_reg 0.2220 loss_cls 0.0197 weighted_loss_overall 0.3204
+
+2026-07-23 19:22:53,019 - __main__ - INFO - [Epoch 230]
+2026-07-23 19:24:24,349 - __main__ - INFO - 2026_07_23_19_24_24 [Epoch] 230 [Loss] loss_reg 0.2201 loss_cls 0.0198 weighted_loss_overall 0.3193
+
+2026-07-23 19:25:37,881 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 47.06),
+                ('MR-full-R1@0.5', 36.86),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 23.39),
+                ('MR-full-mAP@0.5', 44.55),
+                ('MR-full-mAP@0.75', 25.2),
+                ('MR-full-mIoU', 32.18),
+                ('GMR-AUROC', 59.64),
+                ('GMR-Rej-F1@0.4', 15.45),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 62.11),
+                ('GMR-Acc@0.6', 53.55),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.22),
+                ('GMR-G-mIoU@3', 10.85),
+                ('GMR-G-mIoU@5', 8.12),
+                ('GMR-mAP', 23.39),
+                ('GMR-mR@1', 15.05),
+                ('GMR-mR@3', 24.77),
+                ('GMR-mR@5', 31.96),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.0),
+                ('GMR-mR+@5', 11.98),
+                ('GMR-mIoU@1', 32.18),
+                ('GMR-mIoU@3', 29.3),
+                ('GMR-mIoU@5', 29.28),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.48),
+                ('GMR-mIoU+@5', 8.63)])
+2026-07-23 19:25:37,881 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 47.06),
+                ('MR-full-R1@0.5', 36.86),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 25.55),
+                ('MR-full-mAP@0.5', 47.87),
+                ('MR-full-mAP@0.75', 28.35),
+                ('MR-full-mIoU', 32.18),
+                ('GMR-AUROC', 59.64),
+                ('GMR-Rej-F1@0.4', 15.52),
+                ('GMR-Acc@0.4', 57.85),
+                ('GMR-Rej-F1@0.6', 62.21),
+                ('GMR-Acc@0.6', 53.76),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 18.27),
+                ('GMR-G-mIoU@3', 11.22),
+                ('GMR-G-mIoU@5', 8.31),
+                ('GMR-mAP', 25.55),
+                ('GMR-mR@1', 15.05),
+                ('GMR-mR@3', 28.81),
+                ('GMR-mR@5', 34.95),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.7),
+                ('GMR-mR+@5', 13.52),
+                ('GMR-mIoU@1', 32.18),
+                ('GMR-mIoU@3', 30.28),
+                ('GMR-mIoU@5', 30.18),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.68),
+                ('GMR-mIoU+@5', 8.49)])
+2026-07-23 19:25:38,096 - __main__ - INFO - [Epoch 231]
+2026-07-23 19:27:12,624 - __main__ - INFO - 2026_07_23_19_27_12 [Epoch] 231 [Loss] loss_reg 0.2182 loss_cls 0.0197 weighted_loss_overall 0.3165
+
+2026-07-23 19:27:12,834 - __main__ - INFO - [Epoch 232]
+2026-07-23 19:28:47,901 - __main__ - INFO - 2026_07_23_19_28_47 [Epoch] 232 [Loss] loss_reg 0.2197 loss_cls 0.0194 weighted_loss_overall 0.3168
+
+2026-07-23 19:28:48,116 - __main__ - INFO - [Epoch 233]
+2026-07-23 19:30:23,853 - __main__ - INFO - 2026_07_23_19_30_23 [Epoch] 233 [Loss] loss_reg 0.2159 loss_cls 0.0196 weighted_loss_overall 0.3137
+
+2026-07-23 19:30:24,082 - __main__ - INFO - [Epoch 234]
+2026-07-23 19:31:57,100 - __main__ - INFO - 2026_07_23_19_31_57 [Epoch] 234 [Loss] loss_reg 0.2147 loss_cls 0.0197 weighted_loss_overall 0.3131
+
+2026-07-23 19:31:57,319 - __main__ - INFO - [Epoch 235]
+2026-07-23 19:33:30,676 - __main__ - INFO - 2026_07_23_19_33_30 [Epoch] 235 [Loss] loss_reg 0.2160 loss_cls 0.0196 weighted_loss_overall 0.3138
+
+2026-07-23 19:34:44,533 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 50.59),
+                ('MR-full-R1@0.5', 37.65),
+                ('MR-full-R1@0.7', 21.18),
+                ('MR-full-mAP', 23.45),
+                ('MR-full-mAP@0.5', 44.65),
+                ('MR-full-mAP@0.75', 24.86),
+                ('MR-full-mIoU', 33.67),
+                ('GMR-AUROC', 59.76),
+                ('GMR-Rej-F1@0.4', 21.14),
+                ('GMR-Acc@0.4', 58.28),
+                ('GMR-Rej-F1@0.6', 61.05),
+                ('GMR-Acc@0.6', 52.26),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.15),
+                ('GMR-G-mIoU@3', 12.58),
+                ('GMR-G-mIoU@5', 9.82),
+                ('GMR-mAP', 23.45),
+                ('GMR-mR@1', 14.92),
+                ('GMR-mR@3', 24.99),
+                ('GMR-mR@5', 31.99),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.98),
+                ('GMR-mR+@5', 11.48),
+                ('GMR-mIoU@1', 33.67),
+                ('GMR-mIoU@3', 29.5),
+                ('GMR-mIoU@5', 29.39),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 6.27),
+                ('GMR-mIoU+@5', 6.05)])
+2026-07-23 19:34:44,534 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 20.78),
+                ('MR-full-mAP', 25.75),
+                ('MR-full-mAP@0.5', 47.72),
+                ('MR-full-mAP@0.75', 28.25),
+                ('MR-full-mIoU', 33.28),
+                ('GMR-AUROC', 59.76),
+                ('GMR-Rej-F1@0.4', 21.22),
+                ('GMR-Acc@0.4', 58.49),
+                ('GMR-Rej-F1@0.6', 61.02),
+                ('GMR-Acc@0.6', 52.47),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 20.25),
+                ('GMR-G-mIoU@3', 12.99),
+                ('GMR-G-mIoU@5', 10.06),
+                ('GMR-mAP', 25.75),
+                ('GMR-mR@1', 14.78),
+                ('GMR-mR@3', 29.09),
+                ('GMR-mR@5', 37.19),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.93),
+                ('GMR-mR+@5', 14.35),
+                ('GMR-mIoU@1', 33.28),
+                ('GMR-mIoU@3', 30.53),
+                ('GMR-mIoU@5', 30.44),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.29),
+                ('GMR-mIoU+@5', 8.14)])
+2026-07-23 19:34:44,762 - __main__ - INFO - [Epoch 236]
+2026-07-23 19:36:17,071 - __main__ - INFO - 2026_07_23_19_36_17 [Epoch] 236 [Loss] loss_reg 0.2149 loss_cls 0.0197 weighted_loss_overall 0.3133
+
+2026-07-23 19:36:17,294 - __main__ - INFO - [Epoch 237]
+2026-07-23 19:37:49,326 - __main__ - INFO - 2026_07_23_19_37_49 [Epoch] 237 [Loss] loss_reg 0.2133 loss_cls 0.0194 weighted_loss_overall 0.3103
+
+2026-07-23 19:37:49,551 - __main__ - INFO - [Epoch 238]
+2026-07-23 19:39:25,401 - __main__ - INFO - 2026_07_23_19_39_25 [Epoch] 238 [Loss] loss_reg 0.2118 loss_cls 0.0194 weighted_loss_overall 0.3089
+
+2026-07-23 19:39:25,611 - __main__ - INFO - [Epoch 239]
+2026-07-23 19:40:57,379 - __main__ - INFO - 2026_07_23_19_40_57 [Epoch] 239 [Loss] loss_reg 0.2140 loss_cls 0.0193 weighted_loss_overall 0.3104
+
+2026-07-23 19:40:57,587 - __main__ - INFO - [Epoch 240]
+2026-07-23 19:42:30,877 - __main__ - INFO - 2026_07_23_19_42_30 [Epoch] 240 [Loss] loss_reg 0.2146 loss_cls 0.0195 weighted_loss_overall 0.3121
+
+2026-07-23 19:43:44,179 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 37.65),
+                ('MR-full-R1@0.7', 21.96),
+                ('MR-full-mAP', 23.7),
+                ('MR-full-mAP@0.5', 44.98),
+                ('MR-full-mAP@0.75', 25.0),
+                ('MR-full-mIoU', 33.61),
+                ('GMR-AUROC', 60.61),
+                ('GMR-Rej-F1@0.4', 20.41),
+                ('GMR-Acc@0.4', 58.06),
+                ('GMR-Rej-F1@0.6', 61.28),
+                ('GMR-Acc@0.6', 54.62),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.8),
+                ('GMR-G-mIoU@3', 12.42),
+                ('GMR-G-mIoU@5', 9.68),
+                ('GMR-mAP', 23.7),
+                ('GMR-mR@1', 15.34),
+                ('GMR-mR@3', 25.15),
+                ('GMR-mR@5', 32.45),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 5.98),
+                ('GMR-mR+@5', 11.65),
+                ('GMR-mIoU@1', 33.61),
+                ('GMR-mIoU@3', 29.78),
+                ('GMR-mIoU@5', 29.75),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.68),
+                ('GMR-mIoU+@5', 8.69)])
+2026-07-23 19:43:44,179 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 22.35),
+                ('MR-full-mAP', 26.55),
+                ('MR-full-mAP@0.5', 48.6),
+                ('MR-full-mAP@0.75', 29.14),
+                ('MR-full-mIoU', 33.68),
+                ('GMR-AUROC', 60.61),
+                ('GMR-Rej-F1@0.4', 20.58),
+                ('GMR-Acc@0.4', 58.49),
+                ('GMR-Rej-F1@0.6', 60.77),
+                ('GMR-Acc@0.6', 54.19),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.88),
+                ('GMR-G-mIoU@3', 12.74),
+                ('GMR-G-mIoU@5', 9.84),
+                ('GMR-mAP', 26.55),
+                ('GMR-mR@1', 15.58),
+                ('GMR-mR@3', 29.99),
+                ('GMR-mR@5', 37.33),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 8.7),
+                ('GMR-mR+@5', 14.13),
+                ('GMR-mIoU@1', 33.68),
+                ('GMR-mIoU@3', 30.61),
+                ('GMR-mIoU@5', 30.49),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.38),
+                ('GMR-mIoU+@5', 9.05)])
+2026-07-23 19:43:44,410 - __main__ - INFO - [Epoch 241]
+2026-07-23 19:45:16,180 - __main__ - INFO - 2026_07_23_19_45_16 [Epoch] 241 [Loss] loss_reg 0.2119 loss_cls 0.0193 weighted_loss_overall 0.3084
+
+2026-07-23 19:45:16,400 - __main__ - INFO - [Epoch 242]
+2026-07-23 19:46:49,878 - __main__ - INFO - 2026_07_23_19_46_49 [Epoch] 242 [Loss] loss_reg 0.2126 loss_cls 0.0192 weighted_loss_overall 0.3086
+
+2026-07-23 19:46:50,084 - __main__ - INFO - [Epoch 243]
+2026-07-23 19:48:21,767 - __main__ - INFO - 2026_07_23_19_48_21 [Epoch] 243 [Loss] loss_reg 0.2094 loss_cls 0.0192 weighted_loss_overall 0.3053
+
+2026-07-23 19:48:22,000 - __main__ - INFO - [Epoch 244]
+2026-07-23 19:49:54,688 - __main__ - INFO - 2026_07_23_19_49_54 [Epoch] 244 [Loss] loss_reg 0.2097 loss_cls 0.0191 weighted_loss_overall 0.3052
+
+2026-07-23 19:49:54,910 - __main__ - INFO - [Epoch 245]
+2026-07-23 19:51:27,337 - __main__ - INFO - 2026_07_23_19_51_27 [Epoch] 245 [Loss] loss_reg 0.2101 loss_cls 0.0193 weighted_loss_overall 0.3068
+
+2026-07-23 19:52:41,280 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 23.53),
+                ('MR-full-mAP', 23.86),
+                ('MR-full-mAP@0.5', 45.28),
+                ('MR-full-mAP@0.75', 25.24),
+                ('MR-full-mIoU', 33.96),
+                ('GMR-AUROC', 60.87),
+                ('GMR-Rej-F1@0.4', 22.75),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 63.12),
+                ('GMR-Acc@0.6', 53.76),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.03),
+                ('GMR-G-mIoU@3', 13.25),
+                ('GMR-G-mIoU@5', 10.48),
+                ('GMR-mAP', 23.86),
+                ('GMR-mR@1', 16.45),
+                ('GMR-mR@3', 24.36),
+                ('GMR-mR@5', 30.79),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.54),
+                ('GMR-mR+@5', 10.65),
+                ('GMR-mIoU@1', 33.96),
+                ('GMR-mIoU@3', 30.3),
+                ('GMR-mIoU@5', 30.19),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.93),
+                ('GMR-mIoU+@5', 7.69)])
+2026-07-23 19:52:41,280 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.8),
+                ('MR-full-R1@0.5', 38.04),
+                ('MR-full-R1@0.7', 23.53),
+                ('MR-full-mAP', 25.99),
+                ('MR-full-mAP@0.5', 48.08),
+                ('MR-full-mAP@0.75', 28.49),
+                ('MR-full-mIoU', 33.93),
+                ('GMR-AUROC', 60.87),
+                ('GMR-Rej-F1@0.4', 22.75),
+                ('GMR-Acc@0.4', 57.63),
+                ('GMR-Rej-F1@0.6', 62.65),
+                ('GMR-Acc@0.6', 53.33),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 21.03),
+                ('GMR-G-mIoU@3', 13.42),
+                ('GMR-G-mIoU@5', 10.58),
+                ('GMR-mAP', 25.99),
+                ('GMR-mR@1', 16.45),
+                ('GMR-mR@3', 27.58),
+                ('GMR-mR@5', 35.0),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.98),
+                ('GMR-mR+@5', 12.81),
+                ('GMR-mIoU@1', 33.93),
+                ('GMR-mIoU@3', 30.76),
+                ('GMR-mIoU@5', 30.66),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.91),
+                ('GMR-mIoU+@5', 8.73)])
+2026-07-23 19:52:41,517 - __main__ - INFO - [Epoch 246]
+2026-07-23 19:54:11,795 - __main__ - INFO - 2026_07_23_19_54_11 [Epoch] 246 [Loss] loss_reg 0.2104 loss_cls 0.0192 weighted_loss_overall 0.3065
+
+2026-07-23 19:54:12,000 - __main__ - INFO - [Epoch 247]
+2026-07-23 19:55:42,975 - __main__ - INFO - 2026_07_23_19_55_42 [Epoch] 247 [Loss] loss_reg 0.2099 loss_cls 0.0192 weighted_loss_overall 0.3058
+
+2026-07-23 19:55:43,188 - __main__ - INFO - [Epoch 248]
+2026-07-23 19:57:15,458 - __main__ - INFO - 2026_07_23_19_57_15 [Epoch] 248 [Loss] loss_reg 0.2071 loss_cls 0.0190 weighted_loss_overall 0.3022
+
+2026-07-23 19:57:15,682 - __main__ - INFO - [Epoch 249]
+2026-07-23 19:58:46,809 - __main__ - INFO - 2026_07_23_19_58_46 [Epoch] 249 [Loss] loss_reg 0.2108 loss_cls 0.0192 weighted_loss_overall 0.3067
+
+2026-07-23 19:58:47,020 - __main__ - INFO - [Epoch 250]
+2026-07-23 20:00:17,700 - __main__ - INFO - 2026_07_23_20_00_17 [Epoch] 250 [Loss] loss_reg 0.2060 loss_cls 0.0194 weighted_loss_overall 0.3031
+
+2026-07-23 20:01:30,296 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 37.25),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 24.1),
+                ('MR-full-mAP@0.5', 44.97),
+                ('MR-full-mAP@0.75', 25.97),
+                ('MR-full-mIoU', 33.54),
+                ('GMR-AUROC', 59.22),
+                ('GMR-Rej-F1@0.4', 8.97),
+                ('GMR-Acc@0.4', 56.34),
+                ('GMR-Rej-F1@0.6', 59.07),
+                ('GMR-Acc@0.6', 54.41),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 16.89),
+                ('GMR-G-mIoU@3', 9.24),
+                ('GMR-G-mIoU@5', 6.44),
+                ('GMR-mAP', 24.1),
+                ('GMR-mR@1', 15.81),
+                ('GMR-mR@3', 26.18),
+                ('GMR-mR@5', 33.4),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.04),
+                ('GMR-mR+@5', 11.87),
+                ('GMR-mIoU@1', 33.54),
+                ('GMR-mIoU@3', 29.52),
+                ('GMR-mIoU@5', 29.41),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.06),
+                ('GMR-mIoU+@5', 7.81)])
+2026-07-23 20:01:30,296 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 49.02),
+                ('MR-full-R1@0.5', 36.86),
+                ('MR-full-R1@0.7', 22.35),
+                ('MR-full-mAP', 26.36),
+                ('MR-full-mAP@0.5', 47.45),
+                ('MR-full-mAP@0.75', 29.25),
+                ('MR-full-mIoU', 33.4),
+                ('GMR-AUROC', 59.22),
+                ('GMR-Rej-F1@0.4', 8.97),
+                ('GMR-Acc@0.4', 56.34),
+                ('GMR-Rej-F1@0.6', 59.07),
+                ('GMR-Acc@0.6', 54.41),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 16.85),
+                ('GMR-G-mIoU@3', 9.54),
+                ('GMR-G-mIoU@5', 6.62),
+                ('GMR-mAP', 26.36),
+                ('GMR-mR@1', 15.67),
+                ('GMR-mR@3', 29.95),
+                ('GMR-mR@5', 35.94),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 7.93),
+                ('GMR-mR+@5', 11.98),
+                ('GMR-mIoU@1', 33.4),
+                ('GMR-mIoU@3', 30.37),
+                ('GMR-mIoU@5', 30.28),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 9.21),
+                ('GMR-mIoU+@5', 9.02)])
+2026-07-23 20:01:30,512 - __main__ - INFO - [Epoch 251]
+2026-07-23 20:03:04,598 - __main__ - INFO - 2026_07_23_20_03_04 [Epoch] 251 [Loss] loss_reg 0.2076 loss_cls 0.0190 weighted_loss_overall 0.3027
+
+2026-07-23 20:03:04,811 - __main__ - INFO - [Epoch 252]
+2026-07-23 20:04:37,455 - __main__ - INFO - 2026_07_23_20_04_37 [Epoch] 252 [Loss] loss_reg 0.2047 loss_cls 0.0190 weighted_loss_overall 0.2998
+
+2026-07-23 20:04:37,677 - __main__ - INFO - [Epoch 253]
+2026-07-23 20:06:09,501 - __main__ - INFO - 2026_07_23_20_06_09 [Epoch] 253 [Loss] loss_reg 0.2056 loss_cls 0.0188 weighted_loss_overall 0.2997
+
+2026-07-23 20:06:09,705 - __main__ - INFO - [Epoch 254]
+2026-07-23 20:07:41,115 - __main__ - INFO - 2026_07_23_20_07_41 [Epoch] 254 [Loss] loss_reg 0.2050 loss_cls 0.0188 weighted_loss_overall 0.2991
+
+2026-07-23 20:07:41,319 - __main__ - INFO - [Epoch 255]
+2026-07-23 20:09:12,831 - __main__ - INFO - 2026_07_23_20_09_12 [Epoch] 255 [Loss] loss_reg 0.2051 loss_cls 0.0188 weighted_loss_overall 0.2989
+
+2026-07-23 20:10:26,274 - __main__ - INFO - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 49.41),
+                ('MR-full-R1@0.5', 38.82),
+                ('MR-full-R1@0.7', 22.75),
+                ('MR-full-mAP', 23.42),
+                ('MR-full-mAP@0.5', 44.93),
+                ('MR-full-mAP@0.75', 25.43),
+                ('MR-full-mIoU', 33.19),
+                ('GMR-AUROC', 61.5),
+                ('GMR-Rej-F1@0.4', 20.0),
+                ('GMR-Acc@0.4', 58.71),
+                ('GMR-Rej-F1@0.6', 61.96),
+                ('GMR-Acc@0.6', 54.84),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.97),
+                ('GMR-G-mIoU@3', 12.21),
+                ('GMR-G-mIoU@5', 9.45),
+                ('GMR-mAP', 23.42),
+                ('GMR-mR@1', 15.54),
+                ('GMR-mR@3', 24.52),
+                ('GMR-mR@5', 32.23),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 6.72),
+                ('GMR-mR+@5', 12.54),
+                ('GMR-mIoU@1', 33.19),
+                ('GMR-mIoU@3', 29.88),
+                ('GMR-mIoU@5', 29.87),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 7.98),
+                ('GMR-mIoU+@5', 8.17)])
+2026-07-23 20:10:26,274 - __main__ - INFO - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 50.2),
+                ('MR-full-R1@0.5', 39.22),
+                ('MR-full-R1@0.7', 23.14),
+                ('MR-full-mAP', 26.14),
+                ('MR-full-mAP@0.5', 48.79),
+                ('MR-full-mAP@0.75', 29.56),
+                ('MR-full-mIoU', 33.68),
+                ('GMR-AUROC', 61.5),
+                ('GMR-Rej-F1@0.4', 19.33),
+                ('GMR-Acc@0.4', 58.71),
+                ('GMR-Rej-F1@0.6', 61.96),
+                ('GMR-Acc@0.6', 54.84),
+                ('GMR-Rej-F1@0.8', 62.22),
+                ('GMR-Acc@0.8', 45.16),
+                ('GMR-G-mIoU@1', 19.86),
+                ('GMR-G-mIoU@3', 12.22),
+                ('GMR-G-mIoU@5', 9.34),
+                ('GMR-mAP', 26.14),
+                ('GMR-mR@1', 15.63),
+                ('GMR-mR@3', 27.95),
+                ('GMR-mR@5', 35.84),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 9.54),
+                ('GMR-mR+@5', 14.2),
+                ('GMR-mIoU@1', 33.68),
+                ('GMR-mIoU@3', 30.46),
+                ('GMR-mIoU@5', 30.36),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 8.86),
+                ('GMR-mIoU+@5', 8.68)])
+2026-07-23 20:10:26,283 - __main__ - INFO - 
+>>>>> Early stop at epoch 254  25.8
+
+2026-07-23 20:10:26,327 - __main__ - INFO - 
+
+
+FINISHED TRAINING!!!
+2026-07-23 20:10:26,329 - __main__ - INFO - Evaluating model at /home/guoxiangyu/generalized-moment-retrieval/artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_plain/model_best.ckpt
+2026-07-23 20:10:26,329 - __main__ - INFO - Input args ['/home/guoxiangyu/generalized-moment-retrieval/configs/flash_vtg_gmr/model.py', '--resume', '/home/guoxiangyu/generalized-moment-retrieval/artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_plain/model_best.ckpt', '--eval_split_name', 'val', '--eval_path', '/home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/val.jsonl']

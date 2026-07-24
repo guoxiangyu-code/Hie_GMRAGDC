@@ -1,0 +1,4 @@
+started_at=2026-07-23T22:25:27+08:00
+seed=2023
+backbones=moment_detr,eatr,flash_vtg
+steps=B,Q,Z,Q+Z,Q+Z+P

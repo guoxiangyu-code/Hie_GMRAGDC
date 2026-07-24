@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=1 PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True bash scripts/run_eatr_dgqc_transfer.sh children 1 

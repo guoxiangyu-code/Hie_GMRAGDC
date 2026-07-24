@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8">
+<title>GMR 当前实验汇总大表 2026-07-23</title>
+<style>
+@page { size: A3 landscape; margin: 10mm; }
+* { box-sizing: border-box; }
+body { font-family: "Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif; color:#18212f; font-size:11px; }
+h1 { font-size:28px; margin:0 0 4px; color:#102a43; }
+h2 { font-size:18px; color:#163b65; border-bottom:2px solid #b9cee5; padding-bottom:4px; margin:18px 0 8px; }
+p { margin:5px 0; line-height:1.5; }
+.sub { color:#52667a; font-size:12px; }
+.summary { display:flex; gap:10px; margin:13px 0; }
+.stat { flex:1; padding:10px 12px; border-radius:7px; background:#edf4fb; border:1px solid #c8d9ea; }
+.stat b { font-size:20px; color:#143c66; display:block; }
+.cards { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+.card { padding:8px; border:1px solid #cfd8e3; border-radius:6px; background:#f8fafc; }
+.win-card { background:#eaf8ef; border-color:#85c99c; }
+.legend { padding:8px 10px; background:#fff8df; border-left:4px solid #e3ab2f; margin:8px 0; }
+table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:8.5px; }
+th { background:#173b63; color:white; padding:5px 3px; border:1px solid #dbe5ef; }
+td { padding:4px 3px; border:1px solid #d6dee7; vertical-align:middle; text-align:center; }
+tr:nth-child(even):not(.group) { background:#f7f9fc; }
+tr.group td { background:#dce9f6; color:#15395f; font-weight:bold; font-size:11px; text-align:left; padding:5px; }
+tr.running { background:#fff9e8 !important; }
+tr.stopped { background:#f7eeee !important; color:#6f5252; }
+.badge { display:inline-block; padding:2px 5px; border-radius:9px; white-space:nowrap; }
+.badge.done { background:#dff2e5; color:#176739; }
+.badge.running { background:#ffedb8; color:#875e00; }
+.badge.stopped { background:#edd9d9; color:#8b3030; }
+.verdict { font-weight:bold; }
+.verdict.win { color:#08783f; background:#dbf5e6; padding:2px 4px; }
+.verdict.trade { color:#976800; }
+.verdict.loss { color:#9b3030; }
+.pos { color:#08783f; font-weight:bold; } .neg { color:#a12c2c; }
+.note { text-align:left; } .source { text-align:left; font-size:7px; color:#52667a; overflow-wrap:anywhere; }
+.matrix td:nth-child(1), .matrix td:nth-child(5) { text-align:left; }
+.small { color:#52667a; font-size:9px; }
+.pagebreak { page-break-before:always; }
+code { font-family:monospace; font-size:9px; }
+</style></head><body>
+<h1>GMR 当前实验汇总大表</h1>
+<p class="sub">快照时间：2026-07-23 15:26 CST · Seed 2023 · 当前训练默认 batch size 128；新增/续跑任务每 5 epoch validation</p>
+<div class="legend"><b>口径：</b>“完成”行采用保存的 best checkpoint；“运行中”行采用当前 best-so-far，不能作为最终论文数值；
+“失败/中止”行仅保留诊断值。Δ 按同 backbone 的 GMR baseline 计算。绿色“超过 baseline”要求 mAP 与 G-mIoU@3 同时提升。</div>
+<div class="summary">
+ <div class="stat"><b>30</b>已纳入实验行</div>
+ <div class="stat"><b>5</b>已完成双指标胜出</div>
+ <div class="stat"><b>8</b>当前运行中</div>
+ <div class="stat"><b>6</b>失败或主动中止</div>
+</div>
+<h2>已完成且明确超过各自 GMR baseline</h2>
+<div class="cards"><div class="card win-card"><b>Moment-DETR · HieA2M-DGQC</b>
+    <div>mAP 9.16 (+0.23) · G-mIoU@3 36.40 (+5.62)</div></div><div class="card win-card"><b>EaTR · Quality</b>
+    <div>mAP 8.24 (+0.22) · G-mIoU@3 19.13 (+2.31)</div></div><div class="card win-card"><b>EaTR · Dual gate</b>
+    <div>mAP 8.06 (+0.04) · G-mIoU@3 21.10 (+4.28)</div></div><div class="card win-card"><b>QD-DETR · Quality</b>
+    <div>mAP 7.56 (+0.53) · G-mIoU@3 42.36 (+39.22)</div></div><div class="card win-card"><b>FlashVTG · GMR + Quality</b>
+    <div>mAP 26.67 (+0.66) · G-mIoU@3 34.03 (+0.10)</div></div></div>
+
+<h2>全量核心结果表</h2>
+<table>
+<colgroup>
+<col style="width:8%"><col style="width:5%"><col style="width:3%">
+<col style="width:4%"><col style="width:4%"><col style="width:4%"><col style="width:4%"><col style="width:4%"><col style="width:4%">
+<col style="width:4%"><col style="width:4%"><col style="width:10%"><col style="width:11%"><col style="width:31%">
+</colgroup>
+<thead><tr><th>方法</th><th>状态</th><th>进度</th><th>AUROC</th><th>Rej-F1<br>@0.4</th><th>mAP</th><th>mR@5</th><th>mR+@5</th><th>G-mIoU@3</th><th>ΔmAP</th><th>ΔG@3</th><th>相对 baseline</th><th>说明</th><th>指标来源</th></tr></thead>
+<tbody><tr class="group"><td colspan="14">Moment-DETR</td></tr>
+    <tr class="done">
+      <td>GMR baseline (matched)</td>
+      <td><span class="badge done">完成</span></td>
+      <td>—</td>
+      <td>70.95</td><td>61.22</td>
+      <td>8.93</td><td>13.85</td><td>3.17</td>
+      <td>30.78</td><td>—</td><td>—</td>
+      <td><span class="verdict base">BASE</span></td>
+      <td class="note">同骨干严格训练基线</td>
+      <td class="source">artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128/best_joint_soccer_gmr_val_preds_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>HieA2M-DGQC</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e13</td>
+      <td>73.36</td><td>68.22</td>
+      <td>9.16</td><td>15.45</td><td>1.33</td>
+      <td>36.40</td><td><span class="pos">+0.23</span></td><td><span class="pos">+5.62</span></td>
+      <td><span class="verdict win">双指标超过 baseline</span></td>
+      <td class="note">当前主方法</td>
+      <td class="source">artifacts/validation_selector_ablation/seed2023_posw1/stage2_zero/stdout.log#epoch13-best-joint</td>
+    </tr>
+    <tr class="done">
+      <td>Quality + Dual gate</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e130</td>
+      <td>71.80</td><td>53.40</td>
+      <td>7.48</td><td>12.34</td><td>1.67</td>
+      <td>23.53</td><td><span class="neg">-1.45</span></td><td><span class="neg">-7.25</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">Stage-B 迁移组合</td>
+      <td class="source">artifacts/cross_backbone_stage_b/seed2023/moment/md_quality_dual/best_joint_soccer_gmr_val_preds_metrics.json</td>
+    </tr><tr class="group"><td colspan="14">EaTR</td></tr>
+    <tr class="done">
+      <td>GMR baseline</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e99</td>
+      <td>71.67</td><td>39.35</td>
+      <td>8.02</td><td>12.30</td><td>2.93</td>
+      <td>16.82</td><td>—</td><td>—</td>
+      <td><span class="verdict base">BASE</span></td>
+      <td class="note">同骨干比较基线</td>
+      <td class="source">artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>Quality</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e94</td>
+      <td>71.98</td><td>44.31</td>
+      <td>8.24</td><td>12.69</td><td>4.17</td>
+      <td>19.13</td><td><span class="pos">+0.22</span></td><td><span class="pos">+2.31</span></td>
+      <td><span class="verdict win">双指标超过 baseline</span></td>
+      <td class="note">单模块</td>
+      <td class="source">artifacts/eatr_dgqc_transfer/seed2023/eatr_quality/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>Dual gate</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e67</td>
+      <td>72.05</td><td>48.12</td>
+      <td>8.06</td><td>11.91</td><td>1.31</td>
+      <td>21.10</td><td><span class="pos">+0.04</span></td><td><span class="pos">+4.28</span></td>
+      <td><span class="verdict win">双指标超过 baseline</span></td>
+      <td class="note">双门控</td>
+      <td class="source">artifacts/eatr_dgqc_transfer/seed2023/eatr_dual/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>Counter</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e136</td>
+      <td>73.31</td><td>29.79</td>
+      <td>6.16</td><td>9.46</td><td>0.93</td>
+      <td>12.15</td><td><span class="neg">-1.86</span></td><td><span class="neg">-4.67</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">条件计数</td>
+      <td class="source">artifacts/eatr_dgqc_transfer/seed2023/eatr_counter/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>HieA2M-DGQC</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e78</td>
+      <td>72.65</td><td>22.66</td>
+      <td>7.08</td><td>9.89</td><td>1.61</td>
+      <td>9.56</td><td><span class="neg">-0.94</span></td><td><span class="neg">-7.26</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">完整方法迁移</td>
+      <td class="source">artifacts/eatr_dgqc_transfer/seed2023/eatr_hiea2m/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>Quality + Dual gate</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e80</td>
+      <td>71.90</td><td>41.64</td>
+      <td>7.85</td><td>12.57</td><td>3.87</td>
+      <td>17.57</td><td><span class="neg">-0.17</span></td><td><span class="pos">+0.75</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">临时最优，最终值待定</td>
+      <td class="source">artifacts/cross_backbone_stage_b/seed2023/eatr/eatr_quality_dual/best_joint_val_metrics.json</td>
+    </tr><tr class="group"><td colspan="14">QD-DETR</td></tr>
+    <tr class="done">
+      <td>GMR baseline</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e109</td>
+      <td>72.40</td><td>3.74</td>
+      <td>7.03</td><td>9.10</td><td>0.00</td>
+      <td>3.14</td><td>—</td><td>—</td>
+      <td><span class="verdict base">BASE</span></td>
+      <td class="note">同骨干比较基线</td>
+      <td class="source">artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>Quality</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e60</td>
+      <td>72.50</td><td>70.24</td>
+      <td>7.56</td><td>10.80</td><td>0.67</td>
+      <td>42.36</td><td><span class="pos">+0.53</span></td><td><span class="pos">+39.22</span></td>
+      <td><span class="verdict win">双指标超过 baseline</span></td>
+      <td class="note">单模块</td>
+      <td class="source">artifacts/strict_bsz32/qd_detr/seed2023/qd_quality/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>Dual gate</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e72</td>
+      <td>72.38</td><td>67.98</td>
+      <td>6.61</td><td>10.36</td><td>0.17</td>
+      <td>38.54</td><td><span class="neg">-0.42</span></td><td><span class="pos">+35.40</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">临时最优，逐轮旧任务</td>
+      <td class="source">artifacts/strict_bsz32/qd_detr/seed2023/qd_dual/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>Quality + Dual gate</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e60</td>
+      <td>72.74</td><td>70.26</td>
+      <td>6.27</td><td>9.32</td><td>0.00</td>
+      <td>42.04</td><td><span class="neg">-0.76</span></td><td><span class="pos">+38.90</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡</span></td>
+      <td class="note">Stage-B 已完成，5 epoch 验证</td>
+      <td class="source">artifacts/cross_backbone_stage_b/seed2023/qd/qd_quality_dual/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="stopped">
+      <td>Counter</td>
+      <td><span class="badge stopped">中止</span></td>
+      <td>e19</td>
+      <td>72.33</td><td>26.72</td>
+      <td>6.76</td><td>9.76</td><td>0.00</td>
+      <td>9.75</td><td><span class="neg">-0.27</span></td><td><span class="pos">+6.61</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡</span></td>
+      <td class="note">早期走势无优势；数值仅供诊断</td>
+      <td class="source">artifacts/strict_bsz32/qd_detr/seed2023/qd_counter/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="stopped">
+      <td>HieA2M</td>
+      <td><span class="badge stopped">中止</span></td>
+      <td>e12</td>
+      <td>72.55</td><td>0.00</td>
+      <td>5.83</td><td>8.83</td><td>0.00</td>
+      <td>2.24</td><td><span class="neg">-1.20</span></td><td><span class="neg">-0.90</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">早期走势无优势；数值仅供诊断</td>
+      <td class="source">artifacts/strict_bsz32/qd_detr/seed2023/qd_hiea2m/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>FAIR · Continued control</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e7</td>
+      <td>72.52</td><td>47.93</td>
+      <td>5.61</td><td>8.82</td><td>0.33</td>
+      <td>19.19</td><td><span class="neg">-1.42</span></td><td><span class="pos">+16.05</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">公平矩阵：不开新增模块</td>
+      <td class="source">artifacts/qd_fair_ablation/seed2023_bsz32/continued_control/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>FAIR · Quality</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e6</td>
+      <td>72.60</td><td>70.10</td>
+      <td>5.99</td><td>8.65</td><td>0.83</td>
+      <td>40.90</td><td><span class="neg">-1.04</span></td><td><span class="pos">+37.76</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">公平矩阵：仅 Quality</td>
+      <td class="source">artifacts/qd_fair_ablation/seed2023_bsz32/quality/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>FAIR · Dual</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e5</td>
+      <td>72.30</td><td>70.27</td>
+      <td>6.34</td><td>8.17</td><td>0.00</td>
+      <td>43.34</td><td><span class="neg">-0.69</span></td><td><span class="pos">+40.20</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">公平矩阵：仅 Dual</td>
+      <td class="source">artifacts/qd_fair_ablation/seed2023_bsz32/dual/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>FAIR · Quality + Dual</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e6</td>
+      <td>72.74</td><td>70.26</td>
+      <td>6.27</td><td>9.32</td><td>0.00</td>
+      <td>42.04</td><td><span class="neg">-0.76</span></td><td><span class="pos">+38.90</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">公平矩阵：Quality 与 Dual 组合</td>
+      <td class="source">artifacts/qd_fair_ablation/seed2023_bsz32/quality_dual/best_joint_val_metrics.json</td>
+    </tr><tr class="group"><td colspan="14">CG-DETR</td></tr>
+    <tr class="done">
+      <td>GMR baseline</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e53</td>
+      <td>59.69</td><td>0.00</td>
+      <td>4.84</td><td>7.64</td><td>0.33</td>
+      <td>1.87</td><td>—</td><td>—</td>
+      <td><span class="verdict base">BASE</span></td>
+      <td class="note">同骨干比较基线</td>
+      <td class="source">artifacts/strict_bsz32/cg_detr/seed2023/cg_detr_gmr/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="stopped">
+      <td>Quality</td>
+      <td><span class="badge stopped">失败/中止</span></td>
+      <td>e19</td>
+      <td>59.75</td><td>0.00</td>
+      <td>4.95</td><td>7.08</td><td>0.72</td>
+      <td>1.79</td><td><span class="pos">+0.11</span></td><td><span class="neg">-0.08</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡</span></td>
+      <td class="note">全线无收益，停止占用资源</td>
+      <td class="source">artifacts/strict_bsz32/cg_detr/seed2023/cg_quality/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="stopped">
+      <td>Phrase</td>
+      <td><span class="badge stopped">失败/中止</span></td>
+      <td>e19</td>
+      <td>59.72</td><td>0.00</td>
+      <td>4.76</td><td>7.19</td><td>0.22</td>
+      <td>1.86</td><td><span class="neg">-0.08</span></td><td><span class="neg">-0.01</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">全线无收益，停止占用资源</td>
+      <td class="source">artifacts/strict_bsz32/cg_detr/seed2023/cg_phrase/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="stopped">
+      <td>Counter</td>
+      <td><span class="badge stopped">失败/中止</span></td>
+      <td>e13</td>
+      <td>59.71</td><td>0.00</td>
+      <td>4.58</td><td>6.67</td><td>0.39</td>
+      <td>1.77</td><td><span class="neg">-0.26</span></td><td><span class="neg">-0.10</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">全线无收益，停止占用资源</td>
+      <td class="source">artifacts/strict_bsz32/cg_detr/seed2023/cg_counter/best_joint_val_metrics.json</td>
+    </tr>
+    <tr class="stopped">
+      <td>HieA2M</td>
+      <td><span class="badge stopped">失败/中止</span></td>
+      <td>e12</td>
+      <td>59.68</td><td>0.00</td>
+      <td>4.65</td><td>6.81</td><td>0.39</td>
+      <td>1.86</td><td><span class="neg">-0.19</span></td><td><span class="neg">-0.01</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">全线无收益，停止占用资源</td>
+      <td class="source">artifacts/strict_bsz32/cg_detr/seed2023/cg_hiea2m/best_joint_val_metrics.json</td>
+    </tr><tr class="group"><td colspan="14">FlashVTG</td></tr>
+    <tr class="done">
+      <td>GMR release anchor</td>
+      <td><span class="badge done">完成</span></td>
+      <td>—</td>
+      <td>73.95</td><td>62.53</td>
+      <td>26.01</td><td>34.88</td><td>12.93</td>
+      <td>33.93</td><td>—</td><td>—</td>
+      <td><span class="verdict base">BASE</span></td>
+      <td class="note">迁移实验固定比较锚点</td>
+      <td class="source">artifacts/flash_vtg_supplement/release_gmr_val/strict_gmr_val_metrics_raw.json</td>
+    </tr>
+    <tr class="running">
+      <td>Plain from scratch</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e103</td>
+      <td>59.93</td><td>41.06</td>
+      <td>22.00</td><td>32.41</td><td>8.37</td>
+      <td>20.57</td><td>—</td><td>—</td>
+      <td><span class="verdict neutral">参考</span></td>
+      <td class="note">参照项；不计作 GMR 改进</td>
+      <td class="source">artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_plain/best_joint_hl_val_preds_metrics.json</td>
+    </tr>
+    <tr class="running">
+      <td>GMR from scratch</td>
+      <td><span class="badge running">运行中</span></td>
+      <td>e73</td>
+      <td>70.16</td><td>67.07</td>
+      <td>24.08</td><td>33.39</td><td>12.46</td>
+      <td>39.85</td><td><span class="neg">-1.93</span></td><td><span class="pos">+5.92</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡（临时）</span></td>
+      <td class="note">临时最优，最终值待定</td>
+      <td class="source">artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr/best_joint_hl_val_preds_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>GMR + Quality</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e50</td>
+      <td>73.95</td><td>62.53</td>
+      <td>26.67</td><td>37.61</td><td>14.80</td>
+      <td>34.03</td><td><span class="pos">+0.66</span></td><td><span class="pos">+0.10</span></td>
+      <td><span class="verdict win">双指标超过 baseline</span></td>
+      <td class="note">早停完成</td>
+      <td class="source">artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality/best_joint_hl_val_preds_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>GMR + Zero head</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e40</td>
+      <td>74.29</td><td>60.98</td>
+      <td>26.01</td><td>34.88</td><td>12.93</td>
+      <td>31.66</td><td><span class="">+0.00</span></td><td><span class="neg">-2.27</span></td>
+      <td><span class="verdict loss">未超过 baseline</span></td>
+      <td class="note">早停完成</td>
+      <td class="source">artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_zero/best_joint_hl_val_preds_metrics.json</td>
+    </tr>
+    <tr class="done">
+      <td>GMR + Quality + Zero</td>
+      <td><span class="badge done">完成</span></td>
+      <td>e70</td>
+      <td>74.13</td><td>61.12</td>
+      <td>26.67</td><td>37.61</td><td>14.80</td>
+      <td>32.86</td><td><span class="pos">+0.66</span></td><td><span class="neg">-1.07</span></td>
+      <td><span class="verdict trade">单指标超过 / 权衡</span></td>
+      <td class="note">早停完成</td>
+      <td class="source">artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality_zero/best_joint_hl_val_preds_metrics.json</td>
+    </tr></tbody></table>
+
+<div class="pagebreak"></div>
+<h2>结果解读与当前结论</h2>
+<table class="matrix">
+<thead><tr><th>证据</th><th>当前判断</th><th>可信度</th><th>是否可写入论文主结论</th><th>下一步</th></tr></thead>
+<tbody>
+<tr><td>Moment-DETR · HieA2M-DGQC</td><td>相对 matched GMR baseline 已形成明确综合提升，是目前最强主结果。</td><td>已完成</td><td>可以</td><td>补多 seed、模块消融与公平训练预算复核。</td></tr>
+<tr><td>EaTR 已完成变体</td><td>用于判断 Quality、Dual、Counter 与完整组合在第二骨干上的迁移性；以表中同骨干 Δ 为准。</td><td>已完成</td><td>可作为跨骨干证据，但需按指标权衡表述</td><td>等待 Quality+Dual 最终结果，再决定组合路线。</td></tr>
+<tr><td>FlashVTG Quality / Zero / Q+Zero</td><td>两个单模块及其组合均已完成，可直接判断组合是否互补。</td><td>已完成</td><td>可以报告</td><td>以表中的严格同锚点差值选择最终配置。</td></tr>
+<tr><td>QD-DETR Quality / Dual / Q+Dual</td><td>Quality 与 Quality+Dual 已完成；旧 Dual 任务仍在训练，现阶段以完成项定稿。</td><td>混合</td><td>完成项可以定稿</td><td>旧 Dual 结束后补齐最后一格。</td></tr>
+<tr><td>CG-DETR 全线</td><td>现有 Quality/Phrase/Counter/HieA2M 没有形成有效收益，已停止继续消耗资源。</td><td>失败/中止</td><td>不作为正面主结果</td><td>作为负结果和适用边界，后续不优先。</td></tr>
+</tbody></table>
+
+<h2>后续实验矩阵</h2>
+<table class="matrix">
+<thead><tr><th>优先级</th><th>实验</th><th>当前状态</th><th>判定目标</th><th>处理原则</th></tr></thead>
+<tbody>
+<tr><td>P0</td><td>FlashVTG GMR + Quality + Zero</td><td>已完成</td><td>组合是否同时优于 release GMR anchor</td><td>结果已冻结；与两个单模块直接比较。</td></tr>
+<tr><td>P0</td><td>QD-DETR Quality + Dual gate</td><td>已完成</td><td>两个有效倾向模块是否互补</td><td>结果已冻结；等待旧 Dual 任务补齐矩阵。</td></tr>
+<tr><td>P0</td><td>EaTR Quality + Dual gate</td><td>运行中</td><td>组合能否在 EaTR 复现</td><td>完成后决定是否扩展到多 seed。</td></tr>
+<tr><td>P1</td><td>Moment / EaTR / QD / FlashVTG 各自最佳方法多 seed</td><td>待运行</td><td>均值、方差与显著性</td><td>只对当前胜出配置投入资源。</td></tr>
+<tr><td>P1</td><td>去重：Direct Top-K vs geometry vs learned selector</td><td>已有单骨干消融</td><td>学习式去重是否值得使用</td><td>在最终最佳 backbone 配置上统一复核。</td></tr>
+<tr><td>P2</td><td>CG-DETR 组合扩展</td><td>跳过</td><td>现有证据不足</td><td>除非提出针对 CG 结构的新适配，否则不再跑。</td></tr>
+</tbody></table>
+
+<h2>审计说明</h2>
+<p>1. 除 Moment-DETR HieA2M-DGQC 外，表中数值直接读取对应 JSON 指标文件。该行采用 stdout.log 中 e13 的
+<code>Updated best_joint checkpoint</code> 同步指标；其 JSON 后来被后续 validation 覆写，故以 checkpoint 选择日志为准。</p>
+<p>2. FlashVTG 使用 <code>GMR-unified.brief</code>；Moment-DETR、EaTR、QD-DETR、CG-DETR 使用 <code>brief</code>。</p>
+<p>3. best checkpoint 可能分别由 joint 目标选出，因此表中是“同一个 best-joint checkpoint 的完整指标”，不是把各指标各自最优值拼接。</p>
+<p>4. 当前运行中进度来自生成时已有日志；训练继续后 epoch 与 best-so-far 会变化，应重新运行本脚本生成新快照。</p>
+</body></html>

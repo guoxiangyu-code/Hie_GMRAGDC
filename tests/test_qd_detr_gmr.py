@@ -8,13 +8,44 @@ from types import SimpleNamespace
 import torch
 
 from methods.qd_detr_gmr.adapter import GMRExistenceAdapter, existence_loss
+from methods.qd_detr_gmr.config import finalize_model_arguments
 from methods.qd_detr_gmr.dataset import video_id_to_feature_stem
+from methods.qd_detr_gmr.engine import build_components
+from methods.qd_detr_gmr.evaluate import detect_variant
 from methods.qd_detr_gmr.matcher import HungarianMatcher
 from methods.qd_detr_gmr.model import SetCriterion
+from methods.qd_detr_gmr.smoke import build_parser as build_smoke_parser
 from methods.qd_detr_gmr.train import validate_resume_config
 
 
 class QDDETRGMRTest(unittest.TestCase):
+    def test_quality_dual_variant_builds_without_counter_losses(self):
+        args = build_smoke_parser().parse_args(["--device", "cpu"])
+        args.variant = "qd_quality_dual"
+        args = finalize_model_arguments(args)
+        self.assertTrue(args.use_exist_head)
+        self.assertTrue(args.use_quality_head)
+        self.assertTrue(args.use_dual_grounding)
+        self.assertFalse(args.use_hierarchical_counter)
+
+        model, criterion, _ = build_components(args)
+        self.assertIsNotNone(model.exist_head)
+        self.assertIsNotNone(model.quality_embed)
+        self.assertIsNotNone(model.dual_grounding)
+        self.assertIsNone(model.hierarchical_counter)
+        self.assertIn("exist", criterion.losses)
+        self.assertIn("quality", criterion.losses)
+        self.assertIn("dual", criterion.losses)
+        self.assertNotIn("counter", criterion.losses)
+        self.assertIn("loss_quality", criterion.weight_dict)
+        self.assertIn("loss_dual_dqa", criterion.weight_dict)
+        self.assertIn("loss_dual_eos", criterion.weight_dict)
+        self.assertFalse(any(name.startswith("loss_count") for name in criterion.weight_dict))
+
+        detected, structure = detect_variant(model.state_dict())
+        self.assertEqual(detected, "qd_quality_dual")
+        self.assertFalse(structure["hierarchical_counter"])
+
     def test_resume_rejects_strict_loss_semantic_drift(self):
         checkpoint = {
             "config": {

@@ -1,0 +1,7 @@
+backbone=eatr
+variant=eatr_quality_dual
+seed=2023
+physical_gpu=1
+parent=/home/guoxiangyu/generalized-moment-retrieval/artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best.pt
+started_at=2026-07-23T14:35:21+08:00
+git_commit=f1eaf738bada88e33bc1c388bb3c9b0924983f8d

@@ -34,6 +34,72 @@ logging.basicConfig(
 )
 
 
+def evaluate_unified_gmr(submission, opt, gt_data):
+    """Run the repository-wide GMR evaluator and require complete split coverage."""
+    from eval.eval_main import evaluate_gmr
+    from eval.normalization import normalize_ground_truth
+
+    gt, _ = normalize_ground_truth(gt_data, None, drop_empty_gt=False)
+    pred_qids = {row.get("qid") for row in submission}
+    gt_qids = {row.get("qid") for row in gt}
+    if pred_qids != gt_qids:
+        raise ValueError(
+            "Strict GMR evaluation requires complete qid coverage: "
+            f"pred={len(pred_qids)}, gt={len(gt_qids)}, "
+            f"missing={len(gt_qids - pred_qids)}, extra={len(pred_qids - gt_qids)}"
+        )
+
+    return evaluate_gmr(
+        submission,
+        gt,
+        k_list=(1, 3, 5),
+        max_pred_windows=10,
+        cls_thresholds=tuple(getattr(opt, "gmr_cls_thresholds", (0.4, 0.6))),
+        gmiou_cls_threshold=float(getattr(opt, "gmiou_cls_threshold", 0.4)),
+        map_num_workers=8,
+        verbose=bool(getattr(opt, "debug", False)),
+    )
+
+
+def attach_unified_gmr_metrics(metrics, submission, opt, gt_data):
+    """Attach prefixed strict metrics without changing legacy Flash-VTG keys."""
+    unified = evaluate_unified_gmr(submission, opt, gt_data)
+    metrics["GMR-unified"] = unified
+    for name, value in unified["brief"].items():
+        if isinstance(value, (int, float)):
+            metrics["brief"][f"GMR-{name}"] = value
+    return metrics
+
+
+def combine_two_stage_existence(
+    stage1_exist,
+    zero_probability,
+    candidate_strength,
+    opt,
+):
+    """High-recall stage one with independent rescue and high-confidence veto."""
+    if zero_probability is None:
+        return stage1_exist
+    verifier_exist = 1.0 - zero_probability
+    if stage1_exist is None:
+        return verifier_exist
+
+    combined = torch.maximum(stage1_exist, verifier_exist)
+    loose = float(getattr(opt, "exist_loose_thd", 0.35))
+    rescue = float(getattr(opt, "zero_rescue_thd", 0.45))
+    veto = float(getattr(opt, "zero_veto_thd", 0.65))
+    weak = float(getattr(opt, "zero_weak_candidate_thd", 0.35))
+
+    both_empty = (stage1_exist < loose) & (zero_probability >= (1.0 - rescue))
+    strong_veto = (
+        (stage1_exist >= loose)
+        & (zero_probability >= veto)
+        & (candidate_strength < weak)
+    )
+    conservative = torch.minimum(stage1_exist, verifier_exist)
+    return torch.where(both_empty | strong_veto, conservative, combined)
+
+
 def post_processing_mr_nms(mr_res, nms_thd, max_before_nms, max_after_nms, nms_type):
     mr_res_after_nms = []
     for e in mr_res:
@@ -76,33 +142,7 @@ def eval_epoch_post_processing(submission, opt, gt_data, save_submission_filenam
             full_only=opt.eval_full_only,
             mr_only=opt.mr_only,
         )
-        if getattr(opt, "use_exist_head", False):
-            from models.flash_vtg_gmr.utils.basic_utils import load_jsonl
-            eval_gmr_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'eval_GMR', 'v1'))
-            if eval_gmr_dir not in sys.path:
-                sys.path.insert(0, eval_gmr_dir)
-            from eval_v1_3 import compute_gmr_cls_metrics, normalize_ground_truth, _load_ts_window_cfg
-
-            gt_raw = load_jsonl(opt.eval_path)
-            ts_cfg = _load_ts_window_cfg(None)
-            gt, _ = normalize_ground_truth(gt_raw, ts_cfg, drop_empty_gt=False)
-
-            pred_qids = set(e["qid"] for e in submission if isinstance(e, dict) and "qid" in e)
-            shared_qids = pred_qids.intersection(set(e["qid"] for e in gt))
-            submission_aligned = [e for e in submission if e.get("qid") in shared_qids]
-            gt_aligned = [e for e in gt if e.get("qid") in shared_qids]
-
-            pred_topk_for_cls = int(getattr(opt, "pred_topk_for_cls", 10))
-            pred_score_thd_for_cls = float(getattr(opt, "pred_score_thd_for_cls", 0.5))
-            cls_metrics = compute_gmr_cls_metrics(
-                submission_aligned,
-                gt_aligned,
-                pred_topk=pred_topk_for_cls,
-                pred_score_thd=pred_score_thd_for_cls,
-            )
-            metrics["brief"]["GMR-TPR"] = cls_metrics["TPR"]
-            metrics["brief"]["GMR-TNR"] = cls_metrics["TNR"]
-            metrics["brief"]["GMR-BalancedAcc"] = cls_metrics["BalancedAcc"]
+        metrics = attach_unified_gmr_metrics(metrics, submission, opt, gt_data)
 
         save_metrics_path = submission_path.replace(".jsonl", "_metrics.json")
         save_json(metrics, save_metrics_path, save_pretty=True, sort_keys=False)
@@ -137,19 +177,9 @@ def eval_epoch_post_processing(submission, opt, gt_data, save_submission_filenam
                 full_only=opt.eval_full_only,
                 mr_only=opt.mr_only,
             )
-            if getattr(opt, "use_exist_head", False):
-                submission_after_nms_aligned = [e for e in submission_after_nms if e.get("qid") in shared_qids]
-                pred_topk_for_cls = int(getattr(opt, "pred_topk_for_cls", 10))
-                pred_score_thd_for_cls = float(getattr(opt, "pred_score_thd_for_cls", 0.5))
-                cls_metrics_nms = compute_gmr_cls_metrics(
-                    submission_after_nms_aligned,
-                    gt_aligned,
-                    pred_topk=pred_topk_for_cls,
-                    pred_score_thd=pred_score_thd_for_cls,
-                )
-                metrics_nms["brief"]["GMR-TPR"] = cls_metrics_nms["TPR"]
-                metrics_nms["brief"]["GMR-TNR"] = cls_metrics_nms["TNR"]
-                metrics_nms["brief"]["GMR-BalancedAcc"] = cls_metrics_nms["BalancedAcc"]
+            metrics_nms = attach_unified_gmr_metrics(
+                metrics_nms, submission_after_nms, opt, gt_data
+            )
             save_metrics_nms_path = submission_nms_path.replace(
                 ".jsonl", "_metrics.json"
             )
@@ -308,15 +338,38 @@ def compute_mr_results(
             targets = {}
         outputs = model(**model_inputs, targets=targets)
 
-        # Optional existence calibration (GMR): softly suppress window scores for negatives
-        pred_exist_scores = None
+        # Optional two-stage GMR calibration.  Stage one is deliberately loose;
+        # the independent zero verifier may rescue it, or veto only when both
+        # P(null) and weak candidate evidence agree.
+        pred_exist_stage1_scores = None
         if getattr(opt, "use_exist_head", False) and ("pred_exist_logits" in outputs):
-            pred_exist_scores = torch.sigmoid(outputs["pred_exist_logits"]).detach().cpu()
-            thd = float(getattr(opt, "exist_gate_thd", 0.5))
-            mult = torch.where(pred_exist_scores >= thd, torch.ones_like(pred_exist_scores), pred_exist_scores)
+            pred_exist_stage1_scores = torch.sigmoid(
+                outputs["pred_exist_logits"]
+            ).detach().cpu()
+        pred_zero_scores = None
+        if "pred_zero_logits" in outputs:
+            pred_zero_scores = torch.sigmoid(
+                outputs["pred_zero_logits"]
+            ).detach().cpu()
 
         boundary_out = outputs.get("_out", {}).get("boundary", None)
+        if boundary_out is not None and boundary_out.numel() > 0:
+            candidate_strength = boundary_out[:, 2].detach().max().cpu().reshape(1)
+        else:
+            candidate_strength = torch.zeros(1)
+        pred_exist_scores = combine_two_stage_existence(
+            pred_exist_stage1_scores,
+            pred_zero_scores,
+            candidate_strength,
+            opt,
+        )
         if pred_exist_scores is not None and boundary_out is not None:
+            thd = float(getattr(opt, "exist_gate_thd", 0.5))
+            mult = torch.where(
+                pred_exist_scores >= thd,
+                torch.ones_like(pred_exist_scores),
+                pred_exist_scores,
+            )
             # Boundary decoding currently assumes an inference batch size of one.
             boundary_out = boundary_out.clone()
             boundary_out[:, 2] = boundary_out[:, 2] * float(mult[0])
@@ -369,6 +422,14 @@ def compute_mr_results(
                 cur_query_pred["pred_saliency_scores"] = saliency_scores[idx]
             if pred_exist_scores is not None:
                 cur_query_pred["pred_exist_score"] = float(f"{float(pred_exist_scores[idx]):.3f}")
+            if pred_exist_stage1_scores is not None:
+                cur_query_pred["pred_exist_score_stage1"] = float(
+                    f"{float(pred_exist_stage1_scores[idx]):.3f}"
+                )
+            if pred_zero_scores is not None:
+                cur_query_pred["pred_zero_score"] = float(
+                    f"{float(pred_zero_scores[idx]):.3f}"
+                )
             mr_res.append(cur_query_pred)
 
         loss_dict = {k: v for k, v in outputs.items() if 'loss' in k}
@@ -503,6 +564,22 @@ def setup_model(opt):
     logger.info("setup model/optimizer/scheduler")
     from models.flash_vtg_gmr.model import build_model1
     model, criterion = build_model1(opt)
+
+    if bool(getattr(opt, "freeze_parent", False)):
+        for parameter in model.parameters():
+            parameter.requires_grad = False
+        if bool(getattr(opt, "use_quality_head", False)) and not bool(
+            getattr(opt, "freeze_quality_head", False)
+        ):
+            for parameter in model.quality_head.parameters():
+                parameter.requires_grad = True
+        if bool(getattr(opt, "use_independent_zero_head", False)):
+            for parameter in model.zero_verifier_head.parameters():
+                parameter.requires_grad = True
+        if not any(parameter.requires_grad for parameter in model.parameters()):
+            raise ValueError(
+                "--freeze_parent requires at least one trainable Quality/Zero head"
+            )
     if opt.device.type == "cuda":
         logger.info("CUDA enabled.")
         model.to(opt.device)
@@ -520,13 +597,16 @@ def setup_model(opt):
 
     if opt.resume_adapter is not None:
         logger.info(f"Load adapter checkpoint from {opt.resume_adapter}")
-        adapter_checkpoint = torch.load(opt.resume_adapter)
+        # Flash-VTG checkpoints contain argparse.Namespace metadata.  PyTorch
+        # 2.6+ defaults to weights_only=True, which cannot deserialize that
+        # legacy but locally produced/trusted format.
+        adapter_checkpoint = torch.load(opt.resume_adapter, weights_only=False)
         adapter_state_dict = {k: v for k, v in adapter_checkpoint['state_dict'].items() if k.startswith('adapter')}
         model.load_state_dict(adapter_state_dict, strict=False)
 
     if opt.resume is not None:
         logger.info(f"Load checkpoint from {opt.resume}")
-        checkpoint = torch.load(opt.resume, map_location="cpu")
+        checkpoint = torch.load(opt.resume, map_location="cpu", weights_only=False)
 
         from collections import OrderedDict
 
@@ -538,12 +618,52 @@ def setup_model(opt):
             for k, v in state.items():
                 name = k[7:] if k.startswith("module.") else k
                 new_state_dict[name] = v
-            model.load_state_dict(new_state_dict, strict=True)
+            state = new_state_dict
+
+        if bool(getattr(opt, "allow_head_init", False)):
+            incompatible = model.load_state_dict(state, strict=False)
+            allowed_prefixes = []
+            if bool(getattr(opt, "use_quality_head", False)):
+                allowed_prefixes.append("quality_head.")
+            if bool(getattr(opt, "use_independent_zero_head", False)):
+                allowed_prefixes.append("zero_verifier_head.")
+            disallowed_missing = [
+                key
+                for key in incompatible.missing_keys
+                if not any(key.startswith(prefix) for prefix in allowed_prefixes)
+            ]
+            if disallowed_missing or incompatible.unexpected_keys:
+                raise RuntimeError(
+                    "Checkpoint mismatch outside requested new heads: "
+                    f"missing={disallowed_missing}, "
+                    f"unexpected={incompatible.unexpected_keys}"
+                )
+            logger.info(
+                "Initialized requested new head keys: %s",
+                incompatible.missing_keys,
+            )
         else:
             model.load_state_dict(state, strict=True)
         if opt.resume_all:
             optimizer.load_state_dict(checkpoint["optimizer"])
-            lr_scheduler.load_state_dict(checkpoint["lr_scheduler"])
+            # Older Flash runs called StepLR.step(loss_tensor), which serialized
+            # differentiable tensors into both optimizer LR fields and scheduler
+            # counters.  Normalize those values before exact continuation.
+            for group in optimizer.param_groups:
+                for key in ("lr", "initial_lr"):
+                    value = group.get(key)
+                    if torch.is_tensor(value):
+                        group[key] = float(value.detach().cpu().item())
+            scheduler_state = dict(checkpoint["lr_scheduler"])
+            scheduler_state["last_epoch"] = int(checkpoint["epoch"]) + 1
+            scheduler_state["_last_lr"] = [
+                float(value.detach().cpu().item()) if torch.is_tensor(value)
+                else float(value)
+                for value in scheduler_state.get(
+                    "_last_lr", [group["lr"] for group in optimizer.param_groups]
+                )
+            ]
+            lr_scheduler.load_state_dict(scheduler_state)
             opt.start_epoch = checkpoint["epoch"] + 1
     else:
         logger.warning(
@@ -597,7 +717,10 @@ def start_inference(train_opt=None, split=None, splitfile=None):
         txt_drop_ratio=0,
         dset_domain=opt.dset_domain,
         mr_only=opt.mr_only,
-        keep_empty_gt=bool(getattr(opt, "use_exist_head", False)),
+        # Strict GMR evaluation requires predictions for every query, including
+        # null queries.  Plain Flash-VTG uses its maximum window score as the
+        # existence proxy in eval/eval_main.py.
+        keep_empty_gt=True,
     )
     model, criterion, _, _ = setup_model(opt)
     save_submission_filename = "hl_{}_submission.jsonl".format(opt.eval_split_name)

@@ -46,6 +46,23 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
+# Canonical optional-branch structure for every Moment-DETR training variant.
+# Tuple order: existence, quality, dual grounding, counter, independent zero,
+# learned pairwise selector.
+MOMENT_VARIANT_FLAGS = {
+    "md_base": (False, False, False, False, False, False),
+    "md_gmr": (True, False, False, False, False, False),
+    "md_gmr_clean": (True, False, False, False, False, False),
+    "md_quality": (True, True, False, False, False, False),
+    "md_dual": (True, False, True, False, False, False),
+    "md_quality_dual": (True, True, True, False, False, False),
+    "md_counter": (True, False, False, True, False, False),
+    "md_hiea2m": (True, True, True, True, False, False),
+    "md_hiea2m_zero": (True, True, True, True, True, False),
+    "md_hiea2m_pairwise": (True, True, True, True, True, True),
+}
+
+
 def set_seed(seed, use_cuda=True):
     random.seed(seed)
     np.random.seed(seed)
@@ -506,10 +523,7 @@ def parse_args():
     parser.add_argument("--resume", "-r", type=str, default=None, help="Optional checkpoint for fine-tuning.")
     parser.add_argument(
         "--variant",
-        choices=[
-            "md_base", "md_gmr", "md_gmr_clean", "md_quality", "md_dual",
-            "md_counter", "md_hiea2m", "md_hiea2m_zero", "md_hiea2m_pairwise",
-        ],
+        choices=tuple(MOMENT_VARIANT_FLAGS),
         default="md_gmr",
     )
     parser.add_argument("--run_tag", type=str, default=None, help="Append a tag to the output directory.")
@@ -624,27 +638,20 @@ if __name__ == "__main__":
     opt.mr_only = True
     opt.lw_saliency = 0
     opt.variant = args.variant
-    opt.use_exist_head = args.variant in {
-        "md_gmr", "md_gmr_clean", "md_quality", "md_dual", "md_counter",
-        "md_hiea2m", "md_hiea2m_zero", "md_hiea2m_pairwise",
-    }
-    full_variants = {"md_hiea2m", "md_hiea2m_zero", "md_hiea2m_pairwise"}
-    opt.use_quality_head = args.variant in {"md_quality", *full_variants}
-    opt.use_dual_grounding = args.variant in {"md_dual", *full_variants}
-    opt.use_hierarchical_counter = args.variant in {"md_counter", *full_variants}
-    opt.use_independent_zero_head = args.variant in {
-        "md_hiea2m_zero", "md_hiea2m_pairwise"
-    }
-    opt.use_pairwise_head = args.variant == "md_hiea2m_pairwise"
-    if args.variant in {
-        "md_gmr_clean", "md_quality", "md_dual", "md_counter", *full_variants
-    }:
+    (
+        opt.use_exist_head,
+        opt.use_quality_head,
+        opt.use_dual_grounding,
+        opt.use_hierarchical_counter,
+        opt.use_independent_zero_head,
+        opt.use_pairwise_head,
+    ) = MOMENT_VARIANT_FLAGS[args.variant]
+    if args.variant not in {"md_base", "md_gmr"}:
         if args.trim_text_by_attention_mask is None:
             opt.trim_text_by_attention_mask = True
         if args.round_to_clip is None:
             opt.round_to_clip = False
-    if args.variant in {"md_hiea2m_zero", "md_hiea2m_pairwise"} \
-            and args.mask_null_vmr_loss is None:
+    if opt.use_independent_zero_head and args.mask_null_vmr_loss is None:
         opt.mask_null_vmr_loss = True
     if args.trainable_scope is None:
         opt.trainable_scope = "all"

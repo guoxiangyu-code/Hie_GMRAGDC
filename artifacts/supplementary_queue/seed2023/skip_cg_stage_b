@@ -1,0 +1,2 @@
+CG-DETR quality, phrase, counter, and hiea2m all failed the seed2023 screening.
+Do not spend Stage-B resources on cg_quality_phrase in the active queue.

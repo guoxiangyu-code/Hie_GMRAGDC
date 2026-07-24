@@ -38,10 +38,16 @@ class BaseOptions(object):
         parser.add_argument("--debug", action="store_true",
                             help="debug (fast) mode, break all loops, do not load all data into memory.")
         parser.add_argument("--data_ratio", type=float, default=1.0,
-                            help="how many training and eval data to use. 1.0: use all, 0.1: use 10%."
+                            help="how many training and eval data to use. 1.0: use all, 0.1: use 10%%."
                                  "Use small portion for debug purposes. Note this is different from --debug, "
                                  "which works by breaking the loops, typically they are not used together.")
         parser.add_argument("--results_root", type=str, default="results")
+        parser.add_argument(
+            "--run_dir",
+            type=str,
+            default=None,
+            help="Exact output directory for a reproducible run; overrides timestamped results_root layout.",
+        )
         parser.add_argument("--exp_id", type=str, default=None, help="id of this run, required at training")
         parser.add_argument("--seed", type=int, default=2024, help="random seed")
         parser.add_argument("--device", type=int, default=0, help="0 cuda, -1 cpu")
@@ -64,6 +70,25 @@ class BaseOptions(object):
                             help="mini-batch size at inference, for query")
         parser.add_argument("--eval_epoch", type=int, default=2,
                             help="inference epoch")
+        parser.add_argument(
+            "--selection_metric",
+            type=str,
+            choices=["mAP", "gmiou3", "joint"],
+            default="mAP",
+            help="Metric controlling early stopping and the legacy model_best checkpoint.",
+        )
+        parser.add_argument(
+            "--reference_map",
+            type=float,
+            default=0.0,
+            help="Matched baseline mAP used to normalize joint checkpoint selection.",
+        )
+        parser.add_argument(
+            "--reference_gmiou3",
+            type=float,
+            default=0.0,
+            help="Matched baseline G-mIoU@3 used to normalize joint checkpoint selection.",
+        )
         parser.add_argument("--eval_full_only", action="store_true",
                             help="Only evaluate and log full-range MR metrics during validation.")
         parser.add_argument("--mr_only", action="store_true",
@@ -127,7 +152,7 @@ class BaseOptions(object):
         parser.add_argument('--dropout', default=0.1, type=float,
                             help="Dropout applied in the transformer")
         parser.add_argument("--txt_drop_ratio", default=0, type=float,
-                            help="drop txt_drop_ratio tokens from text input. 0.1=10%")
+                            help="drop txt_drop_ratio tokens from text input. 0.1=10%%")
         parser.add_argument("--use_txt_pos", action="store_true", help="use position_embedding for text as well.")
         parser.add_argument('--nheads', default=8, type=int,
                             help="Number of attention heads inside the transformer's attentions")
@@ -173,10 +198,78 @@ class BaseOptions(object):
                             help="Weight for existence BCE loss.")
         parser.add_argument("--exist_gate_thd", type=float, default=0.5,
                             help="Soft gate threshold used in inference; if p_exist<thd, score*=p_exist.")
+        parser.add_argument(
+            "--use_quality_head",
+            action="store_true",
+            help="Predict candidate IoU quality and use it to calibrate ranking.",
+        )
+        parser.add_argument("--quality_loss_coef", type=float, default=1.0)
+        parser.add_argument("--quality_score_alpha", type=float, default=0.5)
+        parser.add_argument("--quality_negative_weight", type=float, default=0.1)
+        parser.add_argument(
+            "--use_independent_zero_head",
+            action="store_true",
+            help="Predict P(N=0) independently of the legacy existence head.",
+        )
+        parser.add_argument("--zero_loss_coef", type=float, default=1.0)
+        parser.add_argument("--zero_positive_query_weight", type=float, default=1.0)
+        parser.add_argument("--selector_dropout", type=float, default=0.1)
+        parser.add_argument(
+            "--exist_loose_thd",
+            type=float,
+            default=0.35,
+            help="Loose first-stage existence threshold used by the two-stage cascade.",
+        )
+        parser.add_argument(
+            "--zero_rescue_thd",
+            type=float,
+            default=0.45,
+            help="Maximum P(N=0) at which the independent verifier rescues a sample.",
+        )
+        parser.add_argument(
+            "--zero_veto_thd",
+            type=float,
+            default=0.65,
+            help="P(N=0) required for a second-stage veto when candidate evidence is weak.",
+        )
+        parser.add_argument(
+            "--zero_weak_candidate_thd",
+            type=float,
+            default=0.35,
+            help="Maximum candidate score considered weak by the zero-head veto.",
+        )
+        parser.add_argument(
+            "--allow_head_init",
+            action="store_true",
+            help="Allow only requested new Quality/Zero head keys to be absent in --resume.",
+        )
+        parser.add_argument(
+            "--freeze_parent",
+            action="store_true",
+            help="Freeze Flash-VTG and train only requested Quality/Zero heads.",
+        )
+        parser.add_argument(
+            "--freeze_quality_head",
+            action="store_true",
+            help="Keep an initialized Quality head frozen while fitting the independent Zero head.",
+        )
         parser.add_argument("--pred_topk_for_cls", type=int, default=10,
                             help="Top-K windows used for GMR positive/negative classification metrics.")
         parser.add_argument("--pred_score_thd_for_cls", type=float, default=0.5,
                             help="Score threshold used to classify a query-video pair as positive in GMR metrics.")
+        parser.add_argument(
+            "--gmr_cls_thresholds",
+            type=float,
+            nargs="+",
+            default=[0.4, 0.6],
+            help="Thresholds reported by the unified Soccer-GMR evaluator.",
+        )
+        parser.add_argument(
+            "--gmiou_cls_threshold",
+            type=float,
+            default=0.4,
+            help="Existence threshold used for unified G-mIoU@k checkpoint metrics.",
+        )
 
         parser.add_argument("--no_sort_results", action="store_true",
                             help="do not sort results, use this for moment query visualization")
@@ -244,8 +337,20 @@ class BaseOptions(object):
                 raise ValueError("--exp_id is required for at a training option!")
 
             ctx_str = opt.ctx_mode + "_sub" if any(["sub_ctx" in p for p in opt.v_feat_dirs]) else opt.ctx_mode
-            opt.results_dir = os.path.join(opt.results_root,
-                                           "-".join([opt.dset_name, ctx_str, opt.exp_id, time.strftime("%Y-%m-%d-%H-%M-%S")]))
+            if opt.run_dir is not None:
+                opt.results_dir = os.path.abspath(opt.run_dir)
+            else:
+                opt.results_dir = os.path.join(
+                    opt.results_root,
+                    "-".join(
+                        [
+                            opt.dset_name,
+                            ctx_str,
+                            opt.exp_id,
+                            time.strftime("%Y-%m-%d-%H-%M-%S"),
+                        ]
+                    ),
+                )
                                                     #  str(opt.enc_layers) + str(opt.dec_layers) + str(opt.t2v_layers) + str(opt.moment_layers) + str(opt.dummy_layers) + str(opt.sent_layers),
                                                     #  'ndum_' + str(opt.num_dummies), 'nprom_' + str(opt.num_prompts) + '_' + str(opt.total_prompts)]))
 

@@ -48,6 +48,8 @@ def detect_variant(state: dict[str, torch.Tensor]) -> tuple[str, dict[str, bool]
     }
     if structure["quality_head"] and structure["dual_grounding"] and structure["hierarchical_counter"]:
         variant = "qd_hiea2m"
+    elif structure["quality_head"] and structure["dual_grounding"]:
+        variant = "qd_quality_dual"
     elif structure["hierarchical_counter"]:
         variant = "qd_counter"
     elif structure["dual_grounding"]:
@@ -104,7 +106,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     decode_modes = ("full",)
     if args.diagnostic_decoders and args.variant in {
-        "qd_quality", "qd_dual", "qd_counter", "qd_hiea2m"
+        "qd_quality", "qd_dual", "qd_quality_dual", "qd_counter", "qd_hiea2m"
     }:
         decode_modes = ("full", "threshold")
         if args.use_hierarchical_counter:

@@ -1,0 +1,27 @@
+{
+    "checkpoint_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    },
+    "discarded_checkpoint_keys": [],
+    "initialized_new_keys": [
+        "quality_embed.layers.0.weight",
+        "quality_embed.layers.0.bias",
+        "quality_embed.layers.1.weight",
+        "quality_embed.layers.1.bias",
+        "quality_embed.layers.2.weight",
+        "quality_embed.layers.2.bias"
+    ],
+    "protocol_match": true,
+    "resume": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128_rerun_from_best_v2/best_joint.ckpt",
+    "run_protocol": {
+        "mask_null_vmr_loss": true,
+        "max_q_l": 32,
+        "max_windows": 8,
+        "round_to_clip": true,
+        "trim_text_by_attention_mask": false
+    }
+}

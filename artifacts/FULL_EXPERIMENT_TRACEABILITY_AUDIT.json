@@ -1,0 +1,290 @@
+[
+  {
+    "name": "Moment-DETR Strict GMR (Base)",
+    "auroc": "70.95",
+    "rej_f1": "61.22",
+    "map": "8.93",
+    "gmiou3": "30.78",
+    "json_path": "artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128/best_joint_soccer_gmr_val_preds_metrics.json",
+    "log_path": "artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128"
+  },
+  {
+    "name": "Moment HieA2M Parent",
+    "auroc": "73.38",
+    "rej_f1": "40.40",
+    "map": "9.16",
+    "gmiou3": "15.54",
+    "json_path": "artifacts/formal_strict/moment_detr/seed2023/md_hiea2m_b128_rerun_from_best_v2/best_joint_soccer_gmr_val_preds_metrics.json",
+    "log_path": "artifacts/formal_strict/moment_detr/seed2023/md_hiea2m_b128_rerun_from_best_v2"
+  },
+  {
+    "name": "HieA2M-DGQC + Independent Zero",
+    "auroc": "72.62",
+    "rej_f1": "69.28",
+    "map": "9.16",
+    "gmiou3": "39.77",
+    "json_path": "artifacts/validation_selector_ablation/seed2023_posw1/stage2_zero/best_joint_soccer_gmr_val_preds_metrics.json",
+    "log_path": "artifacts/validation_selector_ablation/seed2023_posw1/stage2_zero/stdout.log"
+  },
+  {
+    "name": "EaTR Strict GMR (Base)",
+    "auroc": "71.67",
+    "rej_f1": "39.35",
+    "map": "8.02",
+    "gmiou3": "16.82",
+    "json_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_joint_val_metrics.json",
+    "log_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/stdout.log"
+  },
+  {
+    "name": "EaTR + Quality",
+    "auroc": "72.21",
+    "rej_f1": "43.12",
+    "map": "7.14",
+    "gmiou3": "17.91",
+    "json_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_quality/best_joint_val_metrics.json",
+    "log_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_quality/stdout.log"
+  },
+  {
+    "name": "EaTR + Dual Gate",
+    "auroc": "71.52",
+    "rej_f1": "46.47",
+    "map": "6.23",
+    "gmiou3": "20.23",
+    "json_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_dual/best_joint_val_metrics.json",
+    "log_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_dual/stdout.log"
+  },
+  {
+    "name": "EaTR + Counter",
+    "auroc": "72.36",
+    "rej_f1": "6.22",
+    "map": "6.35",
+    "gmiou3": "4.73",
+    "json_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_counter/best_joint_val_metrics.json",
+    "log_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_counter/stdout.log"
+  },
+  {
+    "name": "EaTR + HieA2M Full",
+    "auroc": "72.30",
+    "rej_f1": "6.22",
+    "map": "7.49",
+    "gmiou3": "5.00",
+    "json_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_hiea2m/best_joint_val_metrics.json",
+    "log_path": "artifacts/eatr_dgqc_transfer/seed2023/eatr_hiea2m/stdout.log"
+  },
+  {
+    "name": "Flash-VTG Plain (Base)",
+    "auroc": "59.93",
+    "rej_f1": "41.06",
+    "map": "22.00",
+    "gmiou3": "20.57",
+    "json_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_plain/best_joint_hl_val_preds_metrics.json",
+    "log_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_plain/stdout.log"
+  },
+  {
+    "name": "Flash-VTG GMR (Base)",
+    "auroc": "72.07",
+    "rej_f1": "62.59",
+    "map": "26.53",
+    "gmiou3": "35.39",
+    "json_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr/best_joint_hl_val_preds_metrics.json",
+    "log_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr/stdout.log"
+  },
+  {
+    "name": "Flash-VTG GMR Release Anchor",
+    "auroc": "73.95",
+    "rej_f1": "62.53",
+    "map": "26.01",
+    "gmiou3": "33.93",
+    "json_path": "artifacts/flash_vtg_supplement/release_gmr_val/strict_gmr_val_metrics_raw.json",
+    "log_path": "artifacts/flash_vtg_supplement/release_gmr_val"
+  },
+  {
+    "name": "Flash-VTG GMR + Quality",
+    "auroc": "73.95",
+    "rej_f1": "62.53",
+    "map": "26.67",
+    "gmiou3": "34.03",
+    "json_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality/best_joint_hl_val_preds_metrics.json",
+    "log_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality/stdout.log"
+  },
+  {
+    "name": "Flash-VTG GMR + Zero",
+    "auroc": "74.29",
+    "rej_f1": "60.98",
+    "map": "26.01",
+    "gmiou3": "31.66",
+    "json_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_zero/best_joint_hl_val_preds_metrics.json",
+    "log_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_zero/stdout.log"
+  },
+  {
+    "name": "Flash-VTG GMR + Quality + Zero",
+    "auroc": "74.13",
+    "rej_f1": "61.12",
+    "map": "26.67",
+    "gmiou3": "32.86",
+    "json_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality_zero/best_joint_hl_val_preds_metrics.json",
+    "log_path": "artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality_zero/stdout.log"
+  },
+  {
+    "name": "QD Continued Control",
+    "auroc": "72.02",
+    "rej_f1": "65.96",
+    "map": "6.91",
+    "gmiou3": "35.23",
+    "json_path": "artifacts/qd_fair_ablation/seed2023_bsz32/continued_control/best_joint_val_metrics.json",
+    "log_path": "artifacts/qd_fair_ablation/seed2023_bsz32/continued_control/stdout.log"
+  },
+  {
+    "name": "QD + Quality",
+    "auroc": "72.10",
+    "rej_f1": "63.35",
+    "map": "6.54",
+    "gmiou3": "31.75",
+    "json_path": "artifacts/qd_fair_ablation/seed2023_bsz32/quality/best_joint_val_metrics.json",
+    "log_path": "artifacts/qd_fair_ablation/seed2023_bsz32/quality/stdout.log"
+  },
+  {
+    "name": "QD + Dual",
+    "auroc": "72.40",
+    "rej_f1": "66.38",
+    "map": "7.15",
+    "gmiou3": "35.03",
+    "json_path": "artifacts/qd_fair_ablation/seed2023_bsz32/dual/best_joint_val_metrics.json",
+    "log_path": "artifacts/qd_fair_ablation/seed2023_bsz32/dual/stdout.log"
+  },
+  {
+    "name": "QD + Quality + Dual",
+    "auroc": "72.74",
+    "rej_f1": "70.26",
+    "map": "6.27",
+    "gmiou3": "42.04",
+    "json_path": "artifacts/qd_fair_ablation/seed2023_bsz32/quality_dual/best_joint_val_metrics.json",
+    "log_path": "artifacts/qd_fair_ablation/seed2023_bsz32/quality_dual/stdout.log"
+  },
+  {
+    "name": "QD Dual Best (e48)",
+    "auroc": "72.38",
+    "rej_f1": "67.98",
+    "map": "6.61",
+    "gmiou3": "38.54",
+    "json_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_dual/best_map_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_dual/train_log.jsonl"
+  },
+  {
+    "name": "QD Strict GMR (Base)",
+    "auroc": "72.40",
+    "rej_f1": "3.74",
+    "map": "7.03",
+    "gmiou3": "3.14",
+    "json_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/stdout.log"
+  },
+  {
+    "name": "QD + Quality (bsz32)",
+    "auroc": "72.50",
+    "rej_f1": "70.24",
+    "map": "7.56",
+    "gmiou3": "42.36",
+    "json_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_quality/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_quality/train_log.jsonl"
+  },
+  {
+    "name": "QD + Dual (bsz32)",
+    "auroc": "72.38",
+    "rej_f1": "67.98",
+    "map": "6.61",
+    "gmiou3": "38.54",
+    "json_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_dual/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_dual/train_log.jsonl"
+  },
+  {
+    "name": "QD + Counter (bsz32)",
+    "auroc": "72.33",
+    "rej_f1": "26.72",
+    "map": "6.76",
+    "gmiou3": "9.75",
+    "json_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_counter/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_counter/train_log.jsonl"
+  },
+  {
+    "name": "QD + HieA2M (bsz32)",
+    "auroc": "72.55",
+    "rej_f1": "0.00",
+    "map": "5.83",
+    "gmiou3": "2.24",
+    "json_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_hiea2m/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/qd_detr/seed2023/qd_hiea2m/train_log.jsonl"
+  },
+  {
+    "name": "CG Strict GMR (Base)",
+    "auroc": "59.69",
+    "rej_f1": "0.00",
+    "map": "4.84",
+    "gmiou3": "1.87",
+    "json_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_detr_gmr/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_detr_gmr/train_log.jsonl"
+  },
+  {
+    "name": "CG + Quality (bsz32)",
+    "auroc": "59.75",
+    "rej_f1": "0.00",
+    "map": "4.95",
+    "gmiou3": "1.79",
+    "json_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_quality/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_quality/train_log.jsonl"
+  },
+  {
+    "name": "CG + Counter (bsz32)",
+    "auroc": "59.71",
+    "rej_f1": "0.00",
+    "map": "4.58",
+    "gmiou3": "1.77",
+    "json_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_counter/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_counter/train_log.jsonl"
+  },
+  {
+    "name": "CG + HieA2M (bsz32)",
+    "auroc": "59.68",
+    "rej_f1": "0.00",
+    "map": "4.65",
+    "gmiou3": "1.86",
+    "json_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_hiea2m/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_hiea2m/train_log.jsonl"
+  },
+  {
+    "name": "CG + Phrase (bsz32)",
+    "auroc": "59.72",
+    "rej_f1": "0.00",
+    "map": "4.76",
+    "gmiou3": "1.86",
+    "json_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_phrase/best_joint_val_metrics.json",
+    "log_path": "artifacts/strict_bsz32/cg_detr/seed2023/cg_phrase/train_log.jsonl"
+  },
+  {
+    "name": "Moment + Quality + Dual (Stage B)",
+    "auroc": "71.80",
+    "rej_f1": "53.40",
+    "map": "7.48",
+    "gmiou3": "23.53",
+    "json_path": "artifacts/cross_backbone_stage_b/seed2023/moment/md_quality_dual/best_joint_soccer_gmr_val_preds_metrics.json",
+    "log_path": "artifacts/cross_backbone_stage_b/seed2023/moment/md_quality_dual/stdout.log"
+  },
+  {
+    "name": "EaTR + Quality + Dual (Stage B)",
+    "auroc": "71.90",
+    "rej_f1": "41.64",
+    "map": "7.85",
+    "gmiou3": "17.57",
+    "json_path": "artifacts/cross_backbone_stage_b/seed2023/eatr/eatr_quality_dual/best_joint_val_metrics.json",
+    "log_path": "artifacts/cross_backbone_stage_b/seed2023/eatr/eatr_quality_dual/stdout.log"
+  },
+  {
+    "name": "QD + Quality + Dual (Stage B)",
+    "auroc": "72.74",
+    "rej_f1": "70.26",
+    "map": "6.27",
+    "gmiou3": "42.04",
+    "json_path": "artifacts/cross_backbone_stage_b/seed2023/qd/qd_quality_dual/best_joint_val_metrics.json",
+    "log_path": "artifacts/cross_backbone_stage_b/seed2023/qd/qd_quality_dual/stdout.log"
+  }
+]

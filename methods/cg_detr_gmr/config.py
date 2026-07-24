@@ -14,6 +14,7 @@ VARIANT_FLAGS = {
     "cg_detr_gmr": (True, False, False, False),
     "cg_quality": (True, True, False, False),
     "cg_phrase": (True, False, True, False),
+    "cg_quality_phrase": (True, True, True, False),
     "cg_counter": (True, False, False, True),
     "cg_hiea2m": (True, True, True, True),
 }

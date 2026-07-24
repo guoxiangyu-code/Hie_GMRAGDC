@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>GMR 阶段性方法与有效结果汇报</title>
+<style>
+@page { size:A4; margin:13mm 13mm 14mm; }
+* { box-sizing:border-box; }
+body { font-family:"Noto Sans CJK SC","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+       color:#172234; font-size:10.5pt; line-height:1.52; }
+h1 { color:#123b64; font-size:25pt; margin:0 0 5mm; }
+h2 { color:#164f7c; font-size:15pt; border-bottom:2px solid #b8cee1;
+      padding-bottom:2mm; margin:6mm 0 2mm; }
+h3 { color:#285b80; margin:4mm 0 1mm; }
+p { margin:1.5mm 0; }
+.cover { min-height:255mm; display:flex; flex-direction:column; justify-content:center; }
+.kicker { color:#3277a8; font-size:12pt; font-weight:bold; letter-spacing:1px; }
+.meta { color:#607487; margin-top:3mm; }
+.hero { background:linear-gradient(135deg,#edf6fc,#f7fbfe); border-left:5px solid #2778af;
+         padding:5mm; margin:8mm 0; border-radius:3px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:3mm; margin:4mm 0; }
+.card { border:1px solid #cbd9e5; border-radius:5px; padding:3.5mm; background:#f8fbfd; }
+.card b { color:#164f7c; }
+.claim { background:#e9f7ef; border:1px solid #9bcdb0; padding:3mm; border-radius:4px; }
+.warn { background:#fff7df; border-left:4px solid #d6a127; padding:3mm; margin:3mm 0; }
+.audit { background:#f4f1fa; border-left:4px solid #7654a7; padding:3mm; margin:3mm 0; }
+.page { page-break-before:always; }
+table { width:100%; border-collapse:collapse; margin:2.5mm 0 4mm; table-layout:fixed; }
+th { background:#174d78; color:white; padding:2.2mm 1.3mm; font-size:8.6pt; }
+td { border:1px solid #d2dce5; padding:2mm 1.3mm; text-align:center; font-size:8.6pt; }
+tr:nth-child(even) { background:#f7fafc; }
+tr.base { background:#e9f0f6; }
+.left { text-align:left; }
+.pill { display:inline-block; border-radius:9px; padding:0.3mm 1.5mm;
+         background:#dbe7f1; color:#31536e; font-size:7.5pt; }
+.pill.positive { background:#dff3e6; color:#176b3b; }
+.up { color:#08783f; font-weight:bold; }
+.down { color:#a73535; font-weight:bold; }
+.flat { color:#5f6c78; }
+.subtitle { color:#52697d; font-size:9pt; }
+ul { margin:2mm 0 2mm 5mm; padding-left:4mm; }
+li { margin:1.1mm 0; }
+.path { text-align:left; font-family:monospace; font-size:6.8pt; overflow-wrap:anywhere; }
+.source-list { margin:3mm 0 4mm; border-top:1px solid #d2dce5; }
+.source-item { padding:1.5mm 2mm; border:1px solid #d2dce5; border-top:0;
+                page-break-inside:avoid; }
+.source-item:nth-child(even) { background:#f7fafc; }
+.source-name { color:#164f7c; font-weight:bold; font-size:7.8pt; margin-bottom:0.4mm; }
+.small { font-size:8pt; color:#596d7e; }
+.footer-note { margin-top:6mm; padding-top:2mm; border-top:1px solid #cbd8e3; color:#617486; }
+</style></head><body>
+
+<div class="cover">
+  <div class="kicker">GENERALIZED MOMENT RETRIEVAL · 阶段性研究汇报</div>
+  <h1>GMR 阶段性方法与有效结果汇报</h1>
+  <p class="meta">汇报快照：2026-07-24 01:41 CST<br>
+  数据集：Standard validation（465 queries：255 positive / 210 null）<br>
+  主要口径：AUROC、Rej-F1@0.4、mAP、G-mIoU@3</p>
+  <div class="hero">
+    <h3>当前最值得形成论文的主线</h3>
+    <p><b>高召回初判 + 独立判空复核 + Quality-aware 定位 + Learned Event Dedup</b></p>
+    <p>即候选框架 <b>U = B + Q + Z + P</b>。现有结果分别验证了 Z、Q、P 的机制价值；
+    Dual Grounding 作为拒答增强模块保留，不把 Counter/Fusion 纳入默认方法。</p>
+  </div>
+  <div class="grid">
+    <div class="card"><b>最强综合结果</b><br>Moment HieA2M-DGQC + Zero：
+      mAP 9.16，G-mIoU@3 39.77。</div>
+    <div class="card"><b>最稳定跨架构模块</b><br>Quality 在 EaTR 与 Flash-VTG 上均提高 mAP 和 G-mIoU@3。</div>
+    <div class="card"><b>拒答增强证据</b><br>EaTR Dual：Rej-F1 39.35→48.12，G-mIoU@3 16.82→21.10。</div>
+    <div class="card"><b>集合输出证据</b><br>Learned Dedup 相对 Direct Top-3：平均 mAP +0.48。</div>
+  </div>
+  <div class="warn"><b>结论边界：</b>当前均为 validation 证据。最终论文仍需统一 parent、
+  三随机种子、冻结阈值和一次性 test；训练中结果不作为最终论文数字。</div>
+</div>
+
+<div class="page">
+  <h1>一、指标与核心有效结果</h1>
+  <div class="grid">
+    <div class="card"><b>AUROC</b><br>不依赖固定阈值的 positive/null 判别能力。</div>
+    <div class="card"><b>Rej-F1@0.4</b><br>existence threshold=0.4 时的拒答 F1。</div>
+    <div class="card"><b>mAP</b><br>时间定位平均精度，反映候选边界与排序质量。</div>
+    <div class="card"><b>G-mIoU@3</b><br>同时考虑 null 拒答与 top-3 定位的 generalized 指标。</div>
+  </div>
+  
+    <section>
+      <h2>1. 两级判空：当前最强单骨干主结果</h2>
+      <p class="subtitle">Moment-DETR，Standard validation，seed2023，best-joint。第二层 Zero Head 独立输出 P(N=0)，用于 rescue/veto。</p>
+      <table class="metrics">
+        <thead><tr><th>方法</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th><th>可汇报结论</th></tr></thead>
+        <tbody><tr class='base'><td><b>Moment-DETR Strict GMR</b><br><span class='pill'>BASE</span></td><td><b>70.95</b></td><td><b>61.22</b></td><td><b>8.93</b></td><td><b>30.78</b></td><td>配对比较基线</td></tr><tr><td><b>HieA2M-DGQC + Independent Zero</b><br><span class='pill positive'>有效结果</span></td><td><b>72.62</b><br><span class="up">+1.67</span></td><td><b>69.28</b><br><span class="up">+8.06</span></td><td><b>9.16</b><br><span class="up">+0.23</span></td><td><b>39.77</b><br><span class="up">+8.99</span></td><td class='left'>四项指标全部提升；验证“高召回初判 + 独立判空复核”具有明显潜力。</td></tr></tbody>
+      </table>
+    </section>
+    
+  
+    <section>
+      <h2>2. Quality-aware Ranking：跨骨干最稳定的正向模块</h2>
+      <p class="subtitle">EaTR，matched strict parent，Standard validation，seed2023，best-joint。Quality head 学习候选与最近 GT 的 temporal IoU，并与前景分数联合排序。</p>
+      <table class="metrics">
+        <thead><tr><th>方法</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th><th>可汇报结论</th></tr></thead>
+        <tbody><tr class='base'><td><b>EaTR Strict GMR</b><br><span class='pill'>BASE</span></td><td><b>71.67</b></td><td><b>39.35</b></td><td><b>8.02</b></td><td><b>16.82</b></td><td>配对比较基线</td></tr><tr><td><b>EaTR + Quality</b><br><span class='pill positive'>有效结果</span></td><td><b>71.98</b><br><span class="up">+0.31</span></td><td><b>44.31</b><br><span class="up">+4.96</span></td><td><b>8.24</b><br><span class="up">+0.22</span></td><td><b>19.13</b><br><span class="up">+2.31</span></td><td class='left'>AUROC、拒答、定位和 generalized 指标同时提高，是目前最均衡的迁移结果。</td></tr></tbody>
+      </table>
+    </section>
+    
+</div>
+
+<div class="page">
+  <h1>二、跨架构 Quality 与拒答增强</h1>
+  
+    <section>
+      <h2>3. Quality 在 Flash-VTG 上的外部架构证据</h2>
+      <p class="subtitle">Flash-VTG 发布 GMR parent 上冻结主干、仅训练 Quality head；Standard validation，seed2023，best-joint。该实验已早停完成。</p>
+      <table class="metrics">
+        <thead><tr><th>方法</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th><th>可汇报结论</th></tr></thead>
+        <tbody><tr class='base'><td><b>Flash-VTG GMR Release Anchor</b><br><span class='pill'>BASE</span></td><td><b>73.95</b></td><td><b>62.53</b></td><td><b>26.01</b></td><td><b>33.93</b></td><td>配对比较基线</td></tr><tr><td><b>Flash-VTG GMR + Quality</b><br><span class='pill positive'>有效结果</span></td><td><b>73.95</b><br><span class="flat">+0.00</span></td><td><b>62.53</b><br><span class="flat">+0.00</span></td><td><b>26.67</b><br><span class="up">+0.66</span></td><td><b>34.03</b><br><span class="up">+0.10</span></td><td class='left'>不改变判空分数，因此 AUROC/Rej 保持；mAP +0.66、G-mIoU@3 +0.10，支持 Quality 可移植。</td></tr></tbody>
+      </table>
+    </section>
+    
+  
+    <section>
+      <h2>4. Dual Grounding：可选的拒答增强模块</h2>
+      <p class="subtitle">EaTR，matched strict parent，Standard validation，seed2023，best-joint。Dual head 建模细粒度文本/虚拟片段 grounding。</p>
+      <table class="metrics">
+        <thead><tr><th>方法</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th><th>可汇报结论</th></tr></thead>
+        <tbody><tr class='base'><td><b>EaTR Strict GMR</b><br><span class='pill'>BASE</span></td><td><b>71.67</b></td><td><b>39.35</b></td><td><b>8.02</b></td><td><b>16.82</b></td><td>配对比较基线</td></tr><tr><td><b>EaTR + Dual Grounding</b><br><span class='pill positive'>有效结果</span></td><td><b>72.05</b><br><span class="up">+0.38</span></td><td><b>48.12</b><br><span class="up">+8.77</span></td><td><b>8.06</b><br><span class="up">+0.04</span></td><td><b>21.10</b><br><span class="up">+4.28</span></td><td class='left'>Rej-F1 +8.77、G-mIoU@3 +4.28；mAP 基本持平，适合作为拒答增强而非公共核心。</td></tr></tbody>
+      </table>
+    </section>
+    
+  <div class="claim">
+    <b>可汇报的阶段性判断：</b>
+    Quality-aware ranking 是目前最稳定的可插拔模块；Dual Grounding 对拒答明显有效，
+    但更适合作为 DETR 类骨干的可选增强。二者直接组合在 Moment/EaTR/QD 上尚未形成稳定净收益，
+    因此论文主方法不采用“模块越多越好”的叙事。
+  </div>
+</div>
+
+<div class="page">
+  <h1>三、学习式事件去重</h1>
+  
+    <section>
+      <h2>5. Learned Event Dedup：优于直接 Top-K</h2>
+      <p class="subtitle">Moment-DETR 固定候选上的 5 组 head 设置平均：
+      seed2023、seed2023-posw1、seed2023-posw4、seed2024、seed2025。
+      Pairwise head 判断两个候选是否指向同一事件；分类分数固定，因此 AUROC/Rej 不变。</p>
+      <table class="metrics">
+        <thead><tr><th>选择策略</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th><th>平均选框数</th><th>结论</th></tr></thead>
+        <tbody><tr class='base'><td><b>Direct Top-3</b></td><td><b>69.55</b></td><td><b>7.66</b></td><td><b>6.48</b></td><td><b>4.95</b></td><td>3.00</td><td class='left'>固定候选直接截断。</td></tr><tr class=''><td><b>Learned Dedup Top-3</b></td><td><b>69.55</b><br><span class="flat">+0.00</span></td><td><b>7.66</b><br><span class="flat">+0.00</span></td><td><b>6.96</b><br><span class="up">+0.48</span></td><td><b>5.06</b><br><span class="up">+0.11</span></td><td>3.00</td><td class='left'>默认去重候选；mAP 最优。</td></tr><tr class=''><td><b>Learned Dedup + Soft Count</b></td><td><b>69.55</b><br><span class="flat">+0.00</span></td><td><b>7.66</b><br><span class="flat">+0.00</span></td><td><b>6.72</b><br><span class="up">+0.24</span></td><td><b>7.25</b><br><span class="up">+2.30</span></td><td>5.94</td><td class='left'>召回导向；G-mIoU@3 最优，但 mAP 低于 Learned Top-3。</td></tr></tbody>
+      </table>
+    </section>
+    
+  <h3>方法说明</h3>
+  <p>对候选对 (i,j) 预测其属于同一真实事件的概率，再按“候选质量 − 重复惩罚”
+  增量选框。它不同于固定 IoU NMS：即使两个框重叠，只要内容证据表明属于不同事件，
+  仍可同时保留。</p>
+  <div class="claim"><b>默认建议：</b>采用 Learned Dedup Top-3。
+  Soft Count 可作为召回导向消融，但不进入默认 U；Boundary Fusion 与 Soft Count
+  指标相同，没有额外贡献。</div>
+  
+    <section>
+      <h2>附：Flash-VTG 从头配对训练的当前趋势（非最终论文数字）</h2>
+      <p class="subtitle">两项仍在训练，表内为各自 best-joint best-so-far，仅用于说明外部架构可行性。</p>
+      <table class="metrics">
+        <thead><tr><th>方法</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th><th>可汇报结论</th></tr></thead>
+        <tbody><tr class='base'><td><b>Flash-VTG Plain</b><br><span class='pill'>BASE</span></td><td><b>59.93</b></td><td><b>41.06</b></td><td><b>22.00</b></td><td><b>20.57</b></td><td>配对比较基线</td></tr><tr><td><b>Flash-VTG GMR</b><br><span class='pill positive'>有效结果</span></td><td><b>72.07</b><br><span class="up">+12.14</span></td><td><b>62.59</b><br><span class="up">+21.53</span></td><td><b>26.53</b><br><span class="up">+4.53</span></td><td><b>35.39</b><br><span class="up">+14.82</span></td><td class='left'>当前四项均优于 plain；完成后才冻结为正式配对结果。</td></tr></tbody>
+      </table>
+    </section>
+    
+</div>
+
+<div class="page">
+  <h1>四、严谨性审计与论文落地</h1>
+  <h2>QD-DETR 公平 continued-control 审计</h2>
+  <p class="subtitle">该矩阵用于判断早期 QD 巨大 G-mIoU 增益究竟来自新增模块，还是来自继续训练/门控校准。
+  Quality 行仍在训练，因此本表只用于审计，不进入正向主结果。</p>
+  <table class="metrics">
+    <thead><tr><th>公平设置</th><th>AUROC ↑</th><th>Rej-F1@0.4 ↑</th><th>mAP ↑</th><th>G-mIoU@3 ↑</th></tr></thead>
+    <tbody><tr><td><b>Continued Control</b></td><td>72.02</td><td>65.96</td><td>6.91</td><td>35.23</td></tr><tr><td><b>+ Quality</b></td><td>72.10</td><td>63.35</td><td>6.54</td><td>31.75</td></tr><tr><td><b>+ Dual</b></td><td>72.40</td><td>66.38</td><td>7.15</td><td>35.03</td></tr><tr><td><b>+ Quality + Dual</b></td><td>72.74</td><td>70.26</td><td>6.27</td><td>42.04</td></tr></tbody>
+  </table>
+  <div class="audit"><b>审计结论：</b>Continued Control 本身已达到 G-mIoU@3 35.23，
+  因此早期从 3.14 跳到 42 左右不能全部归因于 Quality。公平矩阵中 Quality
+  暂未超过 continued control，Dual 仅 mAP 小幅提高。为避免夸大结论，本报告不把
+  QD 作为 Quality 的正向跨骨干证据。</div>
+
+  <h2>当前可以形成的论文贡献</h2>
+  <ol>
+    <li><b>Independent Null Verification：</b>将高召回 existence 与最终判空解耦，
+      用 rescue/veto 缓解正样本误拒。</li>
+    <li><b>Quality-aware Temporal Ranking：</b>显式学习边界质量，修正前景分数与定位质量不一致。</li>
+    <li><b>Learned Event Dedup：</b>学习事件级重复关系，替代 Direct Top-K 与纯几何抑制。</li>
+    <li><b>Optional Dual Grounding：</b>在定位基本不退化时增强拒答，作为 DETR 可选分支。</li>
+  </ol>
+
+  <h2>提交论文前必须完成</h2>
+  <ul>
+    <li>在至少三个代表骨干上完成严格配对的 B / Q / Z / Q+Z / Q+Z+P；</li>
+    <li>对最终 U 补 seed2024、seed2025，并报告 mean ± std；</li>
+    <li>固定 tau_gate、tau_zero、tau_veto 和 selector 参数后一次性评估 test；</li>
+    <li>报告 paired bootstrap 95% CI、参数量、推理时延和平均输出框数；</li>
+    <li>将完全解耦的 Z(no Counter) 与当前 HieA2M-parent Zero 进行公平对照。</li>
+  </ul>
+</div>
+
+<div class="page">
+  <h1>附录：指标来源与可追溯文件</h1>
+  <p>主表所有数字均直接读取下列 JSON；Learned Dedup 为五组已完成设置的算术平均。
+  选定方法均具备四项指标，因此本次无需为补字段额外启动训练或评估。</p>
+  <div class="source-list"><div class='source-item'><div class='source-name'>moment_base</div><div class='path'>artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128/best_joint_soccer_gmr_val_preds_metrics.json</div></div><div class='source-item'><div class='source-name'>moment_zero</div><div class='path'>artifacts/validation_selector_ablation/seed2023_posw1/stage2_zero/best_joint_soccer_gmr_val_preds_metrics.json</div></div><div class='source-item'><div class='source-name'>eatr_base</div><div class='path'>artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>eatr_quality</div><div class='path'>artifacts/eatr_dgqc_transfer/seed2023/eatr_quality/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>eatr_dual</div><div class='path'>artifacts/eatr_dgqc_transfer/seed2023/eatr_dual/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>flash_anchor</div><div class='path'>artifacts/flash_vtg_supplement/release_gmr_val/strict_gmr_val_metrics_raw.json</div></div><div class='source-item'><div class='source-name'>flash_quality</div><div class='path'>artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality/best_joint_hl_val_preds_metrics.json</div></div><div class='source-item'><div class='source-name'>flash_plain_running</div><div class='path'>artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_plain/best_joint_hl_val_preds_metrics.json</div></div><div class='source-item'><div class='source-name'>flash_gmr_running</div><div class='path'>artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr/best_joint_hl_val_preds_metrics.json</div></div><div class='source-item'><div class='source-name'>qd_fair_control</div><div class='path'>artifacts/qd_fair_ablation/seed2023_bsz32/continued_control/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>qd_fair_quality</div><div class='path'>artifacts/qd_fair_ablation/seed2023_bsz32/quality/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>qd_fair_dual</div><div class='path'>artifacts/qd_fair_ablation/seed2023_bsz32/dual/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>qd_fair_quality_dual</div><div class='path'>artifacts/qd_fair_ablation/seed2023_bsz32/quality_dual/best_joint_val_metrics.json</div></div><div class='source-item'><div class='source-name'>selector average input</div><div class='path'>artifacts/validation_selector_ablation/seed2023/stage4_5_selection/learned_selector_ablation_summary.json</div></div><div class='source-item'><div class='source-name'>selector average input</div><div class='path'>artifacts/validation_selector_ablation/seed2023_posw1/stage4_5_selection/learned_selector_ablation_summary.json</div></div><div class='source-item'><div class='source-name'>selector average input</div><div class='path'>artifacts/validation_selector_ablation/seed2023_posw4/stage4_5_selection/learned_selector_ablation_summary.json</div></div><div class='source-item'><div class='source-name'>selector average input</div><div class='path'>artifacts/validation_selector_ablation/seed2024/stage4_5_selection/learned_selector_ablation_summary.json</div></div><div class='source-item'><div class='source-name'>selector average input</div><div class='path'>artifacts/validation_selector_ablation/seed2025/stage4_5_selection/learned_selector_ablation_summary.json</div></div></div>
+  <p class="footer-note">报告生成脚本：
+  <span class="path">scripts/generate_teacher_progress_report.py</span>。
+  本文只保留有方法意义的正向结果和一项必要的公平性审计；CG、Counter、
+  完整负交互组合等失败实验不进入老师汇报主表。</p>
+</div>
+
+</body></html>

@@ -274,6 +274,6 @@
             0.8
         ],
         "gmiou_cls_threshold": 0.4,
-        "eval_time_sec": 0.92
+        "eval_time_sec": 0.78
     }
 }

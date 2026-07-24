@@ -1,0 +1,8 @@
+variant=gmr_quality_zero
+physical_gpu=0
+logical_device=0
+python=/home/guoxiangyu/miniconda3/bin/python
+seed=2023
+batch_size=128
+started_at=2026-07-23T13:01:31+08:00
+git_commit=f1eaf738bada88e33bc1c388bb3c9b0924983f8d

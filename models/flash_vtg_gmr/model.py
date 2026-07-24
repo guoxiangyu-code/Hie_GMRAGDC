@@ -8,6 +8,13 @@ from models.flash_vtg_gmr.position_encoding import build_position_encoding, Posi
 import math
 from nncore.nn import build_model as build_adapter
 from models.flash_vtg_gmr.blocks.generator import PointGenerator
+from models.flash_vtg_gmr.gmr_heads import (
+    FlashCandidateQualityHead,
+    FlashIndependentZeroVerifier,
+    flash_candidate_quality_loss,
+    flash_independent_zero_loss,
+    quality_calibrated_scores,
+)
 
 def init_weights(module):
     if isinstance(module, (nn.Linear, nn.Embedding)):
@@ -141,6 +148,31 @@ class FlashVTG(nn.Module):
                 nn.Linear(hidden_dim, 1),
             )
 
+        # Candidate quality and null verification are separate from the legacy
+        # existence classifier.  ZeroVerifier predicts P(N=0) directly and its
+        # interface deliberately accepts no existence logit.
+        self.use_quality_head = bool(getattr(args, "use_quality_head", False))
+        self.quality_head = (
+            FlashCandidateQualityHead(
+                hidden_dim,
+                dropout=float(getattr(args, "selector_dropout", 0.1)),
+            )
+            if self.use_quality_head else None
+        )
+        self.quality_score_alpha = float(
+            getattr(args, "quality_score_alpha", 0.5)
+        )
+        self.use_independent_zero_head = bool(
+            getattr(args, "use_independent_zero_head", False)
+        )
+        self.zero_verifier_head = (
+            FlashIndependentZeroVerifier(
+                hidden_dim,
+                dropout=float(getattr(args, "selector_dropout", 0.1)),
+            )
+            if self.use_independent_zero_head else None
+        )
+
 
     def forward(self, src_txt, src_txt_mask, src_vid, src_vid_mask, vid, qid, targets=None):
         if vid is not None:
@@ -200,7 +232,7 @@ class FlashVTG(nn.Module):
         video_emb = video_emb.permute(1, 0, 2)  # (L, batch_size, d) -> (batch_size, L, d)
         video_msk = (~video_msk).int()
         pymid, pymid_msk = self.pyramid(
-            video_emb, video_msk, return_mask=self.training == True
+            video_emb, video_msk, return_mask=True
         )
         point = self.generator(pymid)
 
@@ -230,6 +262,31 @@ class FlashVTG(nn.Module):
             output["t2vattnvalues"] = torch.clamp(output["t2vattnvalues"], 0, 1)
             output["video_msk"] = video_msk
 
+            candidate_mask = torch.cat(pymid_msk, dim=1).bool()
+            quality_logits = (
+                self.quality_head(pymid)
+                if self.quality_head is not None else None
+            )
+            if quality_logits is not None:
+                output["pred_quality_logits"] = quality_logits
+                output["candidate_mask"] = candidate_mask
+
+            # Decode candidates once.  Seconds preserve the released
+            # Flash-VTG output contract; normalized spans are used by the new
+            # quality/zero heads.
+            decoded_spans = out_coord.clone()
+            decoded_spans[..., 0] = decoded_spans[..., 0] * -1
+            decoded_spans = decoded_spans * point[None, :, 3, None]
+            decoded_spans = decoded_spans + point[None, :, 0, None]
+            decoded_spans = decoded_spans / (1 / self.args.clip_length)
+            duration = (
+                video_msk.sum(dim=1).to(decoded_spans)
+                * float(self.args.clip_length)
+            ).clamp_min(float(self.args.clip_length))
+            normalized_spans = decoded_spans / duration[:, None, None]
+            if quality_logits is not None:
+                output["pred_quality_spans_xx"] = normalized_spans
+
             if self.use_exist_head:
                 vmask = video_msk.float()  # (bsz, L_vid), 1=valid
                 if self.exist_pool == "max":
@@ -244,6 +301,24 @@ class FlashVTG(nn.Module):
                 exist_inp = torch.cat([query_exist, video_pooled.float()], dim=-1)
                 output["pred_exist_logits"] = self.exist_head(exist_inp).squeeze(-1)
 
+            if self.zero_verifier_head is not None:
+                output["pred_zero_logits"] = self.zero_verifier_head(
+                    query=query_emb,
+                    video=video_emb,
+                    video_mask=video_msk,
+                    candidate_logits=out_class,
+                    candidate_spans_xx=normalized_spans,
+                    quality_logits=quality_logits,
+                    candidate_mask=candidate_mask,
+                )
+
+            foreground_scores = out_class.sigmoid()[..., 0]
+            ranking_scores = quality_calibrated_scores(
+                foreground_scores,
+                quality_logits,
+                alpha=self.quality_score_alpha,
+            )
+
             if self.training == True:
 
                 output["point"] = point
@@ -254,17 +329,11 @@ class FlashVTG(nn.Module):
                 output["out_coord"] = out_coord
 
                 boundarys = []
-                out_class = out_class.sigmoid()
-                for idx, boundary in enumerate(out_coord):
-                    boundary = boundary.clone()
-
-                    boundary[:, 0] = boundary[:, 0] * -1
-                    boundary = boundary * point[:, 3, None].repeat(1, 2)
-                    boundary = boundary + point[:, 0, None].repeat(1, 2)
-                    boundary = boundary / (1/self.args.clip_length)
-                    boundary = torch.cat((boundary, out_class[idx]), dim=-1)
-
-                    _, inds = out_class[idx, :, 0].sort(descending=True)
+                for idx, boundary in enumerate(decoded_spans):
+                    boundary = torch.cat(
+                        (boundary, ranking_scores[idx, :, None]), dim=-1
+                    )
+                    _, inds = ranking_scores[idx].sort(descending=True)
                     boundary = boundary[inds[:]]
                     boundarys.append(boundary)
 
@@ -274,26 +343,29 @@ class FlashVTG(nn.Module):
 
             if self.training == False:
                 assert bs == 1, "batch size larger than 1 is not supported for inference"
-                out_class = out_class.sigmoid()
 
                 output["_out"] = dict(label=targets.get("label", [None])[0])
                 output["_out"]["video_msk"] = video_msk
                 output["_out"]["saliency"] = saliency_scores[0]
                 if self.use_exist_head and ("pred_exist_logits" in output):
                     output["_out"]["pred_exist_score"] = torch.sigmoid(output["pred_exist_logits"]).detach().cpu()
+                if "pred_zero_logits" in output:
+                    output["_out"]["pred_zero_score"] = torch.sigmoid(
+                        output["pred_zero_logits"]
+                    ).detach().cpu()
 
                 if self.coord_head is not None:
-                    boundary = out_coord[0]
-                    boundary[:, 0] *= -1
-                    boundary *= point[:, 3, None].repeat(1, 2)
-                    boundary += point[:, 0, None].repeat(1, 2)
-                    boundary /= 1/self.args.clip_length
-                    boundary = torch.cat((boundary, out_class[0]), dim=-1)
-
-                    _, inds = out_class[0, :, 0].sort(descending=True)
+                    boundary = torch.cat(
+                        (decoded_spans[0], ranking_scores[0, :, None]), dim=-1
+                    )
+                    _, inds = ranking_scores[0].sort(descending=True)
                     boundary = boundary[inds[: self.max_num_moment]]
 
                     output["_out"]["boundary"] = boundary
+                    if quality_logits is not None:
+                        output["_out"]["pred_quality_score"] = torch.sigmoid(
+                            quality_logits[0, inds[: self.max_num_moment]]
+                        ).detach().cpu()
 
         if self.training == True and self.args.use_neg:
             ### Neg Pairs ###
@@ -388,6 +460,34 @@ class SetCriterion(nn.Module):
         if labels.ndim != 1:
             labels = labels.view(-1)
         return {"loss_exist": F.binary_cross_entropy_with_logits(logits, labels, reduction="mean")}
+
+    def loss_quality(self, outputs, targets, log=True):
+        del log
+        if ("pred_quality_logits" not in outputs) or ("span_labels" not in targets):
+            anchor = next(v for v in outputs.values() if torch.is_tensor(v))
+            return {"loss_quality": anchor.sum() * 0.0}
+        return {"loss_quality": flash_candidate_quality_loss(
+            outputs["pred_quality_logits"],
+            outputs["pred_quality_spans_xx"],
+            targets["span_labels"],
+            candidate_mask=outputs.get("candidate_mask"),
+            negative_candidate_weight=float(
+                getattr(self.args, "quality_negative_weight", 0.1)
+            ),
+        )}
+
+    def loss_zero(self, outputs, targets, log=True):
+        del log
+        if ("pred_zero_logits" not in outputs) or ("exist_label" not in targets):
+            anchor = next(v for v in outputs.values() if torch.is_tensor(v))
+            return {"loss_zero": anchor.sum() * 0.0}
+        return {"loss_zero": flash_independent_zero_loss(
+            outputs["pred_zero_logits"],
+            targets["exist_label"],
+            positive_query_weight=float(
+                getattr(self.args, "zero_positive_query_weight", 1.0)
+            ),
+        )}
 
     def loss_saliency(self, outputs, targets, log=True):
         """higher scores for positive clips"""
@@ -691,6 +791,8 @@ class SetCriterion(nn.Module):
             "labels": self.loss_labels,
             "saliency": self.loss_saliency,
             "exist": self.loss_exist,
+            "quality": self.loss_quality,
+            "zero": self.loss_zero,
         }
         assert loss in loss_map, f'do you really want to compute {loss} loss?'
 
@@ -765,7 +867,14 @@ class SetCriterion(nn.Module):
             losses = self.loss(new_outputs, outputs_for_loss)
         else:
             # all-negative batch: skip MR losses; keep existence loss only
-            losses = {k: outputs["pred_exist_logits"].sum() * 0.0 for k in self.weight_dict.keys() if k != "loss_exist"}
+            anchor = outputs.get("pred_exist_logits", outputs.get("pred_zero_logits"))
+            if anchor is None:
+                anchor = next(v for v in outputs.values() if torch.is_tensor(v))
+            losses = {
+                k: anchor.sum() * 0.0
+                for k in self.weight_dict.keys()
+                if k not in {"loss_exist", "loss_zero"}
+            }
 
         # Compute auxiliary losses (saliency/labels/exist)
         for loss in self.losses:
@@ -920,6 +1029,16 @@ def build_model1(args):
     if bool(getattr(args, "use_exist_head", False)):
         weight_dict["loss_exist"] = float(getattr(args, "exist_loss_coef", 1.0))
         losses = list(losses) + ["exist"]
+
+    if bool(getattr(args, "use_quality_head", False)):
+        weight_dict["loss_quality"] = float(
+            getattr(args, "quality_loss_coef", 1.0)
+        )
+        losses = list(losses) + ["quality"]
+
+    if bool(getattr(args, "use_independent_zero_head", False)):
+        weight_dict["loss_zero"] = float(getattr(args, "zero_loss_coef", 1.0))
+        losses = list(losses) + ["zero"]
 
     criterion = SetCriterion(
         weight_dict=weight_dict, losses=losses,

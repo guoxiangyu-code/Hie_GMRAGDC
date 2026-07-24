@@ -468,7 +468,10 @@ class StartEndDataset(Dataset):
                 return torch.zeros((0, 2), dtype=torch.long)
             else:
                 raise NotImplementedError
-        if len(windows) > self.max_windows:
+        if self.max_windows > 0 and len(windows) > self.max_windows:
+            # Do not mutate the annotation object kept in dataset.data; strict
+            # evaluation and pairwise supervision must see the original GT.
+            windows = list(windows)
             random.shuffle(windows)
             windows = windows[:self.max_windows]
         if self.span_loss_type == "l1":

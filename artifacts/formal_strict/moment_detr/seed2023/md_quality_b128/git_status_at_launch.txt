@@ -1,0 +1,151 @@
+ M artifacts/canonical_b128_restart/cg_detr/seed2023/cg_detr/latest_val_metrics.json
+ M artifacts/canonical_b128_restart/cg_detr/seed2023/cg_detr/train_log.jsonl
+ M artifacts/canonical_b128_restart/qd_detr/seed2023/qd_detr/latest_val_metrics.json
+ M artifacts/canonical_b128_restart/qd_detr/seed2023/qd_detr/train_log.jsonl
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_gmiou3_val_metrics.json
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_gmiou3_val_predictions.jsonl
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_joint_val_metrics.json
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_joint_val_predictions.jsonl
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_map_val_metrics.json
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_map_val_predictions.jsonl
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/latest_val_metrics.json
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/latest_val_predictions.jsonl
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/stdout.log
+ M artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/train_log.jsonl
+ M artifacts/persistent_handoff/canonical-cg.log
+ M artifacts/persistent_handoff/canonical-qd.log
+ M artifacts/persistent_handoff/eatr-dgqc.log
+ M artifacts/persistent_handoff/selector-main.log
+ M artifacts/persistent_handoff/selector-posw1.log
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_gmiou3_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_gmiou3_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_joint_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_joint_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_map_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_map_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/best_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/latest_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/latest_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/stdout.log
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/train.log
+ M artifacts/validation_selector_ablation/seed2023/stage2_zero/val.log
+ M artifacts/validation_selector_ablation/seed2023/stage3_pairwise/latest_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023/stage3_pairwise/latest_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023/stage3_pairwise/stdout.log
+ M artifacts/validation_selector_ablation/seed2023/stage3_pairwise/train.log
+ M artifacts/validation_selector_ablation/seed2023/stage3_pairwise/val.log
+ M artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/latest_soccer_gmr_val_preds.jsonl
+ M artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/latest_soccer_gmr_val_preds_metrics.json
+ M artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/stdout.log
+ M artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/train.log
+ M artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/val.log
+ M methods/cg_detr_gmr/README.md
+ M methods/cg_detr_gmr/config.py
+ M methods/cg_detr_gmr/train.py
+ M methods/eatr_gmr/hierarchical_counter.py
+ M methods/eatr_gmr/train.py
+ M methods/eatr_gmr/variants.py
+ M methods/qd_detr_gmr/README.md
+ M methods/qd_detr_gmr/config.py
+ M methods/qd_detr_gmr/evaluate.py
+ M methods/qd_detr_gmr/train.py
+ M models/flash_vtg_gmr/model.py
+ M models/moment_detr_gmr/hierarchical_counter.py
+ M models/moment_detr_gmr/learned_selector.py
+ M tests/test_cg_detr_gmr.py
+ M tests/test_eatr_gmr_hiea2m.py
+ M tests/test_eatr_gmr_smoke.py
+ M tests/test_qd_detr_gmr.py
+ M tests/test_staged_optimizer_groups.py
+ M training/flash_vtg_gmr/config.py
+ M training/flash_vtg_gmr/dataset.py
+ M training/flash_vtg_gmr/inference.py
+ M training/flash_vtg_gmr/train.py
+ M training/moment_detr_gmr/evaluate.py
+ M training/moment_detr_gmr/train.py
+?? 20260723.md
+?? GMR_Progress_Report_Updated_20260723.html
+?? GMR_Progress_Report_Updated_20260723.md
+?? GMR_Progress_Report_Updated_20260723.pdf
+?? artifacts/FULL_EXPERIMENT_TRACEABILITY_AUDIT.json
+?? artifacts/GMR_Completed_Experiments_Summary_2026-07-23.html
+?? artifacts/GMR_Completed_Experiments_Summary_2026-07-23.pdf
+?? artifacts/GMR_Experiment_Master_Summary.pdf
+?? artifacts/GMR_Experiment_Master_Summary_Current_2026-07-23.html
+?? artifacts/GMR_Experiment_Master_Summary_Current_2026-07-23.pdf
+?? artifacts/GMR_Experiment_Master_Summary_v2.pdf
+?? artifacts/GMR_Teacher_Progress_Report_2026-07-23.html
+?? artifacts/GMR_Teacher_Progress_Report_2026-07-23.pdf
+?? artifacts/automated_pipeline_logs/
+?? artifacts/cross_backbone_stage_b/
+?? artifacts/disentangled_zero/
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_counter.launcher.log
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_counter.pid
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_counter/
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_dual.launcher.log
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_dual.pid
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_dual/
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/dedup_ablation/
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/eval_out/
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_hiea2m.launcher.log
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_hiea2m.pid
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_hiea2m/
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_quality.launcher.log
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_quality.pid
+?? artifacts/eatr_dgqc_transfer/seed2023/eatr_quality/
+?? artifacts/eatr_dgqc_transfer/seed2023/nohup_suite/
+?? artifacts/eatr_dgqc_transfer/seed2024/
+?? artifacts/flash_vtg_supplement/
+?? artifacts/formal_strict/moment_detr/seed2023/md_quality_b128/
+?? artifacts/formal_strict/moment_detr/seed2024/
+?? artifacts/formal_strict/moment_detr/seed2025/
+?? artifacts/qd_fair_ablation/
+?? artifacts/smoke/flash_vtg_gmr/
+?? artifacts/smoke/flash_vtg_plain/
+?? artifacts/strict_bsz32/
+?? artifacts/strictly_matched_ablation/
+?? artifacts/supplementary_queue/
+?? artifacts/validation_selector_ablation/seed2023/stage2_zero/git_status_at_launch.txt
+?? artifacts/validation_selector_ablation/seed2023/stage2_zero/launch_command.txt
+?? artifacts/validation_selector_ablation/seed2023/stage2_zero/launch_metadata.txt
+?? artifacts/validation_selector_ablation/seed2023/stage2_zero/nohup.log
+?? artifacts/validation_selector_ablation/seed2023/stage2_zero/pid
+?? artifacts/validation_selector_ablation/seed2023/stage3_pairwise/raw_val/
+?? artifacts/validation_selector_ablation/seed2023/stage4_5_selection/
+?? artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/raw_val/
+?? artifacts/validation_selector_ablation/seed2023_posw1/stage4_5_selection/
+?? docs/all_experiments_context_recovery_2026-07-23.md
+?? docs/cross_backbone_supplementary_experiment_plan_2026-07-23.md
+?? docs/current_unfinished_training_matrix_2026-07-23.md
+?? docs/experiment_execution_matrix_2026-07-23.md
+?? matched_ablation_execution_plan.md
+?? models/flash_vtg_gmr/gmr_heads.py
+?? results/
+?? scripts/append_unregistered_artifacts.py
+?? scripts/audit_and_generate_report.py
+?? scripts/fix_and_perfect_report.py
+?? scripts/format_section8.py
+?? scripts/generate_completed_experiment_summary.py
+?? scripts/generate_current_experiment_master_summary.py
+?? scripts/generate_teacher_progress_report.py
+?? scripts/integrate_results.py
+?? scripts/queue_flash_vtg_after_components.sh
+?? scripts/queue_supplementary_experiments.sh
+?? scripts/resume_current_interval5.sh
+?? scripts/run_automated_experiment_pipeline.sh
+?? scripts/run_components_matrix_strict_bsz32.sh
+?? scripts/run_flash_vtg_strict.sh
+?? scripts/run_parallel_ready_experiments.sh
+?? scripts/run_qd_fair_control_matrix.sh
+?? scripts/run_stage_b_quality_dual.sh
+?? scripts/run_strictly_matched_ablation_master.sh
+?? scripts/run_supplementary_after_wave1.sh
+?? scripts/start_cg_gmr_strict_bsz32.sh
+?? scripts/start_qd_gmr_strict_bsz32.sh
+?? scripts/verify_goal_audit.py
+?? test_hello.html
+?? test_hello.pdf
+?? test_wk.pdf
+?? tests/test_flash_gmr_heads.py
+?? tests/test_moment_quality_dual.py

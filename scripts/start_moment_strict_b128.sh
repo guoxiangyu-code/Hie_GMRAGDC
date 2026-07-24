@@ -2,12 +2,12 @@
 # Normal (non-nohup) strict-null Moment-DETR paired run at batch size 128.
 set -euo pipefail
 if [[ $# -ne 2 ]]; then
-  echo "Usage: $0 {md_gmr|md_hiea2m} GPU_ID" >&2
+  echo "Usage: $0 {md_gmr|md_quality|md_hiea2m} GPU_ID" >&2
   exit 2
 fi
 variant="$1"
 gpu_id="$2"
-case "$variant" in md_gmr|md_hiea2m) ;; *) echo "invalid variant" >&2; exit 2;; esac
+case "$variant" in md_gmr|md_quality|md_hiea2m) ;; *) echo "invalid variant" >&2; exit 2;; esac
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
 run_dir="artifacts/formal_strict/moment_detr/seed2023/${variant}_b128"

@@ -367,6 +367,36 @@ def two_stage_accept(
 class SelectionResult:
     selected: list[int]
     marginal_utilities: list[float]
+    count_prior_active: bool = False
+    effective_count_prior_weight: float = 0.0
+
+
+def _positive_conditional_count_distribution(
+    probabilities: torch.Tensor,
+    eps: float,
+) -> torch.Tensor:
+    """Normalize a positive-conditional count distribution.
+
+    Four entries are interpreted directly as
+    ``P(N=k | N>0), k in {1,2,3,4+}``.  Five entries are accepted only for
+    backward compatibility with saved raw predictions; their null mass is
+    discarded before normalization.
+    """
+    if probabilities.shape == (4,):
+        conditional = probabilities
+    elif probabilities.shape == (5,):
+        conditional = probabilities[1:]
+    else:
+        raise ValueError(
+            "count_probabilities must be positive-conditional [P1,P2,P3,P4+] "
+            "or legacy joint [P0,P1,P2,P3,P4+]"
+        )
+    if not torch.isfinite(conditional).all() or bool((conditional < 0).any()):
+        raise ValueError("count_probabilities must be finite and non-negative")
+    mass = conditional.sum()
+    if float(mass) <= eps:
+        raise ValueError("positive-conditional count probability mass is zero")
+    return conditional / mass
 
 
 def learned_mmr_select(
@@ -378,25 +408,37 @@ def learned_mmr_select(
     count_probabilities: torch.Tensor | None = None,
     count_prior_weight: float = 0.0,
     stop_threshold: float = float("-inf"),
+    query_exists: bool | None = None,
 ) -> SelectionResult:
-    """Select candidates with learned redundancy and an entropy-scaled count prior."""
+    """Select candidates with learned redundancy and a conditional count prior.
+
+    The existence decision is upstream of Soft Count.  ``query_exists=False``
+    therefore returns the empty set without consulting the count head.  For a
+    confirmed non-null query, the first representative is always emitted and
+    ``P(N=k | N>0)`` affects only whether additional representatives are useful.
+    """
     if scores.ndim != 1 or duplicate_probabilities.shape != (scores.numel(), scores.numel()):
         raise ValueError("scores must be [Q] and duplicate_probabilities [Q,Q]")
     if max_output < 0:
         raise ValueError("max_output must be non-negative")
+    if float(count_prior_weight) < 0:
+        raise ValueError("count_prior_weight must be non-negative")
+    if query_exists is False:
+        return SelectionResult([], [], False, 0.0)
     if scores.numel() == 0 or max_output == 0:
-        return SelectionResult([], [])
+        return SelectionResult([], [], False, 0.0)
     eps = torch.finfo(scores.dtype).eps
     base = torch.logit(scores.clamp(eps, 1.0 - eps))
     beta = float(count_prior_weight)
     conditional = None
     if count_probabilities is not None:
-        if count_probabilities.shape != (5,):
-            raise ValueError("count_probabilities must be [P0,P1,P2,P3,P4+]")
-        conditional = count_probabilities[1:]
-        conditional = conditional / conditional.sum().clamp_min(eps)
+        conditional = _positive_conditional_count_distribution(
+            count_probabilities.to(device=scores.device, dtype=scores.dtype),
+            eps,
+        )
         entropy = -(conditional * conditional.clamp_min(eps).log()).sum()
         beta *= max(0.0, 1.0 - float(entropy) / math.log(4.0))
+    count_prior_active = conditional is not None and beta > 0.0
 
     remaining = set(range(scores.numel()))
     selected: list[int] = []
@@ -425,7 +467,12 @@ def learned_mmr_select(
         selected.append(best_index)
         utilities.append(best_utility)
         remaining.remove(best_index)
-    return SelectionResult(selected, utilities)
+    return SelectionResult(
+        selected,
+        utilities,
+        count_prior_active=count_prior_active,
+        effective_count_prior_weight=beta if count_prior_active else 0.0,
+    )
 
 
 def cautious_complete_link_fusion(

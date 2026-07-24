@@ -1,0 +1,192 @@
+2026-07-23 14:20:50,607 - __main__ - INFO - Setup data and model...
+2026-07-23 14:21:30,721 - __main__ - INFO - Model FlashVTG(
+  (transformer): Transformer(
+    (t2v_encoder): TransformerCATEEncoder(
+      (layers): ModuleList(
+        (0-5): 6 x T2V_TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): Linear(in_features=256, out_features=256, bias=True)
+          )
+          (linear1): Linear(in_features=256, out_features=1024, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=1024, out_features=256, bias=True)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (dropout1): DropPath()
+          (dropout2): DropPath()
+          (activation): PReLU(num_parameters=1)
+        )
+      )
+    )
+    (encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-2): 3 x TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+          )
+          (linear1): Linear(in_features=256, out_features=1024, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=1024, out_features=256, bias=True)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (dropout1): DropPath()
+          (dropout2): DropPath()
+          (activation): PReLU(num_parameters=1)
+        )
+      )
+    )
+  )
+  (position_embed): PositionEmbeddingSine()
+  (txt_position_embed): TrainablePositionalEncoding(
+    (position_embeddings): Embedding(40, 256)
+    (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (dropout): Dropout(p=0.5, inplace=False)
+  )
+  (saliency_proj1): Linear(in_features=256, out_features=256, bias=True)
+  (saliency_proj2): Linear(in_features=256, out_features=256, bias=True)
+  (PositionEmbeddingSine): PositionEmbeddingSine()
+  (input_txt_proj): Sequential(
+    (0): LinearLayer(
+      (LayerNorm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=512, out_features=256, bias=True)
+      )
+    )
+    (1): LinearLayer(
+      (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (input_vid_proj): Sequential(
+    (0): LinearLayer(
+      (LayerNorm): LayerNorm((2818,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=2818, out_features=256, bias=True)
+      )
+    )
+    (1): LinearLayer(
+      (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (token_type_embeddings): Embedding(2, 256)
+  (txtproj_encoder): TransformerEncoder(
+    (layers): ModuleList(
+      (0-1): 2 x TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+        )
+        (linear1): Linear(in_features=256, out_features=1024, bias=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+        (linear2): Linear(in_features=1024, out_features=256, bias=True)
+        (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (dropout1): DropPath()
+        (dropout2): DropPath()
+        (activation): PReLU(num_parameters=1)
+      )
+    )
+  )
+  (pyramid): ConvPyramid(
+    (blocks): ModuleList(
+      (0): ReLU(inplace=True)
+      (1): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+      )
+      (2): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+        (5): Permute()
+        (6): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (7): Permute()
+        (8): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (9): ReLU(inplace=True)
+      )
+      (3): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+        (5): Permute()
+        (6): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (7): Permute()
+        (8): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (9): ReLU(inplace=True)
+        (10): Permute()
+        (11): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (12): Permute()
+        (13): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (14): ReLU(inplace=True)
+      )
+    )
+  )
+  (pooling): AdaPooling(
+    (att): Linear(in_features=256, out_features=1, bias=False)
+  )
+  (conf_head): ConfidenceScorer(
+    (convs): ModuleList(
+      (0): Conv2d(256, 256, kernel_size=(1, 5), stride=(1, 1), padding=(0, 2))
+    )
+    (activations): ModuleList(
+      (0): ReLU()
+    )
+    (fc): MLP(
+      (layers): ModuleList(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+  )
+  (class_head): ConfidenceScorer(
+    (convs): ModuleList(
+      (0): Conv2d(256, 256, kernel_size=(1, 5), stride=(1, 1), padding=(0, 2))
+    )
+    (activations): ModuleList(
+      (0): ReLU()
+    )
+    (fc): MLP(
+      (layers): ModuleList(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+  )
+  (coord_head): ConvHead(
+    (module): Sequential(
+      (0): Permute()
+      (1): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+      (2): ReLU(inplace=True)
+      (3): Conv1d(256, 2, kernel_size=(3,), stride=(1,), padding=(1,))
+      (4): Permute()
+    )
+  )
+  (generator): PointGenerator(
+    (buffer): BufferList()
+  )
+)
+2026-07-23 14:21:30,721 - __main__ - INFO - Learnable Parameters:
+2026-07-23 14:21:30,722 - __main__ - INFO - Learnable Parameters: 9.984M (100.0%)
+2026-07-23 14:21:30,722 - __main__ - INFO - Start Training...
+2026-07-23 14:21:30,723 - __main__ - INFO - CUDA enabled.
+2026-07-23 14:21:31,244 - __main__ - INFO - [Epoch 48]
+2026-07-23 14:21:57,174 - __main__ - INFO - 2026_07_23_14_21_57 [Epoch] 048 [Loss] loss_reg 0.3587 loss_cls 0.0284 weighted_loss_overall 0.5008
+
+2026-07-23 14:21:57,512 - __main__ - INFO - [Epoch 49]

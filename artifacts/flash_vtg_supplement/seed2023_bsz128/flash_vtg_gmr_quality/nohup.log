@@ -1,0 +1,2 @@
+run-dir already contains a Flash training run: /home/guoxiangyu/generalized-moment-retrieval/artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality
+set FLASH_ALLOW_EXISTING=1 only if intentional

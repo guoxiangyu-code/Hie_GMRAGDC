@@ -1,0 +1,36 @@
+2026-07-23 00:56:39.722:INFO:__main__ - Setup config, data and model...
+2026-07-23 00:56:39.781:INFO:__main__ - setup model/optimizer/scheduler
+2026-07-23 00:56:40.442:INFO:__main__ - CUDA enabled on cuda.
+2026-07-23 00:56:41.538:INFO:__main__ - Model checkpoint: artifacts/validation_selector_ablation/seed2023_posw1/stage3_pairwise/best.ckpt
+2026-07-23 00:56:41.539:INFO:__main__ - Generate submissions
+compute moment scores:   0%|          | 0/117 [00:00<?, ?it/s]/home/guoxiangyu/miniconda3/lib/python3.13/site-packages/torch/nn/modules/transformer.py:531: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. We recommend specifying layout=torch.jagged when constructing a nested tensor, as this layout receives active development, has better operator coverage, and works with torch.compile. (Triggered internally at /pytorch/aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(
+compute moment scores:   1%|          | 1/117 [00:00<01:42,  1.13it/s]compute moment scores:   3%|▎         | 3/117 [00:00<00:30,  3.75it/s]compute moment scores:   4%|▍         | 5/117 [00:01<00:18,  6.18it/s]compute moment scores:   6%|▌         | 7/117 [00:01<00:12,  8.60it/s]compute moment scores:   8%|▊         | 9/117 [00:01<00:09, 10.84it/s]compute moment scores:   9%|▉         | 11/117 [00:01<00:08, 12.56it/s]compute moment scores:  11%|█         | 13/117 [00:01<00:07, 13.91it/s]compute moment scores:  13%|█▎        | 15/117 [00:01<00:06, 15.10it/s]compute moment scores:  15%|█▍        | 17/117 [00:01<00:06, 15.90it/s]compute moment scores:  16%|█▌        | 19/117 [00:01<00:05, 16.77it/s]compute moment scores:  18%|█▊        | 21/117 [00:01<00:05, 17.36it/s]compute moment scores:  20%|█▉        | 23/117 [00:02<00:05, 17.00it/s]compute moment scores:  21%|██▏       | 25/117 [00:02<00:05, 17.32it/s]compute moment scores:  24%|██▍       | 28/117 [00:02<00:04, 18.52it/s]compute moment scores:  26%|██▌       | 30/117 [00:02<00:04, 17.95it/s]compute moment scores:  27%|██▋       | 32/117 [00:02<00:04, 18.15it/s]compute moment scores:  29%|██▉       | 34/117 [00:02<00:04, 17.33it/s]compute moment scores:  32%|███▏      | 37/117 [00:02<00:04, 19.01it/s]compute moment scores:  33%|███▎      | 39/117 [00:02<00:04, 19.20it/s]compute moment scores:  35%|███▌      | 41/117 [00:03<00:03, 19.23it/s]compute moment scores:  37%|███▋      | 43/117 [00:03<00:04, 17.64it/s]compute moment scores:  39%|███▉      | 46/117 [00:03<00:03, 18.69it/s]compute moment scores:  41%|████      | 48/117 [00:03<00:03, 18.36it/s]compute moment scores:  43%|████▎     | 50/117 [00:03<00:03, 18.58it/s]compute moment scores:  44%|████▍     | 52/117 [00:03<00:03, 18.88it/s]compute moment scores:  46%|████▌     | 54/117 [00:03<00:03, 18.69it/s]compute moment scores:  48%|████▊     | 56/117 [00:03<00:03, 17.85it/s]compute moment scores:  50%|████▉     | 58/117 [00:03<00:03, 18.11it/s]compute moment scores:  51%|█████▏    | 60/117 [00:04<00:03, 18.45it/s]compute moment scores:  53%|█████▎    | 62/117 [00:04<00:02, 18.79it/s]compute moment scores:  56%|█████▌    | 65/117 [00:04<00:02, 21.60it/s]compute moment scores:  58%|█████▊    | 68/117 [00:04<00:02, 22.92it/s]compute moment scores:  61%|██████    | 71/117 [00:04<00:01, 24.40it/s]compute moment scores:  63%|██████▎   | 74/117 [00:04<00:01, 24.60it/s]compute moment scores:  66%|██████▌   | 77/117 [00:04<00:01, 22.54it/s]compute moment scores:  68%|██████▊   | 80/117 [00:04<00:01, 23.22it/s]compute moment scores:  71%|███████   | 83/117 [00:05<00:01, 23.34it/s]compute moment scores:  74%|███████▎  | 86/117 [00:05<00:01, 22.83it/s]compute moment scores:  76%|███████▌  | 89/117 [00:05<00:01, 22.26it/s]compute moment scores:  79%|███████▊  | 92/117 [00:05<00:01, 21.79it/s]compute moment scores:  81%|████████  | 95/117 [00:05<00:00, 22.42it/s]compute moment scores:  84%|████████▍ | 98/117 [00:05<00:00, 22.60it/s]compute moment scores:  86%|████████▋ | 101/117 [00:05<00:00, 22.95it/s]compute moment scores:  89%|████████▉ | 104/117 [00:06<00:00, 22.36it/s]compute moment scores:  91%|█████████▏| 107/117 [00:06<00:00, 21.50it/s]compute moment scores:  94%|█████████▍| 110/117 [00:06<00:00, 21.46it/s]compute moment scores:  97%|█████████▋| 114/117 [00:06<00:00, 24.27it/s]compute moment scores: 100%|██████████| 117/117 [00:06<00:00, 25.35it/s]compute moment scores: 100%|██████████| 117/117 [00:06<00:00, 17.82it/s]
+convert to multiples of clip_length=2:   0%|          | 0/465 [00:00<?, ?it/s]convert to multiples of clip_length=2: 100%|██████████| 465/465 [00:00<00:00, 14149.59it/s]
+2026-07-23 00:56:48.141:INFO:__main__ - Saving/evaluating predictions
+2026-07-23 00:56:49.052:INFO:__main__ - metrics_no_nms OrderedDict([   ('AUROC', 73.18),
+                ('Rej-F1@0.4', 35.49),
+                ('Acc@0.4', 59.35),
+                ('Rej-F1@0.6', 70.07),
+                ('Acc@0.6', 63.44),
+                ('Rej-F1@0.8', 70.71),
+                ('Acc@0.8', 62.58),
+                ('G-mIoU@1', 16.31),
+                ('G-mIoU@3', 13.53),
+                ('G-mIoU@5', 12.59),
+                ('Count-Acc', 59.57),
+                ('Count-MacroAcc', 31.95),
+                ('Positive-Count-Acc', 39.22),
+                ('mAP', 9.16),
+                ('mR@1', 5.38),
+                ('mR@3', 9.75),
+                ('mR@5', 15.45),
+                ('mR+@1', 0.0),
+                ('mR+@3', 0.33),
+                ('mR+@5', 1.33),
+                ('mIoU@1', 12.59),
+                ('mIoU@3', 11.71),
+                ('mIoU@5', 11.71),
+                ('mIoU+@1', 0.0),
+                ('mIoU+@3', 0.0),
+                ('mIoU+@5', 0.0)])

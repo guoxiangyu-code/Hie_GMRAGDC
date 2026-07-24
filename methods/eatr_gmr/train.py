@@ -37,6 +37,7 @@ STAGE_NEW_PREFIXES = {
     "eatr_gmr": ("exist_head.",),
     "eatr_quality": ("quality_embed.",),
     "eatr_dual": ("dual_grounding.",),
+    "eatr_quality_dual": ("quality_embed.", "dual_grounding."),
     "eatr_counter": ("hierarchical_counter.",),
     "eatr_hiea2m": ("quality_embed.", "dual_grounding.", "hierarchical_counter."),
 }

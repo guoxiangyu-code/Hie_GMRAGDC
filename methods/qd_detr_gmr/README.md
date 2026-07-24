@@ -16,6 +16,7 @@ Moment-DETR path:
 - `qd_quality`: matched-IoU query quality calibration;
 - `qd_dual`: DualGround sentence/phrase conditioning after QD's input
   projections and before video/text concatenation;
+- `qd_quality_dual`: quality + DualGround, without the hierarchical counter;
 - `qd_counter`: factorized existence plus positive-conditional `{1,2,3,4+}`
   counting;
 - `qd_hiea2m`: quality + DualGround + hierarchical counter.
@@ -96,9 +97,10 @@ parameter receives `--lr * --backbone_lr_scale`. The exact prefixes, learning
 rates, and parameter counts are frozen in `optimizer_groups.json`.
 
 For a strictly matched staged run, initialize `qd_quality`, `qd_dual`,
-`qd_counter`, or `qd_hiea2m` from the same `qd_detr_gmr` checkpoint. Newly
-introduced parameters use the requested learning rate while shared QD/GMR
-parameters default to `0.1x`; control this with `--backbone_lr_scale`.
+`qd_quality_dual`, `qd_counter`, or `qd_hiea2m` from the same `qd_detr_gmr`
+checkpoint. Newly introduced parameters use the requested learning rate while
+shared QD/GMR parameters default to `0.1x`; control this with
+`--backbone_lr_scale`.
 
 ```bash
 python -m methods.qd_detr_gmr.train \

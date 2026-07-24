@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>GMR 已完成实验汇总</title>
+<style>
+  @page { size: A4 landscape; margin: 11mm 12mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: #182233; font-family: "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; font-size: 10.5px; line-height: 1.45; }
+  h1 { margin: 0 0 5px; color: #163a68; font-size: 25px; }
+  h2 { margin: 0 0 5px; padding-bottom: 5px; border-bottom: 2px solid #2f67a5; color: #193f6d; font-size: 17px; }
+  h3 { margin: 14px 0 5px; color: #244f7c; font-size: 13px; }
+  p { margin: 4px 0 8px; }
+  .cover { padding: 8px 3px 0; }
+  .meta { color: #65758a; }
+  .lead { margin-top: 12px; padding: 11px 13px; border-left: 5px solid #1a9b69; background: #eef9f4; font-size: 12px; }
+  .key-grid { display: table; width: 100%; margin-top: 13px; border-spacing: 9px; }
+  .key-card { display: table-cell; width: 33%; padding: 12px; border: 1px solid #ccd8e5; border-radius: 6px; vertical-align: top; }
+  .key-card strong { display: block; color: #126b4d; font-size: 18px; }
+  section { margin-top: 15px; page-break-inside: avoid; }
+  .page-break { page-break-before: always; }
+  .subtitle { color: #65758a; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th { background: #173b65; color: white; padding: 6px 5px; font-weight: 600; }
+  td { border: 1px solid #cdd7e2; padding: 6px 5px; text-align: center; vertical-align: middle; }
+  th:first-child, td:first-child { width: 19%; text-align: left; }
+  th:last-child, td:last-child { width: 23%; text-align: left; }
+  .baseline-row td { background: #edf2f8; }
+  .baseline-cell { background: #e9eff6; }
+  .win { background: #dff6ea; color: #086a47; }
+  .loss { color: #6c7888; }
+  .delta { display: block; font-size: 8.5px; font-weight: 600; }
+  .tag { display: inline-block; margin-top: 2px; padding: 1px 5px; border-radius: 8px; background: #62748a; color: white; font-size: 7.5px; }
+  .win-tag { background: #16875e; }
+  .note { padding: 8px 10px; background: #fff7df; border-left: 4px solid #e6a522; }
+  .source { font-family: monospace; font-size: 8px; color: #536276; overflow-wrap: anywhere; }
+  .small { font-size: 9px; color: #65758a; }
+  ul { margin: 5px 0 8px; padding-left: 20px; }
+  li { margin: 2px 0; }
+</style>
+</head>
+<body>
+  <div class="cover">
+    <h1>GMR 已完成实验结果汇总</h1>
+    <p class="meta">Soccer-GMR validation · 数据生成时间：2026-07-24 01:41 CST · 只纳入已经完成且有可追溯指标文件的正式实验</p>
+    <div class="lead"><strong>阅读规则：</strong>每张主表以同骨干的 baseline GMR 为基准；绿色单元格表示该指标严格超过 baseline。不同评估集、不同候选输入或不同 checkpoint 选择协议不做直接优劣比较。</div>
+    <div class="key-grid">
+      <div class="key-card"><strong>Moment 主方法有效</strong>独立判空方案相对 Strict GMR：mAP、拒答和 G@3 同时提高；仅多事件 mR+@5 下降。</div>
+      <div class="key-card"><strong>EaTR 可部分泛化</strong>Quality 六项全部超过 EaTR GMR；Dual gate 显著改善拒答与 G@3。完整组合未超过单组件。</div>
+      <div class="key-card"><strong>学习式去重有效</strong>五组设置下 mAP 平均 6.48 → 6.96；边界融合没有额外收益，Soft Count 偏向高召回。</div>
+    </div>
+  </div>
+
+  
+    <section>
+      <h2>1. Moment-DETR：主方法与严格 GMR</h2>
+      <p class="subtitle">Soccer-GMR validation；绿色表示严格高于同骨干 baseline GMR。独立 Zero Head 的结果来自最终 best_joint JSON，而非中间 epoch。</p>
+      <table>
+        <thead><tr><th>方案</th><th>AUROC</th><th>Rej-F1@0.4</th><th>mAP</th><th>mR@5</th><th>mR+@5</th><th>G@3</th><th>结论</th></tr></thead>
+        <tbody><tr class='baseline-row'><td><strong>Moment-DETR Strict GMR</strong><br><span class='tag'>BASELINE GMR</span></td><td class='baseline-cell'><strong>70.95</strong></td><td class='baseline-cell'><strong>61.22</strong></td><td class='baseline-cell'><strong>8.93</strong></td><td class='baseline-cell'><strong>13.85</strong></td><td class='baseline-cell'><strong>3.17</strong></td><td class='baseline-cell'><strong>30.78</strong></td><td>同骨干严格 GMR；best-joint</td></tr><tr><td><strong>HieA2M-DGQC + 独立 Zero Head</strong><br><span class='tag win-tag'>超过 GMR</span></td><td class='win'><strong>72.62</strong><span class='delta'>+1.67</span></td><td class='win'><strong>69.28</strong><span class='delta'>+8.06</span></td><td class='win'><strong>9.16</strong><span class='delta'>+0.23</span></td><td class='win'><strong>15.45</strong><span class='delta'>+1.60</span></td><td class='loss'><strong>1.33</strong><span class='delta'>-1.84</span></td><td class='win'><strong>39.77</strong><span class='delta'>+8.99</span></td><td>posw=1；validation best-joint；除 mR+@5 外均超过 GMR</td></tr></tbody>
+      </table>
+    </section>
+    
+  
+    <section>
+      <h2>2. EaTR：DGQC 跨骨干迁移</h2>
+      <p class="subtitle">全部使用同一 frozen parent、同一 validation 和 best-joint 选择口径。</p>
+      <table>
+        <thead><tr><th>方案</th><th>AUROC</th><th>Rej-F1@0.4</th><th>mAP</th><th>mR@5</th><th>mR+@5</th><th>G@3</th><th>结论</th></tr></thead>
+        <tbody><tr class='baseline-row'><td><strong>EaTR Strict GMR</strong><br><span class='tag'>BASELINE GMR</span></td><td class='baseline-cell'><strong>71.67</strong></td><td class='baseline-cell'><strong>39.35</strong></td><td class='baseline-cell'><strong>8.02</strong></td><td class='baseline-cell'><strong>12.30</strong></td><td class='baseline-cell'><strong>2.93</strong></td><td class='baseline-cell'><strong>16.82</strong></td><td>EaTR 迁移线配对基线；best-joint</td></tr><tr><td><strong>+ Quality</strong><br><span class='tag win-tag'>超过 GMR</span></td><td class='win'><strong>71.98</strong><span class='delta'>+0.31</span></td><td class='win'><strong>44.31</strong><span class='delta'>+4.96</span></td><td class='win'><strong>8.24</strong><span class='delta'>+0.22</span></td><td class='win'><strong>12.69</strong><span class='delta'>+0.39</span></td><td class='win'><strong>4.17</strong><span class='delta'>+1.24</span></td><td class='win'><strong>19.13</strong><span class='delta'>+2.31</span></td><td>所有六项均超过 GMR；最均衡</td></tr><tr><td><strong>+ Dual gate</strong><br><span class='tag win-tag'>超过 GMR</span></td><td class='win'><strong>72.05</strong><span class='delta'>+0.38</span></td><td class='win'><strong>48.12</strong><span class='delta'>+8.77</span></td><td class='win'><strong>8.06</strong><span class='delta'>+0.04</span></td><td class='loss'><strong>11.91</strong><span class='delta'>-0.39</span></td><td class='loss'><strong>1.31</strong><span class='delta'>-1.62</span></td><td class='win'><strong>21.10</strong><span class='delta'>+4.28</span></td><td>拒答与 G@3 提升最大，召回略降</td></tr><tr><td><strong>+ Counter</strong><br><span class='tag win-tag'>超过 GMR</span></td><td class='win'><strong>73.31</strong><span class='delta'>+1.64</span></td><td class='loss'><strong>29.79</strong><span class='delta'>-9.56</span></td><td class='loss'><strong>6.16</strong><span class='delta'>-1.86</span></td><td class='loss'><strong>9.46</strong><span class='delta'>-2.84</span></td><td class='loss'><strong>0.93</strong><span class='delta'>-2.00</span></td><td class='loss'><strong>12.15</strong><span class='delta'>-4.67</span></td><td>仅 AUROC 超过 GMR</td></tr><tr><td><strong>完整 HieA2M-DGQC</strong><br><span class='tag win-tag'>超过 GMR</span></td><td class='win'><strong>72.65</strong><span class='delta'>+0.98</span></td><td class='loss'><strong>22.66</strong><span class='delta'>-16.69</span></td><td class='loss'><strong>7.08</strong><span class='delta'>-0.94</span></td><td class='loss'><strong>9.89</strong><span class='delta'>-2.41</span></td><td class='loss'><strong>1.61</strong><span class='delta'>-1.32</span></td><td class='loss'><strong>9.56</strong><span class='delta'>-7.26</span></td><td>仅 AUROC 超过 GMR；完整组合存在负交互</td></tr></tbody>
+      </table>
+    </section>
+    
+
+  <div class="page-break"></div>
+  <section>
+    <h2>3. 去重消融：严格分开两种候选输入协议</h2>
+    <h3>3.1 纯几何去重（固定候选输入）</h3>
+    <p class="subtitle">只与本表 Direct Top-3=7.57 比较；不与后面的 learned-selector Direct Top-3=6.48 混用。</p>
+    <table>
+      <thead><tr><th>方法</th><th>mAP</th><th>mR@3</th><th>G@3</th><th>协议</th></tr></thead>
+      <tbody><tr><td><strong>Direct Top-3</strong><br><span class="tag">BASELINE</span></td><td class='baseline-cell'><strong>7.57</strong></td><td class='baseline-cell'><strong>10.20</strong></td><td class='baseline-cell'><strong>8.21</strong></td><td>固定 Top-3；相同候选输入</td></tr><tr><td><strong>Hard-NMS IoU=0.5</strong></td><td class='win'><strong>7.92</strong><span class='delta'>+0.35</span></td><td class='win'><strong>11.25</strong><span class='delta'>+1.05</span></td><td class='win'><strong>8.25</strong><span class='delta'>+0.04</span></td><td>固定 Top-3；相同候选输入</td></tr><tr><td><strong>Linear Soft-NMS IoU=0.5</strong></td><td class='win'><strong>7.92</strong><span class='delta'>+0.35</span></td><td class='win'><strong>11.25</strong><span class='delta'>+1.05</span></td><td><strong>8.21</strong></td><td>固定 Top-3；相同候选输入</td></tr><tr><td><strong>Complete-link Fusion IoU=0.5</strong></td><td class='win'><strong>7.96</strong><span class='delta'>+0.39</span></td><td class='win'><strong>11.41</strong><span class='delta'>+1.21</span></td><td class='win'><strong>8.23</strong><span class='delta'>+0.02</span></td><td>固定 Top-3；相同候选输入</td></tr></tbody>
+    </table>
+
+    <h3>3.2 学习式去重（5组 head 训练设置平均）</h3>
+    <p class="subtitle">五组为 seed2023、seed2023-posw1、seed2023-posw4、seed2024、seed2025；λ 由 validation 网格选择，多数为2.0，seed2025 为1.0。</p>
+    <table>
+      <thead><tr><th>方法</th><th>mAP</th><th>mR@3</th><th>mR@5</th><th>G@3</th><th>平均选框数</th></tr></thead>
+      <tbody><tr><td><strong>Direct Top-3</strong><br><span class="tag">BASELINE</span></td><td class='baseline-cell'><strong>6.48</strong></td><td class='baseline-cell'><strong>8.91</strong></td><td class='baseline-cell'><strong>8.91</strong></td><td class='baseline-cell'><strong>4.95</strong></td><td>3.00</td></tr><tr><td><strong>学习式去重 Top-3</strong></td><td class='win'><strong>6.96</strong><span class='delta'>+0.48</span></td><td class='win'><strong>10.10</strong><span class='delta'>+1.19</span></td><td class='win'><strong>10.10</strong><span class='delta'>+1.19</span></td><td class='win'><strong>5.06</strong><span class='delta'>+0.11</span></td><td>3.00</td></tr><tr><td><strong>学习式去重 + Soft Count</strong></td><td class='win'><strong>6.72</strong><span class='delta'>+0.24</span></td><td class='loss'><strong>7.19</strong><span class='delta'>-1.72</span></td><td class='win'><strong>10.69</strong><span class='delta'>+1.78</span></td><td class='win'><strong>7.25</strong><span class='delta'>+2.30</span></td><td>5.94</td></tr><tr><td><strong>Soft Count + Boundary Fusion</strong></td><td class='win'><strong>6.72</strong><span class='delta'>+0.24</span></td><td class='loss'><strong>7.19</strong><span class='delta'>-1.72</span></td><td class='win'><strong>10.69</strong><span class='delta'>+1.78</span></td><td class='win'><strong>7.25</strong><span class='delta'>+2.30</span></td><td>5.94</td></tr></tbody>
+    </table>
+    <p class="note"><strong>结论：</strong>学习式去重 Top-3 是当前主选框方案。Soft Count 把 mR@5 提高到 10.69、G@3 提高到 7.25，但平均输出 5.94 个框且 mAP 低于 learned Top-3；Boundary Fusion 与 Soft Count 指标完全相同，没有观察到额外贡献。</p>
+  </section>
+
+  <section>
+    <h2>4. 已完成但暂时没有组件对照的严格 GMR 父模型</h2>
+    <table>
+      <thead><tr><th>骨干 / 状态</th><th>mAP</th><th>G@3</th><th>AUROC</th><th>Rej-F1@0.4</th><th>mR@5</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>QD-DETR Strict GMR bsz32</strong><br><span class="tag">已完成</span></td><td>7.03</td><td>3.14</td><td>72.40</td><td>3.74</td><td>9.10</td><td>组件矩阵仍在训练，暂不宣称组件增益</td></tr>
+        <tr><td><strong>CG-DETR Strict GMR bsz32</strong><br><span class="tag">已完成</span></td><td>4.84</td><td>1.87</td><td>59.69</td><td>0.00</td><td>7.64</td><td>组件矩阵仍在训练，暂不宣称组件增益</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="page-break"></div>
+  <section>
+    <h2>5. 完成但不进入主结论的诊断实验</h2>
+    <table>
+      <thead><tr><th>实验</th><th>mAP</th><th>G@3</th><th colspan="4">判定</th><th>处理</th></tr></thead>
+      <tbody>
+        <tr><td>QD Plain bsz128 Restart</td><td>0.07</td><td>17.22</td><td colspan="4">定位优化塌陷；原因尚未由控制变量实验确定</td><td>不进入方法比较</td></tr>
+        <tr><td>CG Plain bsz128 Restart</td><td>0.01</td><td>1.55</td><td colspan="4">定位优化塌陷；原因尚未由控制变量实验确定</td><td>不进入方法比较</td></tr>
+        <tr><td>EaTR Plain bsz128</td><td>8.73</td><td>3.51</td><td colspan="4">定位正常，但 Rej-F1@0.4=0；用于说明 GMR 拒答模块的必要性</td><td>只作上下文基线</td></tr>
+        <tr><td>QD/CG legacy protocol variants</td><td>—</td><td>—</td><td colspan="4">旧损失/旧空查询处理协议，与 strict 结果不可直接比较</td><td>保留日志，不进主表</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Smoke test、batch-size probe、持久化机制测试只用于工程验证，不作为科学实验结果列入。</p>
+  </section>
+
+  <section>
+    <h2>6. 当前可支持的研究结论</h2>
+    <ul>
+      <li><strong>主结果：</strong>Moment-DETR 的“高召回初判 + 独立判空复核”在 validation 上相对 Strict GMR 同时提高 mAP、拒答与 G@3。</li>
+      <li><strong>跨骨干：</strong>EaTR Quality 和 Dual gate 均超过 EaTR Strict GMR 的关键指标，支持组件级泛化；完整 DGQC 组合尚未证明跨骨干整体泛化。</li>
+      <li><strong>去重：</strong>学习式去重在五组设置中一致提高 mAP；纯几何 Complete-link Fusion 也有小幅增益，但两者来自不同候选输入，不能直接排序。</li>
+      <li><strong>计数：</strong>Soft Count 提高召回和 G@3，但牺牲 mAP并输出更多框；现阶段应保留为消融，不作为默认主方案。</li>
+      <li><strong>边界融合：</strong>没有观察到相对 Soft Count 的额外提升。</li>
+      <li><strong>限制：</strong>以上主表均为 validation；最终论文结论仍需冻结配置后进行 test-set 评估。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>7. 指标来源索引</h2>
+    <p class="source">M1 artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128/best_joint_soccer_gmr_val_preds_metrics.json</p>
+    <p class="source">M2 artifacts/validation_selector_ablation/seed2023_posw1/stage2_zero/best_joint_soccer_gmr_val_preds_metrics.json</p>
+    <p class="source">E1 artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/best_joint_val_metrics.json</p>
+    <p class="source">E2–E5 artifacts/eatr_dgqc_transfer/seed2023/eatr_{quality,dual,counter,hiea2m}/best_joint_val_metrics.json</p>
+    <p class="source">S1 artifacts/validation_dedup_ablation/md_hiea2m_b128_rerun_from_best_v2_best_map/dedup_ablation_summary.json</p>
+    <p class="source">S2 artifacts/validation_selector_ablation/*/stage4_5_selection/learned_selector_ablation_summary.json</p>
+    <p class="source">Q1 artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/best_joint_val_metrics.json</p>
+    <p class="source">C1 artifacts/strict_bsz32/cg_detr/seed2023/cg_detr_gmr/best_joint_val_metrics.json</p>
+  </section>
+
+  <div class="page-break"></div>
+  <section>
+    <h2>附录 A：其余已完成正式运行的逐项归档</h2>
+    <p class="subtitle">本表用于做到“已完成实验不遗漏”。其中 legacy、重复续训和无效学习率实验不进入主结论，也不因单项数字较高而标记为超过 strict baseline。</p>
+    <table>
+      <thead><tr><th>运行</th><th>选择口径</th><th>mAP</th><th>G@3</th><th>AUROC</th><th>用途与来源</th></tr></thead>
+      <tbody><tr><td><strong>Moment GMR strict initial</strong></td><td>best-joint</td><td>8.93</td><td>30.78</td><td>70.95</td><td>重复训练/稳定性记录；主表只选预先声明的配对结果<br><span class='source'>artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128/best_joint_soccer_gmr_val_preds_metrics.json</span></td></tr><tr><td><strong>Moment GMR rerun</strong></td><td>best-joint</td><td>8.37</td><td>22.95</td><td>71.79</td><td>重复训练/稳定性记录；主表只选预先声明的配对结果<br><span class='source'>artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128_rerun_from_best/best_joint_soccer_gmr_val_preds_metrics.json</span></td></tr><tr><td><strong>Moment GMR rerun v2</strong></td><td>best-joint</td><td>7.77</td><td>24.47</td><td>71.96</td><td>重复训练/稳定性记录；主表只选预先声明的配对结果<br><span class='source'>artifacts/formal_strict/moment_detr/seed2023/md_gmr_b128_rerun_from_best_v2/best_joint_soccer_gmr_val_preds_metrics.json</span></td></tr><tr><td><strong>Moment HieA2M strict initial</strong></td><td>best-joint</td><td>9.18</td><td>13.65</td><td>73.33</td><td>重复训练/稳定性记录；主表只选预先声明的配对结果<br><span class='source'>artifacts/formal_strict/moment_detr/seed2023/md_hiea2m_b128/best_joint_soccer_gmr_val_preds_metrics.json</span></td></tr><tr><td><strong>Moment HieA2M rerun</strong></td><td>best-joint</td><td>8.42</td><td>13.76</td><td>73.41</td><td>重复训练/稳定性记录；主表只选预先声明的配对结果<br><span class='source'>artifacts/formal_strict/moment_detr/seed2023/md_hiea2m_b128_rerun_from_best/best_joint_soccer_gmr_val_preds_metrics.json</span></td></tr><tr><td><strong>Moment HieA2M rerun v2</strong></td><td>best-joint</td><td>9.16</td><td>15.54</td><td>73.38</td><td>重复训练/稳定性记录；主表只选预先声明的配对结果<br><span class='source'>artifacts/formal_strict/moment_detr/seed2023/md_hiea2m_b128_rerun_from_best_v2/best_joint_soccer_gmr_val_preds_metrics.json</span></td></tr><tr><td><strong>QD plain formal</strong></td><td>best-joint</td><td>7.29</td><td>2.83</td><td>71.99</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_detr/best_joint_val_metrics.json</span></td></tr><tr><td><strong>QD GMR legacy</strong></td><td>best-joint</td><td>7.73</td><td>46.25</td><td>61.03</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_detr_gmr/best_joint_val_metrics.json</span></td></tr><tr><td><strong>QD GMR invalid-all-lr</strong></td><td>best-joint</td><td>6.94</td><td>45.96</td><td>60.80</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_detr_gmr_invalid_all_lr/best_joint_val_metrics.json</span></td></tr><tr><td><strong>QD Quality legacy</strong></td><td>best-joint</td><td>7.95</td><td>46.42</td><td>61.17</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_quality/best_joint_val_metrics.json</span></td></tr><tr><td><strong>QD Dual legacy</strong></td><td>best-joint</td><td>7.28</td><td>46.23</td><td>61.74</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_dual/best_joint_val_metrics.json</span></td></tr><tr><td><strong>QD Counter legacy</strong></td><td>best-joint</td><td>7.19</td><td>9.35</td><td>72.31</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_counter/best_joint_val_metrics.json</span></td></tr><tr><td><strong>QD HieA2M legacy</strong></td><td>best-joint</td><td>6.92</td><td>9.48</td><td>72.16</td><td>旧协议；只归档，不与 strict-bsz32 主表比较<br><span class='source'>artifacts/formal/qd_detr/seed2023/qd_hiea2m/best_joint_val_metrics.json</span></td></tr><tr><td><strong>EaTR plain formal legacy</strong></td><td>best-joint</td><td>7.79</td><td>3.39</td><td>69.24</td><td>旧迁移线；由 matched frozen-parent 实验替代<br><span class='source'>artifacts/formal/eatr/seed2023/eatr/best_joint_val_metrics.json</span></td></tr><tr><td><strong>EaTR GMR formal legacy</strong></td><td>best-joint</td><td>7.37</td><td>42.98</td><td>70.12</td><td>旧迁移线；由 matched frozen-parent 实验替代<br><span class='source'>artifacts/formal/eatr/seed2023/eatr_gmr/best_joint_val_metrics.json</span></td></tr></tbody>
+    </table>
+    <p class="note"><strong>未列入：</strong>当前仍在训练的 QD/CG 八个 strict-bsz32 组件实验；smoke test、batch probe、持久化测试等工程检查。它们分别因为“尚未完成”或“不属于科学结果”而不应伪装成已完成实验。</p>
+  </section>
+</body>
+</html>

@@ -1,0 +1,3864 @@
+{
+  "protocol": {
+    "split": "validation",
+    "test_labels_read": false,
+    "prediction_path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/cleaned_val_preds.jsonl",
+    "gt_path": "/home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/val.jsonl",
+    "gt_normalization": {
+      "total": 465,
+      "kept": 465,
+      "dropped_empty": 0,
+      "dropped_invalid": 0
+    },
+    "k_list": [
+      1,
+      3,
+      5
+    ],
+    "max_pred_windows": 10,
+    "cls_thresholds": [
+      0.4,
+      0.6
+    ],
+    "gmiou_cls_threshold": 0.4,
+    "selection_budgets": [
+      1,
+      3,
+      5,
+      "predicted_count"
+    ],
+    "note": "Existence/count fields and the existence gate are preserved. Each dedup method is compared with direct Top-K under the same fixed/predicted-count output budget."
+  },
+  "prediction_schema_audit": {
+    "num_rows": 465,
+    "top_level_fields": [
+      "pred_count",
+      "pred_exist_score",
+      "pred_relevant_windows",
+      "qid",
+      "query",
+      "vid"
+    ],
+    "num_windows": 4650,
+    "explicit_existence_coverage": 465,
+    "count_prediction_coverage": 465,
+    "count_probability_coverage": 0,
+    "candidate_embedding_fields": [],
+    "supports_geometry_score_dedup": true,
+    "supports_candidate_semantic_dedup": false,
+    "semantic_dedup_gap": "Candidate-level decoder embeddings/event IDs are absent; only temporal geometry and scores can be audited."
+  },
+  "source_duplicate_diagnostics": {
+    "num_queries": 465,
+    "total_windows": 4650,
+    "mean_windows_per_query": 10.0,
+    "median_windows_per_query": 10.0,
+    "max_windows_per_query": 10,
+    "pairwise_overlap": {
+      "0.5": {
+        "pairs_above_threshold": 461,
+        "total_pairs": 20925,
+        "pair_rate": 0.022031,
+        "queries_with_pair": 378,
+        "query_rate": 0.812903
+      },
+      "0.7": {
+        "pairs_above_threshold": 210,
+        "total_pairs": 20925,
+        "pair_rate": 0.010036,
+        "queries_with_pair": 176,
+        "query_rate": 0.378495
+      },
+      "0.9": {
+        "pairs_above_threshold": 12,
+        "total_pairs": 20925,
+        "pair_rate": 0.000573,
+        "queries_with_pair": 12,
+        "query_rate": 0.025806
+      }
+    }
+  },
+  "methods": [
+    {
+      "name": "none__topk1",
+      "spec": {
+        "method": "none",
+        "iou_threshold": null,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.8,
+        "mR@1": 4.8,
+        "mR@3": 4.8,
+        "mR@5": 4.8,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 11.94,
+        "mIoU@5": 11.94,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "none__topk3",
+      "spec": {
+        "method": "none",
+        "iou_threshold": null,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.84,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.19,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.77,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 9,
+            "total_pairs": 1395,
+            "pair_rate": 0.006452,
+            "queries_with_pair": 9,
+            "query_rate": 0.019355
+          },
+          "0.7": {
+            "pairs_above_threshold": 1,
+            "total_pairs": 1395,
+            "pair_rate": 0.000717,
+            "queries_with_pair": 1,
+            "query_rate": 0.002151
+          },
+          "0.9": {
+            "pairs_above_threshold": 1,
+            "total_pairs": 1395,
+            "pair_rate": 0.000717,
+            "queries_with_pair": 1,
+            "query_rate": 0.002151
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "none__topk5",
+      "spec": {
+        "method": "none",
+        "iou_threshold": null,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.25,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 9.1,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 9,
+            "total_pairs": 4650,
+            "pair_rate": 0.001935,
+            "queries_with_pair": 9,
+            "query_rate": 0.019355
+          },
+          "0.7": {
+            "pairs_above_threshold": 1,
+            "total_pairs": 4650,
+            "pair_rate": 0.000215,
+            "queries_with_pair": 1,
+            "query_rate": 0.002151
+          },
+          "0.9": {
+            "pairs_above_threshold": 1,
+            "total_pairs": 4650,
+            "pair_rate": 0.000215,
+            "queries_with_pair": 1,
+            "query_rate": 0.002151
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "none__predicted_count_topk",
+      "spec": {
+        "method": "none",
+        "iou_threshold": null,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/none__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.98,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.77,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 9,
+            "total_pairs": 2790,
+            "pair_rate": 0.003226,
+            "queries_with_pair": 9,
+            "query_rate": 0.019355
+          },
+          "0.7": {
+            "pairs_above_threshold": 1,
+            "total_pairs": 2790,
+            "pair_rate": 0.000358,
+            "queries_with_pair": 1,
+            "query_rate": 0.002151
+          },
+          "0.9": {
+            "pairs_above_threshold": 1,
+            "total_pairs": 2790,
+            "pair_rate": 0.000358,
+            "queries_with_pair": 1,
+            "query_rate": 0.002151
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    },
+    {
+      "name": "hard_nms__iou0p5__topk1",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.8,
+        "mR@1": 4.8,
+        "mR@3": 4.8,
+        "mR@5": 4.8,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 11.94,
+        "mIoU@5": 11.94,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "hard_nms__iou0p5__topk3",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.02,
+        "mR@1": 0.0,
+        "mR@3": -0.04,
+        "mR@5": -0.04,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.82,
+        "mR@1": 4.8,
+        "mR@3": 7.15,
+        "mR@5": 7.15,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.77,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "hard_nms__iou0p5__topk5",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.02,
+        "mR@1": 0.0,
+        "mR@3": -0.04,
+        "mR@5": -0.04,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.23,
+        "mR@1": 4.8,
+        "mR@3": 7.15,
+        "mR@5": 9.06,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "hard_nms__iou0p5__predicted_count_topk",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.02,
+        "mR@1": 0.0,
+        "mR@3": -0.04,
+        "mR@5": -0.04,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p5__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.96,
+        "mR@1": 4.8,
+        "mR@3": 7.15,
+        "mR@5": 7.73,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    },
+    {
+      "name": "hard_nms__iou0p7__topk1",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.8,
+        "mR@1": 4.8,
+        "mR@3": 4.8,
+        "mR@5": 4.8,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 11.94,
+        "mIoU@5": 11.94,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "hard_nms__iou0p7__topk3",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.84,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.19,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.77,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 1395,
+            "pair_rate": 0.005735,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "hard_nms__iou0p7__topk5",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.25,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 9.1,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 4650,
+            "pair_rate": 0.00172,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "hard_nms__iou0p7__predicted_count_topk",
+      "spec": {
+        "method": "hard_nms",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": null
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/hard_nms__iou0p7__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.98,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.77,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 2790,
+            "pair_rate": 0.002867,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p5__floor0__topk1",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.8,
+        "mR@1": 4.8,
+        "mR@3": 4.8,
+        "mR@5": 4.8,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 11.94,
+        "mIoU@5": 11.94,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p5__floor0__topk3",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.84,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.19,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.77,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 1395,
+            "pair_rate": 0.005735,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p5__floor0__topk5",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.25,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 9.1,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 4650,
+            "pair_rate": 0.00172,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p5__floor0__predicted_count_topk",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p5__floor0__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.98,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.77,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 2790,
+            "pair_rate": 0.002867,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p7__floor0__topk1",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.8,
+        "mR@1": 4.8,
+        "mR@3": 4.8,
+        "mR@5": 4.8,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 11.94,
+        "mIoU@5": 11.94,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p7__floor0__topk3",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.84,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.19,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.77,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 1395,
+            "pair_rate": 0.005735,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p7__floor0__topk5",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.25,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 9.1,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 4650,
+            "pair_rate": 0.00172,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "soft_nms_linear__iou0p7__floor0__predicted_count_topk",
+      "spec": {
+        "method": "soft_nms_linear",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": 0.0,
+        "cluster_linkage": null
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/soft_nms_linear__iou0p7__floor0__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.98,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.77,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.45,
+        "mIoU+@5": 0.45
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 2790,
+            "pair_rate": 0.002867,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4650,
+          "mean_windows_per_query": 10.0,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 461,
+              "total_pairs": 20925,
+              "pair_rate": 0.022031,
+              "queries_with_pair": 378,
+              "query_rate": 0.812903
+            },
+            "0.7": {
+              "pairs_above_threshold": 210,
+              "total_pairs": 20925,
+              "pair_rate": 0.010036,
+              "queries_with_pair": 176,
+              "query_rate": 0.378495
+            },
+            "0.9": {
+              "pairs_above_threshold": 12,
+              "total_pairs": 20925,
+              "pair_rate": 0.000573,
+              "queries_with_pair": 12,
+              "query_rate": 0.025806
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p5__complete__topk1",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.04,
+        "mR@1": -0.04,
+        "mR@3": -0.04,
+        "mR@5": -0.04,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.01,
+        "mIoU@3": 0.01,
+        "mIoU@5": 0.01,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.76,
+        "mR@1": 4.76,
+        "mR@3": 4.76,
+        "mR@5": 4.76,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.95,
+        "mIoU@3": 11.95,
+        "mIoU@5": 11.95,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p5__complete__topk3",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.08,
+        "mR@1": -0.04,
+        "mR@3": -0.12,
+        "mR@5": -0.12,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.01,
+        "mIoU@3": 0.01,
+        "mIoU@5": 0.01,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": -0.01,
+        "mIoU+@5": -0.01
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.76,
+        "mR@1": 4.76,
+        "mR@3": 7.07,
+        "mR@5": 7.07,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.95,
+        "mIoU@3": 10.78,
+        "mIoU@5": 10.78,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.44,
+        "mIoU+@5": 0.44
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p5__complete__topk5",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.08,
+        "mR@1": -0.04,
+        "mR@3": -0.12,
+        "mR@5": -0.12,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.01,
+        "mIoU@3": 0.01,
+        "mIoU@5": 0.01,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": -0.01,
+        "mIoU+@5": -0.01
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.17,
+        "mR@1": 4.76,
+        "mR@3": 7.07,
+        "mR@5": 8.98,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.95,
+        "mIoU@3": 10.78,
+        "mIoU@5": 10.81,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.44,
+        "mIoU+@5": 0.44
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p5__complete__predicted_count_topk",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.5,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": -0.07,
+        "mR@1": -0.04,
+        "mR@3": -0.12,
+        "mR@5": -0.12,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.01,
+        "mIoU@3": 0.01,
+        "mIoU@5": 0.01,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": -0.01,
+        "mIoU+@5": -0.01
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p5__complete__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.91,
+        "mR@1": 4.76,
+        "mR@3": 7.07,
+        "mR@5": 7.65,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.95,
+        "mIoU@3": 10.78,
+        "mIoU@5": 10.81,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.44,
+        "mIoU+@5": 0.44
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4189,
+          "mean_windows_per_query": 9.008602,
+          "median_windows_per_query": 9.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 16859,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p7__complete__topk1",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": 1,
+      "direct_topk_baseline": "none__topk1",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__topk1.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__topk1.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 6.65,
+        "G-mIoU@5": 6.65,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 4.8,
+        "mR@1": 4.8,
+        "mR@3": 4.8,
+        "mR@5": 4.8,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 11.94,
+        "mIoU@5": 11.94,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.0,
+        "mIoU+@5": 0.0
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 465,
+        "mean_windows_per_query": 1.0,
+        "median_windows_per_query": 1.0,
+        "max_windows_per_query": 1,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 0,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 1,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 465,
+          "selected_total": 465,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 4185
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p7__complete__topk3",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": 3,
+      "direct_topk_baseline": "none__topk3",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": -0.01,
+        "mIoU+@5": -0.01
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__topk3.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__topk3.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 3.14,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.84,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.19,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.77,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.44,
+        "mIoU+@5": 0.44
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1395,
+        "mean_windows_per_query": 3.0,
+        "median_windows_per_query": 3.0,
+        "max_windows_per_query": 3,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 1395,
+            "pair_rate": 0.005735,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 1395,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 3,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 1395,
+          "selected_total": 1395,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 3255
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p7__complete__topk5",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": 5,
+      "direct_topk_baseline": "none__topk5",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": -0.01,
+        "mIoU+@5": -0.01
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__topk5.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__topk5.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.24,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 6.25,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 9.1,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.44,
+        "mIoU+@5": 0.44
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 2325,
+        "mean_windows_per_query": 5.0,
+        "median_windows_per_query": 5.0,
+        "max_windows_per_query": 5,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 4650,
+            "pair_rate": 0.00172,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 4650,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": 5,
+          "budget_semantics": "at_most_fixed_k_after_dedup",
+          "requested_total_from_source": 2325,
+          "selected_total": 2325,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2325
+      }
+    },
+    {
+      "name": "cluster_fusion__iou0p7__complete__predicted_count_topk",
+      "spec": {
+        "method": "cluster_fusion",
+        "iou_threshold": 0.7,
+        "sigma": null,
+        "score_floor": null,
+        "cluster_linkage": "complete"
+      },
+      "selection_budget": "predicted_count",
+      "direct_topk_baseline": "none__predicted_count_topk",
+      "delta_vs_direct_topk": {
+        "AUROC": 0.0,
+        "Rej-F1@0.4": 0.0,
+        "Acc@0.4": 0.0,
+        "Rej-F1@0.6": 0.0,
+        "Acc@0.6": 0.0,
+        "G-mIoU@1": 0.0,
+        "G-mIoU@3": 0.0,
+        "G-mIoU@5": 0.0,
+        "Count-Acc": 0.0,
+        "Count-MacroAcc": 0.0,
+        "Positive-Count-Acc": 0.0,
+        "mAP": 0.0,
+        "mR@1": 0.0,
+        "mR@3": 0.0,
+        "mR@5": 0.0,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 0.0,
+        "mIoU@3": 0.0,
+        "mIoU@5": 0.0,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": -0.01,
+        "mIoU+@5": -0.01
+      },
+      "prediction_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__predicted_count_topk.predictions.jsonl",
+      "metrics_output": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/cluster_fusion__iou0p7__complete__predicted_count_topk.metrics.json",
+      "brief": {
+        "AUROC": 72.4,
+        "Rej-F1@0.4": 3.74,
+        "Acc@0.4": 55.7,
+        "Rej-F1@0.6": 70.71,
+        "Acc@0.6": 62.58,
+        "G-mIoU@1": 6.65,
+        "G-mIoU@3": 3.14,
+        "G-mIoU@5": 2.59,
+        "Count-Acc": 0.43,
+        "Count-MacroAcc": 20.0,
+        "Positive-Count-Acc": 0.78,
+        "mAP": 5.98,
+        "mR@1": 4.8,
+        "mR@3": 7.19,
+        "mR@5": 7.77,
+        "mR+@1": 0.0,
+        "mR+@3": 0.0,
+        "mR+@5": 0.0,
+        "mIoU@1": 11.94,
+        "mIoU@3": 10.77,
+        "mIoU@5": 10.8,
+        "mIoU+@1": 0.0,
+        "mIoU+@3": 0.44,
+        "mIoU+@5": 0.44
+      },
+      "diagnostics": {
+        "num_queries": 465,
+        "total_windows": 1860,
+        "mean_windows_per_query": 4.0,
+        "median_windows_per_query": 4.0,
+        "max_windows_per_query": 4,
+        "pairwise_overlap": {
+          "0.5": {
+            "pairs_above_threshold": 8,
+            "total_pairs": 2790,
+            "pair_rate": 0.002867,
+            "queries_with_pair": 8,
+            "query_rate": 0.017204
+          },
+          "0.7": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          },
+          "0.9": {
+            "pairs_above_threshold": 0,
+            "total_pairs": 2790,
+            "pair_rate": 0.0,
+            "queries_with_pair": 0,
+            "query_rate": 0.0
+          }
+        },
+        "dedup_before_selection": {
+          "num_queries": 465,
+          "total_windows": 4440,
+          "mean_windows_per_query": 9.548387,
+          "median_windows_per_query": 10.0,
+          "max_windows_per_query": 10,
+          "pairwise_overlap": {
+            "0.5": {
+              "pairs_above_threshold": 251,
+              "total_pairs": 19069,
+              "pair_rate": 0.013163,
+              "queries_with_pair": 229,
+              "query_rate": 0.492473
+            },
+            "0.7": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            },
+            "0.9": {
+              "pairs_above_threshold": 0,
+              "total_pairs": 19069,
+              "pair_rate": 0.0,
+              "queries_with_pair": 0,
+              "query_rate": 0.0
+            }
+          }
+        },
+        "selection": {
+          "budget": "predicted_count",
+          "budget_semantics": "pred_count clipped to [0,4]; class 4+ uses its Top-4 lower bound",
+          "requested_total_from_source": 1860,
+          "selected_total": 1860,
+          "underfilled_queries": 0,
+          "underfilled_qid_sample": []
+        },
+        "windows_removed_vs_source": 2790
+      }
+    }
+  ],
+  "summary_path": "/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/dedup_ablation/dedup_ablation_summary.json"
+}

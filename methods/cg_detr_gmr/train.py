@@ -31,6 +31,7 @@ STAGE_NEW_PREFIXES = {
     "cg_detr_gmr": ("exist_head.",),
     "cg_quality": ("quality_embed.",),
     "cg_phrase": ("phrase_grounding.",),
+    "cg_quality_phrase": ("quality_embed.", "phrase_grounding."),
     "cg_counter": ("hierarchical_counter.",),
     "cg_hiea2m": ("quality_embed.", "phrase_grounding.", "hierarchical_counter."),
 }

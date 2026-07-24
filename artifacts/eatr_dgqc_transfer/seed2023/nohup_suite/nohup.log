@@ -1,0 +1,4 @@
+started eatr_quality pid=3315593 gpu=1
+started eatr_dual pid=3315594 gpu=1
+started eatr_counter pid=3315596 gpu=1
+started eatr_hiea2m pid=3315597 gpu=1

@@ -27,6 +27,22 @@ class StagedOptimizerGroupingTest(unittest.TestCase):
         self.assertEqual(QD_PREFIXES["qd_dual"], ("dual_grounding.",))
         self.assertEqual(EATR_PREFIXES["eatr_dual"], ("dual_grounding.",))
         self.assertEqual(CG_PREFIXES["cg_phrase"], ("phrase_grounding.",))
+        self.assertEqual(
+            EATR_PREFIXES["eatr_quality_dual"],
+            ("quality_embed.", "dual_grounding."),
+        )
+
+    def test_quality_grounding_stages_exclude_counter(self) -> None:
+        self.assertEqual(
+            QD_PREFIXES["qd_quality_dual"],
+            ("quality_embed.", "dual_grounding."),
+        )
+        self.assertEqual(
+            CG_PREFIXES["cg_quality_phrase"],
+            ("quality_embed.", "phrase_grounding."),
+        )
+        self.assertNotIn("hierarchical_counter.", QD_PREFIXES["qd_quality_dual"])
+        self.assertNotIn("hierarchical_counter.", CG_PREFIXES["cg_quality_phrase"])
 
     def test_full_stage_contains_all_and_only_new_hiea2m_modules(self) -> None:
         self.assertEqual(

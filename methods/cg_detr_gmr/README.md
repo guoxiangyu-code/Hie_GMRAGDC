@@ -18,7 +18,8 @@ calibration and factorized `{0,1,2,3,4+}` counting. The phrase and counter
 residuals are exactly zero at parent warm-start, so localization and existence
 outputs are bitwise identical to `cg_detr_gmr` at step zero.
 The controlled `cg_quality`, `cg_phrase`, and `cg_counter` variants expose
-each new branch independently for validation ablations.
+each new branch independently for validation ablations. `cg_quality_phrase`
+combines quality and phrase grounding while deliberately omitting the counter.
 
 ## MR-only protocol
 

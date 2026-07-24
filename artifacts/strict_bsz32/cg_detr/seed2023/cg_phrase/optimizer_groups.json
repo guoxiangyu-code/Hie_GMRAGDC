@@ -1,0 +1,18 @@
+{
+  "variant": "cg_phrase",
+  "stage_new_prefixes": [
+    "phrase_grounding."
+  ],
+  "groups": [
+    {
+      "role": "shared",
+      "lr": 3e-06,
+      "num_parameters": 12681516
+    },
+    {
+      "role": "new",
+      "lr": 3e-05,
+      "num_parameters": 3101953
+    }
+  ]
+}

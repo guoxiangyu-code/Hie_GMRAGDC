@@ -1,0 +1,9 @@
+started_at=2026-07-23T15:24:32+08:00
+seed=2023
+batch_size=32
+eval_interval=5
+patience=10
+parent=/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/best_joint.ckpt
+reference_map=7.03
+reference_gmiou3=3.14
+comparison=continued_control,quality,dual,quality_dual

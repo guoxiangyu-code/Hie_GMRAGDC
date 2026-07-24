@@ -3,6 +3,7 @@ import time
 import json
 import pprint
 import random
+import shutil
 import numpy as np
 from tqdm import tqdm, trange
 from collections import defaultdict
@@ -32,6 +33,65 @@ def set_seed(seed, use_cuda=True):
     torch.manual_seed(seed)
     if use_cuda:
         torch.cuda.manual_seed_all(seed)
+
+
+def _strict_selection_scores(metrics, opt):
+    """Return comparable mAP/G@3 scores from the unified full-split evaluator."""
+    unified = metrics.get("GMR-unified", {}).get("brief", {})
+    map_score = float(unified.get("mAP", metrics["brief"].get("MR-full-mAP", 0.0)))
+    gmiou3_score = float(unified.get("G-mIoU@3", 0.0))
+    reference_map = float(getattr(opt, "reference_map", 0.0))
+    reference_gmiou3 = float(getattr(opt, "reference_gmiou3", 0.0))
+    if reference_map > 0 and reference_gmiou3 > 0:
+        joint_score = min(
+            map_score / reference_map,
+            gmiou3_score / reference_gmiou3,
+        )
+    elif map_score > 0 and gmiou3_score > 0:
+        joint_score = 2.0 * map_score * gmiou3_score / (map_score + gmiou3_score)
+    else:
+        joint_score = 0.0
+    return {
+        "map": map_score,
+        "gmiou3": gmiou3_score,
+        "joint": joint_score,
+    }
+
+
+def _save_checkpoint_and_eval_files(checkpoint, opt, latest_file_paths, suffix):
+    checkpoint_path = opt.ckpt_filepath.replace(".ckpt", f"_{suffix}.ckpt")
+    torch.save(checkpoint, checkpoint_path)
+    for source in latest_file_paths:
+        target = source.replace("latest", suffix, 1)
+        shutil.copy2(source, target)
+    return checkpoint_path
+
+
+def _restore_selection_state_for_resume(opt):
+    """Preserve historical best files when changing only validation cadence."""
+    strict_best_scores = {
+        "map": float("-inf"),
+        "gmiou3": float("-inf"),
+        "joint": float("-inf"),
+    }
+    if not bool(getattr(opt, "resume_all", False)):
+        return strict_best_scores, 0.0
+
+    for score_name in strict_best_scores:
+        path = opt.ckpt_filepath.replace(".ckpt", f"_best_{score_name}.ckpt")
+        if not os.path.isfile(path):
+            continue
+        checkpoint = torch.load(path, map_location="cpu", weights_only=False)
+        selection = checkpoint.get("strict_selection", {})
+        if score_name in selection:
+            strict_best_scores[score_name] = float(selection[score_name])
+
+    selection_metric = str(getattr(opt, "selection_metric", "mAP"))
+    score_key = {"mAP": "map", "gmiou3": "gmiou3", "joint": "joint"}[
+        selection_metric
+    ]
+    return strict_best_scores, max(0.0, strict_best_scores[score_key])
+
 
 def train_epoch(model, criterion, train_loader, optimizer, opt, epoch_i, tb_writer):
     logger.info(f"[Epoch {epoch_i+1}]")
@@ -125,7 +185,7 @@ def train(model, criterion, optimizer, lr_scheduler, train_dataset, val_dataset,
         pin_memory=opt.pin_memory
     )
 
-    prev_best_score = 0.0
+    strict_best_scores, prev_best_score = _restore_selection_state_for_resume(opt)
     es_cnt = 0  # early stop counter
     if opt.start_epoch is None:
         start_epoch = -1 if opt.eval_untrained else 0
@@ -140,7 +200,7 @@ def train(model, criterion, optimizer, lr_scheduler, train_dataset, val_dataset,
             losses, iteration = train_epoch(
                 model, criterion, train_loader, optimizer, opt, epoch_i, tb_writer
             )
-            lr_scheduler.step(losses)
+            lr_scheduler.step()
         eval_epoch_interval = opt.eval_epoch
 
         if opt.eval_path is not None and (epoch_i + 1) % eval_epoch_interval == 0:
@@ -193,8 +253,31 @@ def train(model, criterion, optimizer, lr_scheduler, train_dataset, val_dataset,
                     )
                 )
 
+            strict_scores = _strict_selection_scores(metrics, opt)
+            checkpoint = {
+                "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "lr_scheduler": lr_scheduler.state_dict(),
+                "epoch": epoch_i,
+                "opt": opt,
+                "strict_selection": strict_scores,
+            }
+            for score_name, score_value in strict_scores.items():
+                if score_value > strict_best_scores[score_name]:
+                    strict_best_scores[score_name] = score_value
+                    _save_checkpoint_and_eval_files(
+                        checkpoint,
+                        opt,
+                        latest_file_paths,
+                        f"best_{score_name}",
+                    )
+
             if opt.dset_name in ["hl"]:
-                stop_score = metrics["brief"]["MR-full-mAP"]
+                selection_metric = str(getattr(opt, "selection_metric", "mAP"))
+                score_key = {"mAP": "map", "gmiou3": "gmiou3", "joint": "joint"}[
+                    selection_metric
+                ]
+                stop_score = strict_scores[score_key]
             elif opt.dset_name in ["tacos"]:
                 stop_score = metrics["brief"]["MR-full-R1@0.3"]
             else:
@@ -207,20 +290,13 @@ def train(model, criterion, optimizer, lr_scheduler, train_dataset, val_dataset,
                 es_cnt = 0
                 prev_best_score = stop_score
 
-                checkpoint = {
-                    "model": model.state_dict(),
-                    "optimizer": optimizer.state_dict(),
-                    "lr_scheduler": lr_scheduler.state_dict(),
-                    "epoch": epoch_i,
-                    "opt": opt,
-                }
                 torch.save(checkpoint, opt.ckpt_filepath.replace(".ckpt", "_best.ckpt"))
 
                 best_file_paths = [
                     e.replace("latest", "best") for e in latest_file_paths
                 ]
                 for src, tgt in zip(latest_file_paths, best_file_paths):
-                    os.renames(src, tgt)
+                    shutil.copy2(src, tgt)
                 logger.info("The checkpoint file has been updated.")
             else:
                 es_cnt += 1
@@ -411,6 +487,10 @@ def start_training():
         dataset_config["data_path"] = opt.eval_path
         dataset_config["txt_drop_ratio"] = 0
         dataset_config["q_feat_dir"] = opt.t_feat_dir.replace("sub_features", "text_features")  # for pretraining
+        # Validation must always cover the complete GMR split.  Plain Flash-VTG
+        # has no explicit existence head, so its window confidence is used as
+        # the null score proxy by the unified evaluator.
+        dataset_config["keep_empty_gt"] = True
         # dataset_config["load_labels"] = False  # uncomment to calculate eval loss
 
         eval_dataset = StartEndDataset(**dataset_config)

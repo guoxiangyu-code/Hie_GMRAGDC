@@ -25,6 +25,33 @@ def _bare_dataset(clip_length: float = 2.0) -> SoccerGMRDataset:
 
 
 class CGDETRGMRTest(unittest.TestCase):
+    def test_quality_phrase_variant_builds_without_counter_losses(self) -> None:
+        args = build_smoke_parser().parse_args(["--device", "cpu"])
+        args.variant = "cg_quality_phrase"
+        args = finalize_model_arguments(args)
+        self.assertTrue(args.use_exist_head)
+        self.assertTrue(args.use_quality_head)
+        self.assertTrue(args.use_phrase_grounding)
+        self.assertFalse(args.use_hierarchical_counter)
+
+        model, criterion, _ = build_components(args)
+        self.assertIsNotNone(model.exist_head)
+        self.assertIsNotNone(model.quality_embed)
+        self.assertIsNotNone(model.phrase_grounding)
+        self.assertIsNone(model.hierarchical_counter)
+        self.assertIn("existence", criterion.losses)
+        self.assertIn("quality", criterion.losses)
+        self.assertIn("phrase_grounding", criterion.losses)
+        self.assertNotIn("counter", criterion.losses)
+        self.assertIn("loss_quality", criterion.weight_dict)
+        self.assertIn("loss_dual_dqa", criterion.weight_dict)
+        self.assertIn("loss_dual_eos", criterion.weight_dict)
+        self.assertFalse(any(name.startswith("loss_count") for name in criterion.weight_dict))
+
+        detected, structure = detect_variant(model.state_dict())
+        self.assertEqual(detected, "cg_quality_phrase")
+        self.assertFalse(structure["counter"])
+
     def test_resume_rejects_strict_loss_semantic_drift(self) -> None:
         checkpoint = {
             "config": {

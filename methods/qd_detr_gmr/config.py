@@ -33,7 +33,7 @@ def add_model_arguments(parser: argparse.ArgumentParser) -> None:
         "--variant",
         choices=(
             "qd_detr", "qd_detr_gmr", "qd_quality", "qd_dual",
-            "qd_counter", "qd_hiea2m",
+            "qd_quality_dual", "qd_counter", "qd_hiea2m",
         ),
         default="qd_detr_gmr",
     )
@@ -104,8 +104,12 @@ def add_model_arguments(parser: argparse.ArgumentParser) -> None:
 
 def finalize_model_arguments(args: argparse.Namespace) -> argparse.Namespace:
     args.use_exist_head = args.variant != "qd_detr"
-    args.use_quality_head = args.variant in {"qd_quality", "qd_hiea2m"}
-    args.use_dual_grounding = args.variant in {"qd_dual", "qd_hiea2m"}
+    args.use_quality_head = args.variant in {
+        "qd_quality", "qd_quality_dual", "qd_hiea2m",
+    }
+    args.use_dual_grounding = args.variant in {
+        "qd_dual", "qd_quality_dual", "qd_hiea2m",
+    }
     args.use_hierarchical_counter = args.variant in {"qd_counter", "qd_hiea2m"}
     args.use_saliency = False
     args.lw_saliency = 0.0

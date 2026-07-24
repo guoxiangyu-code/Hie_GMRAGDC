@@ -1,0 +1,12 @@
+variant=gmr_quality_zero
+physical_gpu=0
+logical_device=0
+python=/home/guoxiangyu/miniconda3/bin/python
+seed=2023
+batch_size=128
+eval_every_epochs=5
+patience_epochs=30
+patience_evaluations=6
+cpu_threads=6
+started_at=2026-07-23T14:48:19+08:00
+git_commit=f1eaf738bada88e33bc1c388bb3c9b0924983f8d

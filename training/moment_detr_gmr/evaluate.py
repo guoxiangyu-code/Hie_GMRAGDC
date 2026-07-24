@@ -27,7 +27,10 @@ except ImportError:  # Direct script execution.
     from dataset import StartEndDataset, prepare_batch_inputs, start_end_collate
     from postprocessing import PostProcessorDETR
 from models.moment_detr_gmr.moment_detr import build_model as build_model_moment_detr
-from models.moment_detr_gmr.hierarchical_counter import hierarchical_count_probabilities
+from models.moment_detr_gmr.hierarchical_counter import (
+    hierarchical_count_probabilities,
+    positive_conditional_count_probabilities,
+)
 from models.moment_detr_gmr.set_decoder import (
     adaptive_count_indices,
     diversity_ranking,
@@ -139,14 +142,34 @@ def compute_mr_results(epoch_i, model, eval_loader, opt, criterion=None):
         )
 
         count_probabilities = None
+        positive_count_probabilities = None
         if "pred_positive_count_logits" in outputs:
             count_probabilities = hierarchical_count_probabilities(outputs).detach().cpu()
+            positive_count_probabilities = (
+                positive_conditional_count_probabilities(outputs).detach().cpu()
+            )
 
         for idx, (meta, spans, score) in enumerate(zip(query_meta, pred_spans, scores)):
             spans = span_cxw_to_xx(spans).clamp(0, 1)
             sample_count_probabilities = (
                 count_probabilities[idx] if count_probabilities is not None else None
             )
+            sample_positive_count_probabilities = (
+                positive_count_probabilities[idx]
+                if positive_count_probabilities is not None else None
+            )
+            count_exist_threshold = float(getattr(opt, "count_exist_thd", 0.4))
+            if pred_exist_scores is not None:
+                sample_predicted_exists = (
+                    float(pred_exist_scores[idx]) > count_exist_threshold
+                )
+            elif sample_count_probabilities is not None:
+                sample_predicted_exists = (
+                    1.0 - float(sample_count_probabilities[0])
+                    > count_exist_threshold
+                )
+            else:
+                sample_predicted_exists = None
             selection_mode = str(getattr(opt, "set_selection_mode", "legacy"))
             selected_spans = None
             selected_scores = None
@@ -191,7 +214,7 @@ def compute_mr_results(epoch_i, model, eval_loader, opt, criterion=None):
                         getattr(opt, "pairwise_redundancy_lambda", 1.0)
                     ),
                     count_probabilities=(
-                        None if fixed_topk else sample_count_probabilities
+                        None if fixed_topk else sample_positive_count_probabilities
                     ),
                     count_prior_weight=(
                         0.0 if fixed_topk else float(
@@ -202,6 +225,9 @@ def compute_mr_results(epoch_i, model, eval_loader, opt, criterion=None):
                         float("-inf") if fixed_topk else float(
                             getattr(opt, "selection_stop_thd", -1.0)
                         )
+                    ),
+                    query_exists=(
+                        None if fixed_topk else sample_predicted_exists
                     ),
                 )
                 selected_indices = selection.selected
@@ -259,18 +285,21 @@ def compute_mr_results(epoch_i, model, eval_loader, opt, criterion=None):
                 )
             if sample_count_probabilities is not None:
                 predicted_positive_count = int(
-                    torch.argmax(sample_count_probabilities[1:]).item()
+                    torch.argmax(sample_positive_count_probabilities).item()
                 ) + 1
-                predicted_exists = (
-                    1.0 - float(sample_count_probabilities[0])
-                    > float(getattr(opt, "count_exist_thd", 0.4))
-                )
                 cur_query_pred["pred_count"] = (
-                    predicted_positive_count if predicted_exists else 0
+                    predicted_positive_count if sample_predicted_exists else 0
                 )
                 cur_query_pred["pred_count_probs"] = [
                     float(f"{float(value):.6f}") for value in sample_count_probabilities
                 ]
+                cur_query_pred["pred_positive_count_probs"] = [
+                    float(f"{float(value):.6f}")
+                    for value in sample_positive_count_probabilities
+                ]
+                cur_query_pred["pred_count_conditioned_on_exists"] = int(
+                    bool(sample_predicted_exists)
+                )
             if bool(getattr(opt, "save_raw_queries", False)):
                 cur_query_pred["all_query_windows"] = [
                     [float(f"{value:.4f}") for value in all_windows[index]]

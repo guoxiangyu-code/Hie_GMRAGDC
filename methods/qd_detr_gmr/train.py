@@ -32,14 +32,28 @@ STAGE_NEW_PREFIXES = {
     "qd_detr_gmr": ("exist_head.",),
     "qd_quality": ("quality_embed.",),
     "qd_dual": ("dual_grounding.",),
+    "qd_quality_dual": ("quality_embed.", "dual_grounding."),
     "qd_counter": ("hierarchical_counter.",),
     "qd_hiea2m": ("quality_embed.", "dual_grounding.", "hierarchical_counter."),
 }
 
 RESUME_MUTABLE_KEYS = {
     "resume", "init_checkpoint", "epochs", "num_workers", "eval_bsz",
-    "map_num_workers", "device",
+    "map_num_workers", "device", "eval_interval",
 }
+
+RESUME_PATH_KEYS = {
+    "train_annotation", "eval_annotation", "video_feature_dirs",
+    "text_feature_dir", "output_dir",
+}
+
+
+def _normalize_resume_value(key: str, value):
+    if key not in RESUME_PATH_KEYS or value is None:
+        return value
+    if isinstance(value, (list, tuple)):
+        return [str(Path(item).expanduser().resolve()) for item in value]
+    return str(Path(value).expanduser().resolve())
 
 
 def validate_resume_config(checkpoint: dict, args: argparse.Namespace) -> None:
@@ -53,8 +67,12 @@ def validate_resume_config(checkpoint: dict, args: argparse.Namespace) -> None:
     keys.add("mask_null_vmr_loss")
     mismatches = {}
     for key in sorted(keys):
-        saved_value = saved.get(key, False if key == "mask_null_vmr_loss" else None)
-        current_value = current.get(key, False if key == "mask_null_vmr_loss" else None)
+        saved_value = _normalize_resume_value(
+            key, saved.get(key, False if key == "mask_null_vmr_loss" else None)
+        )
+        current_value = _normalize_resume_value(
+            key, current.get(key, False if key == "mask_null_vmr_loss" else None)
+        )
         if saved_value != current_value:
             mismatches[key] = {"checkpoint": saved_value, "cli": current_value}
     if mismatches:
@@ -264,7 +282,8 @@ def main(argv: list[str] | None = None) -> None:
         if (epoch + 1) % args.eval_interval == 0:
             decode_modes = ("full",)
             if args.diagnostic_decoders and args.variant in {
-                "qd_quality", "qd_dual", "qd_counter", "qd_hiea2m"
+                "qd_quality", "qd_dual", "qd_quality_dual",
+                "qd_counter", "qd_hiea2m",
             }:
                 decode_modes = ("full", "threshold")
                 if args.use_hierarchical_counter:

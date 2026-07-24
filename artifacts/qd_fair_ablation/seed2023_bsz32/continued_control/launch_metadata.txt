@@ -1,0 +1,7 @@
+label=continued_control
+variant=qd_detr_gmr
+physical_gpu=0
+seed=2023
+parent=/home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/best_joint.ckpt
+started_at=2026-07-23T15:24:32+08:00
+CUDA_VISIBLE_DEVICES=0 /home/guoxiangyu/miniconda3/bin/python -u -m methods.qd_detr_gmr.train --variant qd_detr_gmr --seed 2023 --epochs 200 --batch_size 32 --eval_bsz 32 --patience 10 --eval_interval 5 --num_workers 0 --lr 3e-5 --backbone_lr_scale 0.1 --train_sample_mode mixed --map_num_workers 1 --reference_map 7.03 --reference_gmiou3 3.14 --train_annotation /home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/train.jsonl --eval_annotation /home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/val.jsonl --video_feature_dirs /home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/feature/standard/clip /home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/feature/standard/slowfast --text_feature_dir /home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/feature/standard/clip_text --output_dir /home/guoxiangyu/generalized-moment-retrieval/artifacts/qd_fair_ablation/seed2023_bsz32/continued_control --device cuda --round_to_clip --no-diagnostic_decoders --init_checkpoint /home/guoxiangyu/generalized-moment-retrieval/artifacts/strict_bsz32/qd_detr/seed2023/qd_detr_gmr/best_joint.ckpt --mask-null-vmr-loss 

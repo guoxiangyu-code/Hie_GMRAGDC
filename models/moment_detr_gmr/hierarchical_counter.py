@@ -82,6 +82,18 @@ class HierarchicalMomentCounter(nn.Module):
         }
 
 
+def positive_conditional_count_probabilities(
+    outputs: dict[str, torch.Tensor],
+) -> torch.Tensor:
+    """Return ``P(N=k | N>0)`` for ``k in {1, 2, 3, 4+}``.
+
+    This is the only distribution that may be used by Soft Count.  The null
+    decision is deliberately kept outside this head and is handled by the
+    existence gate.
+    """
+    return outputs["pred_positive_count_logits"].softmax(dim=-1)
+
+
 def hierarchical_count_probabilities(outputs: dict[str, torch.Tensor]) -> torch.Tensor:
     """Return a normalized ``[P(0), P(1), P(2), P(3), P(4+)]`` tensor."""
     p_exist = (
@@ -89,7 +101,7 @@ def hierarchical_count_probabilities(outputs: dict[str, torch.Tensor]) -> torch.
         if "pred_zero_logits" in outputs
         else torch.sigmoid(outputs["pred_exist_logits"])
     )
-    conditional = outputs["pred_positive_count_logits"].softmax(dim=-1)
+    conditional = positive_conditional_count_probabilities(outputs)
     return torch.cat([(1.0 - p_exist)[:, None], p_exist[:, None] * conditional], dim=1)
 
 
@@ -125,10 +137,16 @@ def hierarchical_counter_losses(
 ) -> dict[str, torch.Tensor]:
     """Compute factorized existence, conditional-count and consistency losses."""
     exist = targets["exist_label"].float().view(-1)
-    count = targets["count_label"].long().view(-1).clamp(max=4)
+    count = targets["count_label"].long().view(-1).clamp(min=0, max=4)
     raw_count = targets.get("raw_count_label", count).long().view(-1)
     exist_logits = outputs["pred_exist_logits"].view(-1)
-    positive = count > 0
+    positive = exist > 0.5
+    count_positive = count > 0
+    if not torch.equal(positive, count_positive):
+        raise ValueError(
+            "exist_label and count_label disagree: conditional count is "
+            "defined only for samples with N>0"
+        )
     raw_exist_loss = F.binary_cross_entropy_with_logits(
         exist_logits, exist, reduction="none"
     )

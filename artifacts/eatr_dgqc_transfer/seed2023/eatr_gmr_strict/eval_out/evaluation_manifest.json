@@ -1,0 +1,38 @@
+{
+  "submission": "artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/eval_out/submission.jsonl",
+  "num_predictions": 465,
+  "detected_structure": {
+    "exist": true,
+    "quality": false,
+    "dual": false,
+    "counter": false,
+    "variant": "eatr_gmr"
+  },
+  "primary_decode_mode": "full",
+  "metrics": "artifacts/eatr_dgqc_transfer/seed2023/eatr_gmr_strict/eval_out/metrics.json",
+  "brief": {
+    "AUROC": 71.67,
+    "Rej-F1@0.4": 39.35,
+    "Acc@0.4": 59.57,
+    "Rej-F1@0.6": 70.71,
+    "Acc@0.6": 62.58,
+    "Rej-F1@0.8": 70.71,
+    "Acc@0.8": 62.58,
+    "G-mIoU@1": 20.15,
+    "G-mIoU@3": 16.82,
+    "G-mIoU@5": 15.36,
+    "mAP": 8.02,
+    "mR@1": 5.38,
+    "mR@3": 8.86,
+    "mR@5": 12.3,
+    "mR+@1": 0.0,
+    "mR+@3": 1.81,
+    "mR+@5": 2.93,
+    "mIoU@1": 17.46,
+    "mIoU@3": 15.55,
+    "mIoU@5": 15.5,
+    "mIoU+@1": 0.0,
+    "mIoU+@3": 2.88,
+    "mIoU+@5": 2.79
+  }
+}

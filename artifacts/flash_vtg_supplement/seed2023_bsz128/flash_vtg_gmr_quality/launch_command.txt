@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True bash scripts/run_flash_vtg_strict.sh gmr_quality 0 2023 128 artifacts/flash_vtg_supplement/seed2023_bsz128/flash_vtg_gmr_quality 

@@ -100,7 +100,8 @@ class VariantAndCheckpointTest(unittest.TestCase):
             parent_outputs = parent(**inputs)
 
         for variant in (
-            "eatr_quality", "eatr_dual", "eatr_counter", "eatr_hiea2m"
+            "eatr_quality", "eatr_dual", "eatr_quality_dual",
+            "eatr_counter", "eatr_hiea2m",
         ):
             child, _ = build_model(apply_variant(base, variant))
             missing = load_parent_state(child, parent.state_dict())
@@ -137,6 +138,27 @@ class VariantAndCheckpointTest(unittest.TestCase):
                     child_outputs["pred_counter_exist_delta"],
                     torch.zeros_like(child_outputs["pred_counter_exist_delta"]),
                 ))
+
+    def test_quality_dual_combination_excludes_counter(self):
+        config = apply_variant(tiny_config(), "eatr_quality_dual")
+        self.assertTrue(config.use_exist_head)
+        self.assertTrue(config.use_quality_head)
+        self.assertTrue(config.use_dual_grounding)
+        self.assertFalse(config.use_hierarchical_counter)
+
+        model, criterion = build_model(config)
+        self.assertIsNotNone(model.quality_embed)
+        self.assertIsNotNone(model.dual_grounding)
+        self.assertIsNone(model.hierarchical_counter)
+        self.assertIn("loss_quality", criterion.weight_dict)
+        self.assertIn("loss_dual_dqa", criterion.weight_dict)
+        self.assertIn("loss_dual_eos", criterion.weight_dict)
+        self.assertFalse(any("count" in name for name in criterion.weight_dict))
+
+        outputs = model(**model_inputs())
+        self.assertIn("pred_quality_logits", outputs)
+        self.assertIn("dual_phrase_attention", outputs)
+        self.assertNotIn("pred_positive_count_logits", outputs)
 
 
 class LossAndDecodeTest(unittest.TestCase):

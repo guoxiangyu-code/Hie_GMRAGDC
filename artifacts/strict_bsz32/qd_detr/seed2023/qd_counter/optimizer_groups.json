@@ -1,0 +1,18 @@
+{
+  "variant": "qd_counter",
+  "stage_new_prefixes": [
+    "hierarchical_counter."
+  ],
+  "groups": [
+    {
+      "role": "shared",
+      "lr": 3e-06,
+      "num_parameters": 7651622
+    },
+    {
+      "role": "new",
+      "lr": 3e-05,
+      "num_parameters": 792842
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+launched_at=2026-07-23T22:27:03+08:00
+repo_root=/home/guoxiangyu/generalized-moment-retrieval
+run_dir=/home/guoxiangyu/generalized-moment-retrieval/artifacts/validation_selector_ablation/seed2023/stage2_zero
+gpu_id=0
+hostname=dell-PowerEdge-R750
+git_commit=f1eaf738bada88e33bc1c388bb3c9b0924983f8d
+stdout_log=/home/guoxiangyu/generalized-moment-retrieval/artifacts/validation_selector_ablation/seed2023/stage2_zero/nohup.log
+command_file=/home/guoxiangyu/generalized-moment-retrieval/artifacts/validation_selector_ablation/seed2023/stage2_zero/launch_command.txt
+pid=3315422

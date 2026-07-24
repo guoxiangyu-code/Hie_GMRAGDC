@@ -1,0 +1,487 @@
+|                            | 0                                                                                                                        |
+|:---------------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| config                     | /home/guoxiangyu/generalized-moment-retrieval/configs/flash_vtg_gmr/model.py                                             |
+| use_neg                    | False                                                                                                                    |
+| dset_name                  | hl                                                                                                                       |
+| dset_domain                |                                                                                                                          |
+| eval_split_name            | val                                                                                                                      |
+| debug                      | True                                                                                                                     |
+| data_ratio                 | 0.032                                                                                                                    |
+| results_root               | results                                                                                                                  |
+| run_dir                    | /home/guoxiangyu/generalized-moment-retrieval/artifacts/smoke/flash_vtg_gmr/b128_quality_zero_warmstart                  |
+| exp_id                     | flash_vtg_gmr_quality_zero                                                                                               |
+| seed                       | 2023                                                                                                                     |
+| device                     | 0                                                                                                                        |
+| num_workers                | 0                                                                                                                        |
+| no_pin_memory              | False                                                                                                                    |
+| lr                         | 3e-05                                                                                                                    |
+| lr_drop                    | 400                                                                                                                      |
+| wd                         | 0.0001                                                                                                                   |
+| n_epoch                    | 1                                                                                                                        |
+| max_es_cnt                 | 1                                                                                                                        |
+| bsz                        | 128                                                                                                                      |
+| drop_last                  | False                                                                                                                    |
+| eval_bsz                   | 1                                                                                                                        |
+| eval_epoch                 | 1                                                                                                                        |
+| selection_metric           | mAP                                                                                                                      |
+| reference_map              | 0.0                                                                                                                      |
+| reference_gmiou3           | 0.0                                                                                                                      |
+| eval_full_only             | True                                                                                                                     |
+| mr_only                    | True                                                                                                                     |
+| grad_clip                  | 0.1                                                                                                                      |
+| eval_untrained             | False                                                                                                                    |
+| resume                     | /home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/checkpoint/flashVTG_gmr                                         |
+| resume_all                 | False                                                                                                                    |
+| start_epoch                |                                                                                                                          |
+| resume_adapter             |                                                                                                                          |
+| max_q_l                    | 40                                                                                                                       |
+| max_v_l                    | 75                                                                                                                       |
+| clip_length                | 2.0                                                                                                                      |
+| max_windows                | 5                                                                                                                        |
+| train_path                 | /home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/train.jsonl                                            |
+| eval_path                  | /home/guoxiangyu/generalized-moment-retrieval/data/label/Standard/val.jsonl                                              |
+| no_norm_vfeat              | False                                                                                                                    |
+| no_norm_tfeat              | False                                                                                                                    |
+| v_feat_dirs                | Soccer-GMR/feature/standard/slowfast', '/home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/feature/standard/clip'] |
+| t_feat_dir                 | /home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/feature/standard/clip_text                                      |
+| a_feat_dir                 |                                                                                                                          |
+| v_feat_dim                 | 2816                                                                                                                     |
+| t_feat_dim                 | 512                                                                                                                      |
+| a_feat_dim                 |                                                                                                                          |
+| ctx_mode                   | video_tef                                                                                                                |
+| q_feat_type                | last_hidden_state                                                                                                        |
+| position_embedding         | sine                                                                                                                     |
+| kernel_size                | 5                                                                                                                        |
+| num_conv_layers            | 1                                                                                                                        |
+| num_mlp_layers             | 5                                                                                                                        |
+| use_SRM                    | True                                                                                                                     |
+| enc_layers                 | 3                                                                                                                        |
+| t2v_layers                 | 6                                                                                                                        |
+| dummy_layers               | 2                                                                                                                        |
+| dim_feedforward            | 1024                                                                                                                     |
+| hidden_dim                 | 256                                                                                                                      |
+| input_dropout              | 0.5                                                                                                                      |
+| dropout                    | 0.1                                                                                                                      |
+| txt_drop_ratio             | 0                                                                                                                        |
+| use_txt_pos                | False                                                                                                                    |
+| nheads                     | 8                                                                                                                        |
+| num_dummies                | 40                                                                                                                       |
+| total_prompts              | 10                                                                                                                       |
+| num_prompts                | 1                                                                                                                        |
+| pre_norm                   | False                                                                                                                    |
+| n_input_proj               | 2                                                                                                                        |
+| temperature                | 0.07                                                                                                                     |
+| saliency_margin            | 0.2                                                                                                                      |
+| aux_loss                   | True                                                                                                                     |
+| span_loss_type             | l1                                                                                                                       |
+| sample_radius              | 1.5                                                                                                                      |
+| lw_reg                     | 1.0                                                                                                                      |
+| lw_cls                     | 5.0                                                                                                                      |
+| lw_sal                     | 0.0                                                                                                                      |
+| lw_saliency                | 0.0                                                                                                                      |
+| lw_wattn                   | 1.0                                                                                                                      |
+| lw_ms_align                | 1.0                                                                                                                      |
+| span_loss_coef             | 10                                                                                                                       |
+| giou_loss_coef             | 3                                                                                                                        |
+| label_loss_coef            | 4                                                                                                                        |
+| eos_coef                   | 0.1                                                                                                                      |
+| use_exist_head             | True                                                                                                                     |
+| exist_pool                 | mean                                                                                                                     |
+| exist_loss_coef            | 1.0                                                                                                                      |
+| exist_gate_thd             | 0.5                                                                                                                      |
+| use_quality_head           | True                                                                                                                     |
+| quality_loss_coef          | 1.0                                                                                                                      |
+| quality_score_alpha        | 0.5                                                                                                                      |
+| quality_negative_weight    | 0.1                                                                                                                      |
+| use_independent_zero_head  | True                                                                                                                     |
+| zero_loss_coef             | 1.0                                                                                                                      |
+| zero_positive_query_weight | 1.0                                                                                                                      |
+| selector_dropout           | 0.1                                                                                                                      |
+| exist_loose_thd            | 0.35                                                                                                                     |
+| zero_rescue_thd            | 0.45                                                                                                                     |
+| zero_veto_thd              | 0.65                                                                                                                     |
+| zero_weak_candidate_thd    | 0.35                                                                                                                     |
+| allow_head_init            | True                                                                                                                     |
+| freeze_parent              | True                                                                                                                     |
+| freeze_quality_head        | False                                                                                                                    |
+| pred_topk_for_cls          | 10                                                                                                                       |
+| pred_score_thd_for_cls     | 0.5                                                                                                                      |
+| gmr_cls_thresholds         | [0.4, 0.6, 0.8]                                                                                                          |
+| gmiou_cls_threshold        | 0.4                                                                                                                      |
+| no_sort_results            | False                                                                                                                    |
+| max_before_nms             | 50                                                                                                                       |
+| max_after_nms              | 10                                                                                                                       |
+| conf_thd                   | 0.0                                                                                                                      |
+| nms_thd                    | 0.7                                                                                                                      |
+| nms_type                   | normal                                                                                                                   |
+| results_dir                | /home/guoxiangyu/generalized-moment-retrieval/artifacts/smoke/flash_vtg_gmr/b128_quality_zero_warmstart                  |
+2026-07-23 13:01:34.464:INFO:__main__ - Setup data and model...
+2026-07-23 13:01:34.550:INFO:training.flash_vtg_gmr.dataset - Using 3.2% of the data: 132 examples
+2026-07-23 13:01:36.143:INFO:training.flash_vtg_gmr.dataset - Using 3.2% of the data: 14 examples
+2026-07-23 13:01:36.290:INFO:training.flash_vtg_gmr.inference - setup model/optimizer/scheduler
+2026-07-23 13:01:38.333:INFO:training.flash_vtg_gmr.inference - CUDA enabled.
+2026-07-23 13:01:39.399:INFO:training.flash_vtg_gmr.inference - Load checkpoint from /home/guoxiangyu/generalized-moment-retrieval/Soccer-GMR/checkpoint/flashVTG_gmr
+2026-07-23 13:01:39.550:INFO:training.flash_vtg_gmr.inference - Initialized requested new head keys: ['quality_head.net.0.weight', 'quality_head.net.0.bias', 'quality_head.net.1.weight', 'quality_head.net.1.bias', 'quality_head.net.4.weight', 'quality_head.net.4.bias', 'zero_verifier_head.representation.0.weight', 'zero_verifier_head.representation.0.bias', 'zero_verifier_head.representation.1.weight', 'zero_verifier_head.representation.1.bias', 'zero_verifier_head.classifier.0.weight', 'zero_verifier_head.classifier.0.bias', 'zero_verifier_head.classifier.1.weight', 'zero_verifier_head.classifier.1.bias', 'zero_verifier_head.classifier.4.weight', 'zero_verifier_head.classifier.4.bias']
+2026-07-23 13:01:39.559:INFO:__main__ - Model FlashVTG(
+  (transformer): Transformer(
+    (t2v_encoder): TransformerCATEEncoder(
+      (layers): ModuleList(
+        (0-5): 6 x T2V_TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): Linear(in_features=256, out_features=256, bias=True)
+          )
+          (linear1): Linear(in_features=256, out_features=1024, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=1024, out_features=256, bias=True)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (dropout1): DropPath()
+          (dropout2): DropPath()
+          (activation): PReLU(num_parameters=1)
+        )
+      )
+    )
+    (encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0-2): 3 x TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+          )
+          (linear1): Linear(in_features=256, out_features=1024, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear2): Linear(in_features=1024, out_features=256, bias=True)
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (dropout1): DropPath()
+          (dropout2): DropPath()
+          (activation): PReLU(num_parameters=1)
+        )
+      )
+    )
+  )
+  (position_embed): PositionEmbeddingSine()
+  (txt_position_embed): TrainablePositionalEncoding(
+    (position_embeddings): Embedding(40, 256)
+    (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    (dropout): Dropout(p=0.5, inplace=False)
+  )
+  (saliency_proj1): Linear(in_features=256, out_features=256, bias=True)
+  (saliency_proj2): Linear(in_features=256, out_features=256, bias=True)
+  (PositionEmbeddingSine): PositionEmbeddingSine()
+  (input_txt_proj): Sequential(
+    (0): LinearLayer(
+      (LayerNorm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=512, out_features=256, bias=True)
+      )
+    )
+    (1): LinearLayer(
+      (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (input_vid_proj): Sequential(
+    (0): LinearLayer(
+      (LayerNorm): LayerNorm((2818,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=2818, out_features=256, bias=True)
+      )
+    )
+    (1): LinearLayer(
+      (LayerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (net): Sequential(
+        (0): Dropout(p=0.5, inplace=False)
+        (1): Linear(in_features=256, out_features=256, bias=True)
+      )
+    )
+  )
+  (token_type_embeddings): Embedding(2, 256)
+  (txtproj_encoder): TransformerEncoder(
+    (layers): ModuleList(
+      (0-1): 2 x TransformerEncoderLayer(
+        (self_attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=256, out_features=256, bias=True)
+        )
+        (linear1): Linear(in_features=256, out_features=1024, bias=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+        (linear2): Linear(in_features=1024, out_features=256, bias=True)
+        (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (dropout1): DropPath()
+        (dropout2): DropPath()
+        (activation): PReLU(num_parameters=1)
+      )
+    )
+  )
+  (pyramid): ConvPyramid(
+    (blocks): ModuleList(
+      (0): ReLU(inplace=True)
+      (1): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+      )
+      (2): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+        (5): Permute()
+        (6): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (7): Permute()
+        (8): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (9): ReLU(inplace=True)
+      )
+      (3): Sequential(
+        (0): Permute()
+        (1): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (2): Permute()
+        (3): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (4): ReLU(inplace=True)
+        (5): Permute()
+        (6): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (7): Permute()
+        (8): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (9): ReLU(inplace=True)
+        (10): Permute()
+        (11): Conv1d(256, 256, kernel_size=(2,), stride=(2,))
+        (12): Permute()
+        (13): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+        (14): ReLU(inplace=True)
+      )
+    )
+  )
+  (pooling): AdaPooling(
+    (att): Linear(in_features=256, out_features=1, bias=False)
+  )
+  (conf_head): ConfidenceScorer(
+    (convs): ModuleList(
+      (0): Conv2d(256, 256, kernel_size=(1, 5), stride=(1, 1), padding=(0, 2))
+    )
+    (activations): ModuleList(
+      (0): ReLU()
+    )
+    (fc): MLP(
+      (layers): ModuleList(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+  )
+  (class_head): ConfidenceScorer(
+    (convs): ModuleList(
+      (0): Conv2d(256, 256, kernel_size=(1, 5), stride=(1, 1), padding=(0, 2))
+    )
+    (activations): ModuleList(
+      (0): ReLU()
+    )
+    (fc): MLP(
+      (layers): ModuleList(
+        (0): Linear(in_features=256, out_features=128, bias=True)
+        (1-3): 3 x Linear(in_features=128, out_features=128, bias=True)
+        (4): Linear(in_features=128, out_features=1, bias=True)
+      )
+    )
+  )
+  (coord_head): ConvHead(
+    (module): Sequential(
+      (0): Permute()
+      (1): Conv1d(256, 256, kernel_size=(3,), stride=(1,), padding=(1,))
+      (2): ReLU(inplace=True)
+      (3): Conv1d(256, 2, kernel_size=(3,), stride=(1,), padding=(1,))
+      (4): Permute()
+    )
+  )
+  (generator): PointGenerator(
+    (buffer): BufferList()
+  )
+  (exist_head): Sequential(
+    (0): Linear(in_features=512, out_features=256, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Linear(in_features=256, out_features=1, bias=True)
+  )
+  (quality_head): FlashCandidateQualityHead(
+    (net): Sequential(
+      (0): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+      (1): Linear(in_features=256, out_features=256, bias=True)
+      (2): GELU(approximate='none')
+      (3): Dropout(p=0.1, inplace=False)
+      (4): Linear(in_features=256, out_features=1, bias=True)
+    )
+  )
+  (zero_verifier_head): FlashIndependentZeroVerifier(
+    (representation): Sequential(
+      (0): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+      (1): Linear(in_features=1280, out_features=256, bias=True)
+      (2): GELU(approximate='none')
+      (3): Dropout(p=0.1, inplace=False)
+    )
+    (classifier): Sequential(
+      (0): LayerNorm((267,), eps=1e-05, elementwise_affine=True)
+      (1): Linear(in_features=267, out_features=256, bias=True)
+      (2): GELU(approximate='none')
+      (3): Dropout(p=0.1, inplace=False)
+      (4): Linear(in_features=256, out_features=1, bias=True)
+    )
+  )
+)
+2026-07-23 13:01:39.559:INFO:__main__ - Learnable Parameters:
+2026-07-23 13:01:39.560:INFO:__main__ - Learnable Parameters: 0.445M (4.215%)
+2026-07-23 13:01:39.560:INFO:__main__ - Start Training...
+2026-07-23 13:01:39.560:INFO:__main__ - CUDA enabled.
+Epoch:   0%|          | 0/1 [00:00<?, ?it/s]2026-07-23 13:01:39.585:INFO:__main__ - [Epoch 1]
+
+Training Iteration:   0%|          | 0/2 [00:00<?, ?it/s][A/home/guoxiangyu/generalized-moment-retrieval/training/flash_vtg_gmr/train.py:114: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  loss_dict["weighted_loss_overall"] = float(losses)  # for logging only
+
+Training Iteration:  50%|█████     | 1/2 [00:02<00:02,  2.79s/it][A
+Training Iteration: 100%|██████████| 2/2 [00:02<00:00,  1.24s/it][ATraining Iteration: 100%|██████████| 2/2 [00:02<00:00,  1.47s/it]
+2026-07-23 13:01:42.528:INFO:__main__ - 2026_07_23_13_01_42 [Epoch] 001 [Loss] loss_reg 0.2973 loss_cls 0.0307 loss_exist 0.6176 loss_quality 0.6931 loss_zero 0.6930 weighted_loss_overall 2.4545
+
+/home/guoxiangyu/generalized-moment-retrieval/training/flash_vtg_gmr/train.py:178: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  lr_scheduler.step(losses)
+2026-07-23 13:01:42.529:INFO:training.flash_vtg_gmr.inference - Generate submissions
+
+compute st ed scores:   0%|          | 0/14 [00:00<?, ?it/s][A
+compute st ed scores:  14%|█▍        | 2/14 [00:00<00:00, 16.61it/s][A
+compute st ed scores:  36%|███▌      | 5/14 [00:00<00:00, 21.56it/s][A
+compute st ed scores:  57%|█████▋    | 8/14 [00:00<00:00, 23.17it/s][A
+compute st ed scores:  79%|███████▊  | 11/14 [00:00<00:00, 24.30it/s][A
+compute st ed scores: 100%|██████████| 14/14 [00:00<00:00, 24.73it/s][Acompute st ed scores: 100%|██████████| 14/14 [00:00<00:00, 23.62it/s]
+
+convert to multiples of clip_length=2.0:   0%|          | 0/14 [00:00<?, ?it/s][Aconvert to multiples of clip_length=2.0: 100%|██████████| 14/14 [00:00<00:00, 6294.38it/s]
+2026-07-23 13:01:43.127:INFO:training.flash_vtg_gmr.inference - Saving/Evaluating before nms results
+full: [0, 150], 7/14=50.00 examples.
+[eval_moment_retrieval] [full] 0.41 seconds
+[eval_main] 7 positive (5 single + 2 multi), 7 negative, time=0.0s
+{
+  "AUROC": 64.29,
+  "Rej-F1@0.4": 0.0,
+  "Acc@0.4": 50.0,
+  "Rej-F1@0.6": 66.67,
+  "Acc@0.6": 50.0,
+  "Rej-F1@0.8": 66.67,
+  "Acc@0.8": 50.0,
+  "G-mIoU@1": 22.22,
+  "G-mIoU@3": 7.41,
+  "G-mIoU@5": 4.44,
+  "mAP": 39.57,
+  "mR@1": 34.29,
+  "mR@3": 41.43,
+  "mR@5": 41.43,
+  "mR+@1": 0.0,
+  "mR+@3": 0.0,
+  "mR+@5": 0.0,
+  "mIoU@1": 44.44,
+  "mIoU@3": 44.44,
+  "mIoU@5": 44.44,
+  "mIoU+@1": 0.0,
+  "mIoU+@3": 0.0,
+  "mIoU+@5": 0.0
+}
+2026-07-23 13:01:43.557:INFO:training.flash_vtg_gmr.inference - [MR] Performing nms with nms_thd 0.7
+/home/guoxiangyu/miniconda3/lib/python3.13/site-packages/nncore/utils/data.py:29: UserWarning: Using a non-tuple sequence for multidimensional indexing is deprecated and will be changed in pytorch 2.9; use x[tuple(seq)] instead of x[seq]. In pytorch 2.9 this will be interpreted as tensor index, x[torch.tensor(seq)], which will result either in an error or a different result (Triggered internally at /pytorch/torch/csrc/autograd/python_variable_indexing.cpp:347.)
+  m_j = getattr(matrix[j_inds], meth)()
+/home/guoxiangyu/miniconda3/lib/python3.13/site-packages/nncore/utils/data.py:32: UserWarning: Using a non-tuple sequence for multidimensional indexing is deprecated and will be changed in pytorch 2.9; use x[tuple(seq)] instead of x[seq]. In pytorch 2.9 this will be interpreted as tensor index, x[torch.tensor(seq)], which will result either in an error or a different result (Triggered internally at /pytorch/torch/csrc/autograd/python_variable_indexing.cpp:347.)
+  matrix[j_inds] = m_i
+2026-07-23 13:01:43.702:INFO:training.flash_vtg_gmr.inference - Saving/Evaluating nms results
+full: [0, 150], 7/14=50.00 examples.
+[eval_moment_retrieval] [full] 0.38 seconds
+[eval_main] 7 positive (5 single + 2 multi), 7 negative, time=0.0s
+{
+  "AUROC": 64.29,
+  "Rej-F1@0.4": 0.0,
+  "Acc@0.4": 50.0,
+  "Rej-F1@0.6": 66.67,
+  "Acc@0.6": 50.0,
+  "Rej-F1@0.8": 66.67,
+  "Acc@0.8": 50.0,
+  "G-mIoU@1": 22.22,
+  "G-mIoU@3": 9.79,
+  "G-mIoU@5": 5.87,
+  "mAP": 43.37,
+  "mR@1": 34.29,
+  "mR@3": 52.86,
+  "mR@5": 52.86,
+  "mR+@1": 0.0,
+  "mR+@3": 0.0,
+  "mR+@5": 0.0,
+  "mIoU@1": 44.44,
+  "mIoU@3": 51.59,
+  "mIoU@5": 51.59,
+  "mIoU+@1": 0.0,
+  "mIoU+@3": 0.0,
+  "mIoU+@5": 0.0
+}
+2026-07-23 13:01:44.103:INFO:__main__ - metrics_no_nms OrderedDict([   ('MR-full-R1@0.3', 57.14),
+                ('MR-full-R1@0.5', 57.14),
+                ('MR-full-R1@0.7', 42.86),
+                ('MR-full-mAP', 39.57),
+                ('MR-full-mAP@0.5', 61.9),
+                ('MR-full-mAP@0.75', 49.66),
+                ('MR-full-mIoU', 44.44),
+                ('GMR-AUROC', 64.29),
+                ('GMR-Rej-F1@0.4', 0.0),
+                ('GMR-Acc@0.4', 50.0),
+                ('GMR-Rej-F1@0.6', 66.67),
+                ('GMR-Acc@0.6', 50.0),
+                ('GMR-Rej-F1@0.8', 66.67),
+                ('GMR-Acc@0.8', 50.0),
+                ('GMR-G-mIoU@1', 22.22),
+                ('GMR-G-mIoU@3', 7.41),
+                ('GMR-G-mIoU@5', 4.44),
+                ('GMR-mAP', 39.57),
+                ('GMR-mR@1', 34.29),
+                ('GMR-mR@3', 41.43),
+                ('GMR-mR@5', 41.43),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 0.0),
+                ('GMR-mR+@5', 0.0),
+                ('GMR-mIoU@1', 44.44),
+                ('GMR-mIoU@3', 44.44),
+                ('GMR-mIoU@5', 44.44),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 0.0),
+                ('GMR-mIoU+@5', 0.0)])
+2026-07-23 13:01:44.103:INFO:__main__ - metrics_nms OrderedDict([   ('MR-full-R1@0.3', 57.14),
+                ('MR-full-R1@0.5', 57.14),
+                ('MR-full-R1@0.7', 42.86),
+                ('MR-full-mAP', 43.37),
+                ('MR-full-mAP@0.5', 67.26),
+                ('MR-full-mAP@0.75', 54.56),
+                ('MR-full-mIoU', 44.44),
+                ('GMR-AUROC', 64.29),
+                ('GMR-Rej-F1@0.4', 0.0),
+                ('GMR-Acc@0.4', 50.0),
+                ('GMR-Rej-F1@0.6', 66.67),
+                ('GMR-Acc@0.6', 50.0),
+                ('GMR-Rej-F1@0.8', 66.67),
+                ('GMR-Acc@0.8', 50.0),
+                ('GMR-G-mIoU@1', 22.22),
+                ('GMR-G-mIoU@3', 9.79),
+                ('GMR-G-mIoU@5', 5.87),
+                ('GMR-mAP', 43.37),
+                ('GMR-mR@1', 34.29),
+                ('GMR-mR@3', 52.86),
+                ('GMR-mR@5', 52.86),
+                ('GMR-mR+@1', 0.0),
+                ('GMR-mR+@3', 0.0),
+                ('GMR-mR+@5', 0.0),
+                ('GMR-mIoU@1', 44.44),
+                ('GMR-mIoU@3', 51.59),
+                ('GMR-mIoU@5', 51.59),
+                ('GMR-mIoU+@1', 0.0),
+                ('GMR-mIoU+@3', 0.0),
+                ('GMR-mIoU+@5', 0.0)])
+2026-07-23 13:01:44.447:INFO:__main__ - The checkpoint file has been updated.
+Epoch:   0%|          | 0/1 [00:04<?, ?it/s]
